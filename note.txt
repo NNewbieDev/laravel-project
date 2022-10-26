@@ -16,4 +16,4 @@
     +git branch 
         -> để kiểm tra đúng nhanh cần đến chưa
         Lưu ý: sẽ có dấu sao hoặc chữ màu xanh (các dấu hiệu khác) để thể hiện đang ở branh đó.
-   
+----------------------------ĐÂY LÀ PHẦN ADMIN----------------------------
