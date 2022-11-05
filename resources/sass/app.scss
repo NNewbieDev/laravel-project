@@ -6,3 +6,124 @@
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+
+
+@mixin HorizontalCenter ($type: margin){
+    @if $type == margin {
+        margin: 0 auto;
+    }
+    @else {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+body {
+    background-color: $light-txt;
+}
+
+.form-control {
+    background-color: $light-txt;
+}
+
+.register{
+    &-box {
+       margin: 0 auto;
+    }
+
+// đăng kí cộng tác viên
+    &-author{
+        text-align: center;
+    }
+    
+    &-author__poster > img {
+        width: 100%;
+        height: 100%;
+        border: 1px solid $main-clr;
+        border-radius: 10px;
+        opacity: 0.25;
+    }
+
+    &-author__poster {
+        position: relative;
+    }
+
+    &-author__title {
+        position: absolute;
+        top: 5%;
+        left: 50%;
+        transform: translateX(-50%);
+        color: $main-clr;
+        min-width: 500px;
+
+    }
+
+    &-author__sub {
+        position: absolute;
+        bottom: 50%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80%;
+        color: $main-clr;
+        font-size: 1.25rem;
+    }
+
+    &-author__btn {
+        position: absolute;
+        bottom: 5%;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: $main-clr;
+        border-radius: 8px;
+    }
+
+    &-author__btn a {
+        padding: 16px 32px;
+        text-decoration: none;
+        color: $light-txt;
+        font-size: 1.25rem;
+    }
+
+// Đăng kí thường
+    &-form {
+        font-size: 1.25rem;
+        color: $main-clr;
+    }
+
+    &-title {
+        text-align: center;
+        font-size: 1.5rem;
+        margin-bottom: 25px;
+    }
+
+    &-title__text {
+        font-size: 2rem;
+    }
+
+    &-title__icon {
+        padding: 14px 16px;
+        border: 2px solid $main-clr;
+        border-radius: 50%;
+    }
+
+    &-block__btn {
+        width: 60%;
+        text-align: center;
+        margin-top: 25px;
+        @include HorizontalCenter();
+    }
+    
+    &-btn:hover  {
+        color: $light-txt;
+        background-color: $main-clr;
+    }
+    
+    &-btn {
+        background-color: $light-txt;
+        border: 2px solid $main-clr;
+        color: $main-clr;
+        border-radius: 8px;
+        background-color: transparent;
+        padding: 0 40px;
+    }
+}
