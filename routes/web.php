@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,3 +20,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('register-author', [App\Http\Controllers\RegisterAuthorController::class, 'index'])->name('register-author');
+Route::post('register-author', [App\Http\Controllers\RegisterAuthorController::class, 'create'])->name('regist-author');

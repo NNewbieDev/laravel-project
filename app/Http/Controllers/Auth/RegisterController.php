@@ -8,6 +8,9 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class RegisterController extends Controller
 {
@@ -51,7 +54,7 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'username' => ['required', 'string', 'max:255'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:1', 'confirmed'],
         ]);
     }
 
@@ -63,6 +66,13 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        if (Schema::hasTable('users')) {
+            Schema::table('users', function (Blueprint $table) {
+                if (Schema::hasColumn('users', 'role') && Route::currentRouteName() !== 'register-author') {
+                    $table->integer('role')->default(0)->change();
+                }
+            });
+        }
         return User::create([
             'username' => $data['username'],
             'password' => Hash::make($data['password']),

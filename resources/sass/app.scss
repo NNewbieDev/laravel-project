@@ -127,3 +127,27 @@ body {
         padding: 0 40px;
     }
 }
+
+.login {
+
+    &-form { 
+        font-size: 1.25rem;
+        color: $main-clr;
+    }
+
+    &-title {
+        text-align: center;
+        font-size: 1.5rem;
+        margin-bottom: 25px;
+    }
+
+    &-title__text {
+        font-size: 2rem;
+    }
+
+    &-title__icon {
+        padding: 14px 16px;
+        border: 2px solid $main-clr;
+        border-radius: 50%;
+    }
+}

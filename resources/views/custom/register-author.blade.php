@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
     <div class="container-fluid">
         <div class="register-box row g-0 justify-content-center">
@@ -8,7 +7,7 @@
                     <i class="fa-solid fa-user register-title__icon"></i>
                     <div class="register-title__text">Tạo tài khoản</div>
                 </div>
-                <form method="POST" action="{{ route('register') }}">
+                <form method="POST" action="{{ route('regist-author') }}">
                     @csrf
 
                     <div class="row mb-3">
@@ -59,24 +58,6 @@
                         </button>
                     </div>
                 </form>
-            </div>
-
-            {{-- Đăng ký tác giả --}}
-            <div class="register-author col-lg-5">
-                <div class="register-author__poster">
-                    <div class="register-author__title">
-                        <h1 class="title">Trở thành cộng tác viên</h1>
-                    </div>
-                    <img src="images/become-partner.jpg" alt="">
-                    <div class="register-author__sub">
-                        Hãy trở thành cộng tác viên với chúng tôi để cùng nhau đưa những thông tin chất lượng đến với cộng
-                        đồng.
-                        Trở thành cộng tác viên bạn còn có được những quyền lợi và ưu đãi hấp dẫn.
-                    </div>
-                    <div class="register-author__btn" onclick="">
-                        <a href="{{ route('register-author') }}">Đăng ký ngay</a>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
