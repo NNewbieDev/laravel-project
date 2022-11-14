@@ -22,4 +22,4 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('register-author', [App\Http\Controllers\RegisterAuthorController::class, 'index'])->name('register-author');
-Route::post('register-author', [App\Http\Controllers\RegisterAuthorController::class, 'create'])->name('regist-author');
+Route::post('register-author', [App\Http\Controllers\RegisterAuthorController::class, 'store']);

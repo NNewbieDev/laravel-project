@@ -7,7 +7,7 @@
                     <i class="fa-solid fa-user register-title__icon"></i>
                     <div class="register-title__text">Tạo tài khoản</div>
                 </div>
-                <form method="POST" action="{{ route('regist-author') }}">
+                <form method="POST" action="{{ route('register-author') }}">
                     @csrf
 
                     <div class="row mb-3">

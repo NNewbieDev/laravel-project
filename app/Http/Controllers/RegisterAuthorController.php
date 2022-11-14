@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Foundation\Auth\RedirectsUsers;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Validator;
 
 class RegisterAuthorController extends Controller
 {
@@ -33,14 +33,22 @@ class RegisterAuthorController extends Controller
         return view('custom.register-author');
     }
 
-    use RedirectsUsers;
+    use RegistersUsers;
+
     /**
      * Where to redirect users after registration.
      *
      * @var string
      */
-    protected $redirectTo = 'login';
+    protected $redirectTo = RouteServiceProvider::HOME;
 
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'username' => ['required', 'string', 'max:255'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -48,10 +56,6 @@ class RegisterAuthorController extends Controller
      */
     public function create(Request $data)
     {
-        return User::create([
-            'username' => $data['username'],
-            'password' => Hash::make($data['password'])
-        ]);
     }
 
     /**
@@ -62,6 +66,10 @@ class RegisterAuthorController extends Controller
      */
     public function store(Request $request)
     {
+        return User::create([
+            'username' => $request['username'],
+            'password' => Hash::make($request['password'])
+        ]);
     }
 
     /**
