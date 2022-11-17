@@ -25,66 +25,51 @@
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
-
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->role }}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
+        <div class="header row g-0">
+            <div class="header-left col-lg-6">
+                <div class="header-logo">
+                    <img src="/images/logo.png" alt="logo" class="logo">
                 </div>
             </div>
-        </nav>
+            <div class="header-right col-lg-6 align-self-center ">
+                <div class="header-right-block row g-0 align-items-center ">
+                    <div class="header-search col-lg-6 justify-content-end ">
+                        <input type="text" placeholder="Tìm kiếm bài báo..." class="search-input">
+                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    </div>
+                    <div class="header-account col-lg-6">
+                        <div class="account-block">
+                            <i class="fa-solid fa-user account-icon"></i>
+                            <div class="dropdown">
+                                @guest
+                                    @if (Route::has('login'))
+                                        <div><a href="{{ route('login') }}" class="login">Đăng nhập</a></div>
+                                    @endif
+                                    @if (Route::has('register'))
+                                        <div><a href="{{ route('register') }}" class="register">Đăng ký</a></div>
+                                    @endif
+                                @endguest
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="nav">
+            <ul class="nav-bar">
+                <li class="nav-bar-item"><a href="{{ route('index') }}">Trang chủ</a></li>
+                <li class="nav-bar-item"><a href="{{ route('index') }}">Công nghệ</a></li>
+                <li class="nav-bar-item"><a href="{{ route('index') }}">Kinh tế</a></li>
+                <li class="nav-bar-item"><a href="{{ route('index') }}">Chính trị</a></li>
+                <li class="nav-bar-item"><a href="{{ route('index') }}">Sức khỏe</a></li>
+                <li class="nav-bar-item"><a href="{{ route('index') }}">Giải trí</a></li>
+            </ul>
+        </div>
 
         <main class="py-4">
             @yield('content')
         </main>
+
     </div>
 </body>
 

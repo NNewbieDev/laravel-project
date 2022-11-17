@@ -23,13 +23,7 @@ class RegisterAuthorController extends Controller
     {
         // $role = DB::table('users')->role;
         // dd(Route::currentRouteName() == "register-author");
-        if (Schema::hasTable('users')) {
-            Schema::table('users', function (Blueprint $table) {
-                if (Schema::hasColumn('users', 'role') && Route::currentRouteName() === 'register-author') {
-                    $table->integer('role')->default(1)->change();
-                }
-            });
-        }
+
         return view('custom.register-author');
     }
 
@@ -56,6 +50,18 @@ class RegisterAuthorController extends Controller
      */
     public function create(Request $data)
     {
+        if (Schema::hasTable('users')) {
+            Schema::table('users', function (Blueprint $table) {
+                if (Schema::hasColumn('users', 'role') && Route::currentRouteName() === 'register-author') {
+                    $table->integer('role')->default(1)->change();
+                }
+            });
+        }
+        User::create([
+            'username' => $data['username'],
+            'password' => Hash::make($data['password'])
+        ]);
+        return redirect()->route('login');
     }
 
     /**
@@ -66,10 +72,6 @@ class RegisterAuthorController extends Controller
      */
     public function store(Request $request)
     {
-        return User::create([
-            'username' => $request['username'],
-            'password' => Hash::make($request['password'])
-        ]);
     }
 
     /**

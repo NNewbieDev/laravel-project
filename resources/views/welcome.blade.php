@@ -1,27 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
+@section('content')
+    <div class="container-fluid">
+        <div class="content-block row justify-contents-center">
+            <div class="hot-news row">
+                <div class="hot-news-left col-lg-6">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    {{-- <link rel="stylesheet" href="{{ url('css/main.css') }}">  --}}
-    {{-- @vite('resources/css/app.css') --}}
-</head>
+                </div>
+                <div class="hot-news-right col-lg-6">
 
-<body>
-    <div class="header bg-dark">
-        Layout sẽ apply vào sau
-
-        <div class="btn-login">
-            <a href="{{ route('login') }}">Đăng nhập</a>
-        </div>
-
-        <div class="btn-register">
-            <a href="{{ route('register') }}">Đăng kí</a>
+                </div>
+            </div>
+            <div class="articles row">
+                <div class="filter">
+                    <select name="filter" id="filter">
+                        <option value="new">Mới nhất</option>
+                        <option value="old">Cũ nhất</option>
+                    </select>
+                </div>
+                <div class="article-items">
+                    rss
+                </div>
+            </div>
         </div>
     </div>
-</body>
-
-</html>
+@endsection

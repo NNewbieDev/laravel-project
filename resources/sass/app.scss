@@ -7,6 +7,21 @@
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
 
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+ul,ol,li {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
 
 @mixin HorizontalCenter ($type: margin){
     @if $type == margin {
@@ -21,6 +36,119 @@
 body {
     background-color: $light-txt;
 }
+
+img.logo{
+    width: 102px;
+    height: 52px;
+}
+
+.header {
+    height: 60px;
+    z-index: 9999;
+    &-left {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &-right {
+        color: $main-clr;  
+    }
+
+    &-search, &-account {
+        display: flex;
+        align-items: center;
+    }
+
+    .search {
+        
+        &-input {
+            width: 250px;
+            padding: 6px;
+            color: #ccc;
+            font-style: italic;
+        }
+
+        &-input:focus-visible {
+            border: 2px solid $main-clr;
+            outline: none;
+        }
+
+        &-icon {
+            padding: 8px 15px;
+            font-size: 1.125rem;
+            cursor: pointer;
+        }
+    }
+
+    &-account {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+
+    .account{
+        &-block {
+            position: relative;
+        }
+
+        &-icon {
+            font-size: 1.125rem;
+            padding: 14px 15px;
+            cursor: pointer;
+        }
+    }
+}
+
+.dropdown {
+    position: absolute;
+    display: none;
+    top: 110%;
+    left: 0;
+    min-width: 150px;
+    background-color: #fff;
+    border: 3px double $main-clr;
+    box-shadow: 0 0 5px 2px #ccc;
+    z-index: 9;
+}
+
+.dropdown > div {
+    padding: 10px;
+
+}
+
+.dropdown > div:nth-child(odd) {
+    border-bottom: 1px solid $main-clr;
+}
+
+.dropdown a {
+    color: $main-clr;
+}
+
+// END HEADER
+.nav {
+    display: flex;
+    justify-content: center;
+    background-color: $main-clr;
+
+    &-bar {
+        display: flex;
+        
+        &-item {
+            list-style: none;
+            padding: 8px 15px;    
+        }
+    
+        &-item > a {
+            color: $light-txt;
+        }
+    }
+}
+
+
+
+// END NAVIGATION
 
 .form-control {
     background-color: $light-txt;
@@ -150,4 +278,8 @@ body {
         border: 2px solid $main-clr;
         border-radius: 50%;
     }
+}
+
+.active {
+    display: block;
 }

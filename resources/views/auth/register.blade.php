@@ -11,7 +11,7 @@
                 <form method="POST" action="{{ route('register') }}">
                     @csrf
 
-                    <div class="row mb-3">
+                    <div class="row g-0 mb-3">
                         <label for="username" class="col-md-4 col-form-label text-md-start">Tên tài khoản</label>
 
                         <div class="col-md-7">
@@ -27,7 +27,7 @@
                         </div>
                     </div>
 
-                    <div class="row mb-3">
+                    <div class="row g-0 mb-3">
                         <label for="password" class="col-md-4 col-form-label text-md-start">Mật khẩu</label>
 
                         <div class="col-md-7">
@@ -43,7 +43,7 @@
                         </div>
                     </div>
 
-                    <div class="row mb-3">
+                    <div class="row g-0 mb-3">
                         <label for="password-confirm" class="col-md-4 col-form-label text-md-start">Xác nhận mật
                             khẩu</label>
 
@@ -62,7 +62,7 @@
             </div>
 
             {{-- Đăng ký tác giả --}}
-            <div class="register-author col-lg-5">
+            <div class="register-author col-lg-5 ">
                 <div class="register-author__poster">
                     <div class="register-author__title">
                         <h1 class="title">Trở thành cộng tác viên</h1>
