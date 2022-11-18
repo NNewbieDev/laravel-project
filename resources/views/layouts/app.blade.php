@@ -49,6 +49,7 @@
                                         <div><a href="{{ route('register') }}" class="register">Đăng ký</a></div>
                                     @endif
                                 @endguest
+                                <a href="{{ route('logout') }}">Dang xuat</a>
                             </div>
                         </div>
                     </div>
