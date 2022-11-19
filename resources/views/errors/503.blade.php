@@ -17,7 +17,7 @@
                 <h1 class="display-1 fw-bold">503</h1>
                 <p class="fs-3"> <span class="text-danger">Opps!</span> Server Unavaliable.</p>
                 <p class="lead">
-                    The page you’re looking for doesn’t exist.
+                    The server is temporarily busy, try again later!
                   </p>
                 <a href="index.html" class="btn btn-primary">Go Home</a>
             </div>
