@@ -1,0 +1,28 @@
+<<<<<<< HEAD
+link github
+https://github.com/NNewbieDev/laravel-project
+brand
+-author: checkout author
+-admin: checkout admin
+-user: checkout user
+=======
+----------------------------Trình tự push lên github----------------------------
+    +git checkout admin (user/author/main)
+        -> truy cập đến branch 
+    +git add -A hoặc git add --all hoặc git add <tên file>
+        -> thêm file   
+    +git commit -m "nội dung thêm file"
+        -> cho biết ý nghĩa của lần push này 
+    - git push orign <tên nhánh>
+        -> push lên theo tên nhánh 
+
+----------------------------Trình tự pull về---------------------------- 
+    +git pull orign <tên nhánh>
+        -> pull nhánh về. Nếu đã ở nhánh của mình rồi thì cứ "git pull"
+    +git checkout <tên nhánh>
+        -> truy cập đến nhánh
+    +git branch 
+        -> để kiểm tra đúng nhanh cần đến chưa
+        Lưu ý: sẽ có dấu sao hoặc chữ màu xanh (các dấu hiệu khác) để thể hiện đang ở branh đó.
+   
+>>>>>>> 5f4df5115a2ebbb5abf36d5fc9bff5c9cc7eb5fe
