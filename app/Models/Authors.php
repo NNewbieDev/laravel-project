@@ -23,4 +23,18 @@ class Authors extends Model
     {
         DB::table($this->table)->where('authorID', $id)->update(['avatar' => $avatar]);
     }
+
+    public function updatePassword($id, $password)
+    {
+        DB::table($this->table)->where('authorID', $id)->update(['password' => md5($password)]);
+    }
+
+    public function updateInformation($id, $information)
+    {
+        DB::table($this->table)->where('authorID', $id)->update([
+            'phoneNumber' => $information['phone_number'],
+            'fullName' => $information['full_name'],
+            'address' => $information['address']
+        ]);
+    }
 }

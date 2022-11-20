@@ -6,61 +6,82 @@
     @include('author.header')
 @endsection
 @section('main')
-    <div class="container-fluid text-center py-5" style="background-color:#353536">
+    <div class="container-fluid text-center py-5"
+        style="background-color:{{ $darkMode ? 'var(--background-color-dark)' : 'var(--background-color-light)' }}">
         <div class="d-block">
             <img src="{{ asset('images') . '/' . $auth->avatar }}" alt="img" class="avatar rounded-circle"
                 style="width:200px;height:200px">
-            <h3 class="name mt-1 fs-2 text-white">{{ $auth->authorName }}</h3>
+            <h3 class="name mt-1 fs-2" style="color:{{ $darkMode ? 'var(--text-white-100)' : 'var(--text-dark-100)' }}">
+                {{ $auth->authorName }}</h3>
         </div>
         <div class="row gx-3 gy-3 mt-4 p-xxl-3 p-xl-0 p-lg-3 p-md-4 p-sm-3">
             <div class="col-xl-3 col-lg-4 col-sm-12 col-md-6">
-                <div class=" p-3 rounded-4 text-white text-start h-100 shadow-sm option" style="background-color: #2B2B2C">
+                <div class=" p-3 rounded-4 text-white text-start h-100 shadow-sm option"
+                    style="background-color:{{ $darkMode ? 'var(--background-component-color-dark)' : 'var(--background-component-color-light)' }}">
                     <a href="{{ route('author.management.management-avatar') }}"
-                        class="option_title fs-5 mb-1 fw-bold text-decoration-none text-white">Thay đổi
+                        class="option_title fs-5 mb-1 fw-bold text-decoration-none"
+                        style="color:{{ $darkMode ? 'var(--text-white-100)' : 'var(--text-dark-100)' }}">Thay đổi
                         Avatar</a>
-                    <p class="description fs-6 mb-0 fw-light text-white text-opacity-50">Chọn ảnh đại diện (PNG/JPG)</p>
+                    <p class="description fs-6 mb-0 fw-light"
+                        style="color:{{ $darkMode ? 'var(--text-white-50)' : 'var(--text-dark-75)' }}">Chọn ảnh đại diện
+                        (PNG/JPG)</p>
                 </div>
             </div>
             <div class="col-xl-3 col-lg-4 col-sm-12 col-md-6">
-                <div class=" p-3 rounded-4 text-white text-start h-100 shadow-sm option" style="background-color: #2B2B2C">
+                <div class=" p-3 rounded-4 text-white text-start h-100 shadow-sm option"
+                    style="background-color:{{ $darkMode ? 'var(--background-component-color-dark)' : 'var(--background-component-color-light)' }}">
                     <a href="{{ route('author.management.management-password') }}"
-                        class="option_title fs-5 mb-1 fw-bold text-decoration-none text-white">Quản lí mật
+                        class="option_title fs-5 mb-1 fw-bold text-decoration-none"
+                        style="color:{{ $darkMode ? 'var(--text-white-100)' : 'var(--text-dark-100)' }}">Quản lí mật
                         khẩu</a>
-                    <p class="description fs-6 mb-0 fw-light text-white text-opacity-50">Đổi mật khẩu, đánh giá tính an toàn
+                    <p class="description fs-6 mb-0 fw-light"
+                        style="color:{{ $darkMode ? 'var(--text-white-50)' : 'var(--text-dark-75)' }}">Đổi mật khẩu, đánh
+                        giá tính an toàn
                     </p>
                 </div>
             </div>
             <div class="col-xl-3 col-lg-4 col-sm-12 col-md-6">
-                <div class=" p-3 rounded-4 text-white text-start h-100 shadow-sm option" style="background-color: #2B2B2C">
-                    <a href="" class="option_title fs-5 mb-1 fw-bold text-decoration-none text-white">Quản lí
+                <div class=" p-3 rounded-4 text-white text-start h-100 shadow-sm option"
+                    style="background-color:{{ $darkMode ? 'var(--background-component-color-dark)' : 'var(--background-component-color-light)' }}">
+                    <a href="" class="option_title fs-5 mb-1 fw-bold text-decoration-none"
+                        style="color:{{ $darkMode ? 'var(--text-white-100)' : 'var(--text-dark-100)' }}">Quản lí
                         Email</a>
-                    <p class="description fs-6 mb-0 fw-light text-white text-opacity-50">
+                    <p class="description fs-6 mb-0 fw-light"
+                        style="color:{{ $darkMode ? 'var(--text-white-50)' : 'var(--text-dark-75)' }}">
                         <i class="fa-solid fa-check rounded-circle bg-primary p-1 text-dark" style="font-size:12px"></i>
                         {{ $auth->email }}
                     </p>
                 </div>
             </div>
             <div class="col-xl-3 col-lg-4 col-sm-12 col-md-6">
-                <div class=" p-3 rounded-4 text-white text-start h-100 shadow-sm option" style="background-color: #2B2B2C">
-                    <a href="#" class="option_title fs-5 mb-1 fw-bold text-decoration-none text-white">Lịch sử đăng
+                <div class=" p-3 rounded-4 text-white text-start h-100 shadow-sm option"
+                    style="background-color:{{ $darkMode ? 'var(--background-component-color-dark)' : 'var(--background-component-color-light)' }}">
+                    <a href="#" class="option_title fs-5 mb-1 fw-bold text-decoration-none"
+                        style="color:{{ $darkMode ? 'var(--text-white-100)' : 'var(--text-dark-100)' }}">Lịch sử đăng
                         nhập</a>
-                    <p class="description fs-6 mb-0 fw-light text-white text-opacity-50">Danh sách các phiên đăng nhập gần
+                    <p class="description fs-6 mb-0 fw-light"
+                        style="color:{{ $darkMode ? 'var(--text-white-50)' : 'var(--text-dark-75)' }}">Danh sách các phiên
+                        đăng nhập gần
                         đây</p>
                 </div>
             </div>
             <div class="col-xl-3 col-lg-4 col-sm-12 col-md-6">
-                <div class=" p-3 rounded-4 text-white text-start h-100 shadow-sm option" style="background-color: #2B2B2C">
+                <div class=" p-3 rounded-4 text-white text-start h-100 shadow-sm option"
+                    style="background-color:{{ $darkMode ? 'var(--background-component-color-dark)' : 'var(--background-component-color-light)' }}">
                     <a href="{{ route('author.management.management-information') }}"
-                        class="option_title fs-5 mb-1 fw-bold text-decoration-none text-white">Điều chỉnh hồ
+                        class="option_title fs-5 mb-1 fw-bold text-decoration-none"
+                        style="color:{{ $darkMode ? 'var(--text-white-100)' : 'var(--text-dark-100)' }}">Điều chỉnh hồ
                         sơ</a>
-                    <p class="description fs-6 mb-0 fw-light text-white text-opacity-50">Thông tin cơ bản</p>
+                    <p class="description fs-6 mb-0 fw-light"
+                        style="color:{{ $darkMode ? 'var(--text-white-50)' : 'var(--text-dark-75)' }}">Thông tin cơ bản</p>
                 </div>
             </div>
             <div class="col-xl-3 col-lg-4 col-sm-12 col-md-6">
                 <div class=" px-3 rounded-4 text-white text-start h-100 shadow-sm option d-flex align-items-center"
-                    style="background-color: #2B2B2C">
+                    style="background-color:{{ $darkMode ? 'var(--background-component-color-dark)' : 'var(--background-component-color-light)' }}">
                     <a href="{{ route('author.index') }}" id="logout"
-                        class="text-uppercase fs-6 border p-2 rounded-3 text-decoration-none text-white option_exit">
+                        class="text-uppercase fs-6 border p-2 rounded-3 text-decoration-none option_exit"
+                        style="color:{{ $darkMode ? 'var(--text-white-100)' : 'var(--text-dark-100)' }}">
                         Thoát
                         <i class="fa-solid fa-arrow-right-from-bracket"></i>
                     </a>
@@ -78,13 +99,13 @@
     e.target.innerHTML = "Xác nhận thoát tài khoản? (" + i + ")";
     i--;
     let countDown = setInterval(() => {
-    console.log('i');
     if (i >= 0) {
     e.target.innerHTML = "Xác nhận thoát tài khoản? (" + i + ")";
     i--;
     } else {
     clearInterval(countDown);
-    e.target.style.backgroundColor = "#2B2B2C";
+    e.target.style.backgroundColor =
+    "{{ $darkMode ? 'var(--background-component-color-dark)' : 'var(--background-component-color-light)' }}";
     e.target.innerHTML = "Thoát <i class='fa-solid fa-arrow-right-from-bracket'></i>";
     }
     }, 1000)

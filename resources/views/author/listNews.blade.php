@@ -6,11 +6,12 @@
     @include('author.header')
 @endsection
 @section('main')
-    <div class="container-fluid text-center py-5" style="background-color:#353536">
-        <table class="table table-dark text-start text-white text-opacity-75 rounded-3 table_news">
+    <div class="container-fluid text-center py-5"
+        style="background-color:{{ $darkMode ? 'var(--background-color-dark)' : 'var(--background-color-light)' }}">
+        <table class="table table-dark text-start p-3 text-white text-opacity-75 rounded-3 table_news">
             <thead class="text-uppercase">
                 <tr>
-                    <th width="60%">Tiêu đề</th>
+                    <th width="60%" class="p-2">Tiêu đề</th>
                     <th width="15%">Thể loại</th>
                     <th width="15%">Đăng vào lúc</th>
                     <th width="10%"></th>
@@ -20,7 +21,8 @@
                 @foreach ($newsList as $key => $news)
                     <tr>
                         <td>
-                            <div class="d-flex align-items-center p-2 h-100">{{ $news->NewTitle }}</div>
+                            <div class="d-flex align-items-center p-2 h-100" style="color:#C27324">{{ $news->NewTitle }}
+                            </div>
                         </td>
                         <td>
                             <div class="d-flex align-items-center p-2 h-100">{{ $news->CatagoryID }}</div>

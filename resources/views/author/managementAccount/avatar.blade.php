@@ -6,7 +6,8 @@
     @include('author.header')
 @endsection
 @section('main')
-    <div class="container-fluid text-center py-5" style="background-color:#353536">
+    <div class="container-fluid text-center py-5"
+        style="background-color:{{ $darkMode ? 'var(--background-component-color-dark)' : 'var(--background-component-color-light)' }}">
         <div class=" py-3 px-4 rounded-4 text-white text-center h-100 shadow option" style="background-color: #2B2B2C">
             <form action="{{ route('author.management.update-avatar') }}" method="post" enctype="multipart/form-data">
                 @csrf

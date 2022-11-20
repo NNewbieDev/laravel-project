@@ -5,9 +5,40 @@
     /* font-size: 62.5%; */
 }
 
+:root {
+    --background-color-dark: #353536;
+    --background-component-color-dark: rgb(43, 43, 44);
+
+    --text-white-100: #fff;
+    --text-white-75: #c9c9c9;
+    --text-white-50: #959596;
+    --text-white-20: #606061;
+
+    --text-dark-100: #000;
+    --text-dark-75: #585b5e;
+    --text-dark-50: #8d8f91;
+    --text-dark-20: #c3c4c5;
+
+    --background-color-light: #f5f6fd;
+    --background-component-color-light: #f7f7f8;
+
+    --primary-color: #c27324;
+}
+
 html {
     /* font-size: 1.6em; */
     font-family: "Lato", sans-serif;
+}
+
+#loading {
+    width: 100%;
+    min-height: 100vh;
+    /* background: #101010 url(../image/bold-preloader.gif) no-repeat center center; */
+    background: #191f26 url(../image/water_loading.gif) no-repeat center center;
+    background-size: 40%;
+    position: fixed;
+    top: 0;
+    z-index: 99;
 }
 
 .avatar {
