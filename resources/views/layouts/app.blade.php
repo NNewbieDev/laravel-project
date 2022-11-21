@@ -53,6 +53,7 @@
                                         Đăng xuất
                                     </a>
                                 @endguest
+                                <a href="{{ route('logout') }}">Dang xuat</a>
                             </div>
                         </div>
                     </div>
