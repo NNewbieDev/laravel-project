@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name("index");
+Route::get('/', [App\Http\Controllers\ReadRss::class, 'read'])->name("index");
 
 Auth::routes();
 
@@ -23,3 +21,4 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('register-author', [App\Http\Controllers\RegisterAuthorController::class, 'index'])->name('register-author');
 Route::post('register-author', [App\Http\Controllers\RegisterAuthorController::class, 'create']);
+Route::get('/logout', [App\Http\Controllers\RegisterAuthorController::class, 'logout'])->name('cusLogout');

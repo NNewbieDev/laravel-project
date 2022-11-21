@@ -48,6 +48,10 @@
                                     @if (Route::has('register'))
                                         <div><a href="{{ route('register') }}" class="register">Đăng ký</a></div>
                                     @endif
+                                @else
+                                    <a href="{{ route('cusLogout') }}" class="logout">
+                                        Đăng xuất
+                                    </a>
                                 @endguest
                             </div>
                         </div>
@@ -58,7 +62,7 @@
         <div class="nav">
             <ul class="nav-bar">
                 <li class="nav-bar-item"><a href="{{ route('index') }}">Trang chủ</a></li>
-                <li class="nav-bar-item"><a href="{{ route('index') }}">Công nghệ</a></li>
+                <li class="nav-bar-item"><a href="{{ route('index') }}">Khoa Học</a></li>
                 <li class="nav-bar-item"><a href="{{ route('index') }}">Kinh tế</a></li>
                 <li class="nav-bar-item"><a href="{{ route('index') }}">Chính trị</a></li>
                 <li class="nav-bar-item"><a href="{{ route('index') }}">Sức khỏe</a></li>

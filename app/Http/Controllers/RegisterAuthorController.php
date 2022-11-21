@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class RegisterAuthorController extends Controller
 {
@@ -23,18 +24,15 @@ class RegisterAuthorController extends Controller
     {
         // $role = DB::table('users')->role;
         // dd(Route::currentRouteName() == "register-author");
-
+        if (Schema::hasTable('users')) {
+            Schema::table('users', function (Blueprint $table) {
+                if (Schema::hasColumn('users', 'role') && Route::currentRouteName() === 'register-author') {
+                    $table->integer('role')->default(1)->change();
+                }
+            });
+        }
         return view('custom.register-author');
     }
-
-    use RegistersUsers;
-
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = RouteServiceProvider::HOME;
 
     protected function validator(array $data)
     {
@@ -50,20 +48,18 @@ class RegisterAuthorController extends Controller
      */
     public function create(Request $data)
     {
-        if (Schema::hasTable('users')) {
-            Schema::table('users', function (Blueprint $table) {
-                if (Schema::hasColumn('users', 'role') && Route::currentRouteName() === 'register-author') {
-                    $table->integer('role')->default(1)->change();
-                }
-            });
-        }
-        User::create([
+        return User::create([
             'username' => $data['username'],
             'password' => Hash::make($data['password'])
         ]);
-        return redirect()->route('login');
+        // return redirect()->route('login');
     }
 
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('index');
+    }
     /**
      * Store a newly created resource in storage.
      *

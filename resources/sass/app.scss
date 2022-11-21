@@ -23,6 +23,10 @@ a {
     text-decoration: none;
 }
 
+img {
+    width: 100%;
+}
+
 @mixin HorizontalCenter ($type: margin){
     @if $type == margin {
         margin: 0 auto;
@@ -35,6 +39,10 @@ a {
 
 body {
     background-color: $light-txt;
+}
+
+.item-content.d-flex.flex-column {
+    width: 500px !important;
 }
 
 img.logo{
@@ -118,8 +126,8 @@ img.logo{
 
 }
 
-.dropdown > div:nth-child(odd) {
-    border-bottom: 1px solid $main-clr;
+.dropdown > div:nth-child(even) {
+    border-top: 1px solid $main-clr;
 }
 
 .dropdown a {
@@ -146,10 +154,6 @@ img.logo{
     }
 }
 
-
-
-// END NAVIGATION
-
 .form-control {
     background-color: $light-txt;
 }
@@ -158,6 +162,14 @@ img.logo{
     &-box {
        margin: 0 auto;
     }
+
+// END NAVIGATION
+
+.item-content.d-flex.flex-column {
+    width: 500px !important;
+}
+
+// END CONTENT
 
 // đăng kí cộng tác viên
     &-author{
