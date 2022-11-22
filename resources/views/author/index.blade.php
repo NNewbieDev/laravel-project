@@ -40,7 +40,8 @@
                     </p>
                 </div>
             </div>
-            <div class="col-xl-3 col-lg-4 col-sm-12 col-md-6">
+            {{-- Chuc nang Quản lí Email --}}
+            {{-- <div class="col-xl-3 col-lg-4 col-sm-12 col-md-6">
                 <div class=" p-3 rounded-4 text-white text-start h-100 shadow-sm option"
                     style="background-color:{{ $darkMode ? 'var(--background-component-color-dark)' : 'var(--background-component-color-light)' }}">
                     <a href="" class="option_title fs-5 mb-1 fw-bold text-decoration-none"
@@ -53,7 +54,8 @@
                     </p>
                 </div>
             </div>
-            <div class="col-xl-3 col-lg-4 col-sm-12 col-md-6">
+            {{-- Chuc nang Danh sách các phiên đăng nhập gần ddaay --}}
+            {{-- <div class="col-xl-3 col-lg-4 col-sm-12 col-md-6">
                 <div class=" p-3 rounded-4 text-white text-start h-100 shadow-sm option"
                     style="background-color:{{ $darkMode ? 'var(--background-component-color-dark)' : 'var(--background-component-color-light)' }}">
                     <a href="#" class="option_title fs-5 mb-1 fw-bold text-decoration-none"
@@ -64,7 +66,7 @@
                         đăng nhập gần
                         đây</p>
                 </div>
-            </div>
+            </div>  --}}
             <div class="col-xl-3 col-lg-4 col-sm-12 col-md-6">
                 <div class=" p-3 rounded-4 text-white text-start h-100 shadow-sm option"
                     style="background-color:{{ $darkMode ? 'var(--background-component-color-dark)' : 'var(--background-component-color-light)' }}">
@@ -81,7 +83,7 @@
                     style="background-color:{{ $darkMode ? 'var(--background-component-color-dark)' : 'var(--background-component-color-light)' }}">
                     <a href="{{ route('author.index') }}" id="logout"
                         class="text-uppercase fs-6 border p-2 rounded-3 text-decoration-none option_exit"
-                        style="color:{{ $darkMode ? 'var(--text-white-100)' : 'var(--text-dark-100)' }}">
+                        style="color:{{ $darkMode ? 'var(--text-white-100)' : 'var(--text-dark-100)' }};border-color:{{ $darkMode ? 'var(--text-white-100)' : 'var(--text-dark-75)' }}!important">
                         Thoát
                         <i class="fa-solid fa-arrow-right-from-bracket"></i>
                     </a>

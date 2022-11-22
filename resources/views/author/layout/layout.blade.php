@@ -24,7 +24,7 @@
 </head>
 
 <body>
-    {{-- <div id="loading"></div> --}}
+    <div id="loading"></div>
     <header>@yield('header')</header>
     <main>@yield('main')</main>
     <footer>@yield('footer')</footer>

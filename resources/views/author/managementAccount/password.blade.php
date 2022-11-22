@@ -38,8 +38,8 @@
                     </div>
                     <div class="position-relative mt-3">
                         <input name="password" type="password" id="password"
-                            class="form-control text-white shadow-none  fs-6 fw-normal p-3 form_input"
-                            style="background-color:{{ $darkMode ? 'var(--background-component-color-dark)' : 'var(--background-component-color-light)' }};border-color:#918989"
+                            class="form-control shadow-none  fs-6 fw-normal p-3 form_input"
+                            style="background-color:{{ $darkMode ? 'var(--background-component-color-dark)' : 'var(--background-component-color-light)' }};border-color:#918989;color:{{ $darkMode ? 'var(--text-white-100)' : 'var(--text-dark-100)' }}"
                             placeholder="&nbsp;" value="{{ old('password') }}">
                         <label for="password" class="position-absolute px-2 py-1 input_label"
                             style="left:18px;background-color:{{ $darkMode ? 'var(--background-component-color-dark)' : 'var(--background-component-color-light)' }};color:{{ $darkMode ? 'var(--text-white-75)' : 'var(--text-dark-75)' }}">Nhập
@@ -54,7 +54,7 @@
                     <div class="position-relative mt-3">
                         <input name="confirm_password" type="password" id="confirm_password"
                             class="form-control shadow-none fs-6 fw-normal p-3 form_input"
-                            style="background-color:{{ $darkMode ? 'var(--background-component-color-dark)' : 'var(--background-component-color-light)' }};border-color:#918989"
+                            style="background-color:{{ $darkMode ? 'var(--background-component-color-dark)' : 'var(--background-component-color-light)' }};border-color:#918989;color:{{ $darkMode ? 'var(--text-white-100)' : 'var(--text-dark-100)' }}"
                             placeholder="&nbsp;" value="{{ old('confirm_password') }}">
                         <label for="confirm_password" class="position-absolute px-2 py-1 input_label"
                             style="left:18px;background-color:{{ $darkMode ? 'var(--background-component-color-dark)' : 'var(--background-component-color-light)' }};color:{{ $darkMode ? 'var(--text-white-75)' : 'var(--text-dark-75)' }}">Nhập
@@ -66,8 +66,9 @@
                             </p>
                         @enderror
                     </div>
-                    <input type="submit" value="Đổi mật khẩu" class="py-2 px-3 fs-6 mt-3 rounded-3 text-uppercase"
-                        style="background-color:var(--primary-color);border:none!important;color:{{ $darkMode ? 'var(--text-white-75)' : 'var(--text-dark-100)' }}">
+                    <input type="submit" value="Đổi mật khẩu"
+                        class="py-2 px-3 fs-6 mt-3 rounded-3 text-uppercase text-white text-opacity-75"
+                        style="background-color:var(--primary-color);border:none!important">
                 </form>
 
             </div>
