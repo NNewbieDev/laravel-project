@@ -1,29 +1,33 @@
 @extends('layouts.app')
 @section('content')
     <div class="container-fluid">
-        <div class="content-block ">
-            <div class="hot-news">
-                <div class="hot-news-left col-lg-6">
-
-                </div>
-                <div class="hot-news-right col-lg-6">
-
-                </div>
-            </div>
+        <div class="content-block d-flex justify-content-center ">
             <div class="articles">
-                <div class="filter ">
+                <div class="filter text-end">
                     <select name="filter" id="filter">
-                        <option value="new">Mới nhất</option>
-                        <option value="old">Cũ nhất</option>
+                        <option value="{{ route('latest') }}">Mới nhất</option>
+                        <option value="{{ route('oldest') }}">Cũ nhất</option>
                     </select>
                 </div>
                 <div class="article-items ">
                     @foreach ($result as $item)
-                        <div class="item-list w-50 d-flex align-items-center flex-column">
-                            <h2 class="item-title">{{ $item['title'] }}</h2>
+                        <div class="item-list">
+                            <h3 class="item-title">{{ $item['title'] }}</h3>
                             {{-- {{ $item['content'] }} --}}
-                            <div class="item-content d-flex flex-column ">
-                                {!! $item['description'] !!}
+                            <div class="content-block">
+                                <div class="item-content d-flex">
+                                    {{-- !! để lấy đc thẻ html --}}
+                                    {!! $item['description'] !!}
+                                </div>
+                            </div>
+                            <div class="react-block d-flex">
+                                <div class="like">
+                                    <i class="fa-solid fa-thumbs-up"></i>
+                                </div>
+                                <div class="comment">
+                                    <i class="fa-solid fa-comment"></i>
+
+                                </div>
                             </div>
                         </div>
                     @endforeach

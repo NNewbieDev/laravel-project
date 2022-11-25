@@ -49,11 +49,10 @@
                                         <div><a href="{{ route('register') }}" class="register">Đăng ký</a></div>
                                     @endif
                                 @else
-                                    <a href="{{ route('cusLogout') }}" class="logout">
-                                        Đăng xuất
-                                    </a>
+                                    <div><a href="{{ route('cusLogout') }}" class="logout">
+                                            Đăng xuất
+                                        </a></div>
                                 @endguest
-                                <a href="{{ route('logout') }}">Dang xuat</a>
                             </div>
                         </div>
                     </div>
@@ -63,9 +62,9 @@
         <div class="nav">
             <ul class="nav-bar">
                 <li class="nav-bar-item"><a href="{{ route('index') }}">Trang chủ</a></li>
-                <li class="nav-bar-item"><a href="{{ route('index') }}">Khoa Học</a></li>
-                <li class="nav-bar-item"><a href="{{ route('index') }}">Kinh tế</a></li>
-                <li class="nav-bar-item"><a href="{{ route('index') }}">Chính trị</a></li>
+                <li class="nav-bar-item"><a href="{{ route('index') }}">Khoa học</a></li>
+                <li class="nav-bar-item"><a href="{{ route('index') }}">Kinh doanh</a></li>
+                <li class="nav-bar-item"><a href="{{ route('index') }}">Du lịch</a></li>
                 <li class="nav-bar-item"><a href="{{ route('index') }}">Sức khỏe</a></li>
                 <li class="nav-bar-item"><a href="{{ route('index') }}">Giải trí</a></li>
             </ul>

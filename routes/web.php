@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', [App\Http\Controllers\ReadRss::class, 'read'])->name("index");
+// Route::get('/', [App\Http\Controllers\ReadRss::class, 'read'])->name("index");
 
 Auth::routes();
 
@@ -22,3 +22,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('register-author', [App\Http\Controllers\RegisterAuthorController::class, 'index'])->name('register-author');
 Route::post('register-author', [App\Http\Controllers\RegisterAuthorController::class, 'create']);
 Route::get('/logout', [App\Http\Controllers\RegisterAuthorController::class, 'logout'])->name('cusLogout');
+
+Route::get('/', [App\Http\Controllers\HandleData::class, 'getData'])->name('index');
+Route::get('/rss/latest', [App\Http\Controllers\HandleData::class, 'latest'])->name('latest');
+Route::get('/rss/oldest', [App\Http\Controllers\HandleData::class, 'oldest'])->name('oldest');

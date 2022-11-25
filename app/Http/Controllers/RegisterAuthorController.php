@@ -48,11 +48,11 @@ class RegisterAuthorController extends Controller
      */
     public function create(Request $data)
     {
-        return User::create([
+        User::create([
             'username' => $data['username'],
             'password' => Hash::make($data['password'])
         ]);
-        // return redirect()->route('login');
+        return redirect()->route('login');
     }
 
     public function logout()

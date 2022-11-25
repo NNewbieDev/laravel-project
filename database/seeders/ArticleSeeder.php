@@ -1,17 +1,24 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace Database\Seeders;
 
-use Illuminate\Http\Request;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
 use Vedmant\FeedReader\Facades\FeedReader;
-use Illuminate\Support\Facades\Response;
+use App\Models\Article;
 
-class ReadRss extends Controller
+class ArticleSeeder extends Seeder
 {
-    public function read()
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
     {
-        // Trang chủ RSS
-        $file = FeedReader::read('https://vnexpress.net/rss/tin-moi-nhat.rss');
+
+
+        $file = FeedReader::read();
         $result = [
             'title' => $file->get_title(),
             'description' => $file->get_description(),
@@ -33,11 +40,17 @@ class ReadRss extends Controller
 
             $result['items'][] = $i;
         }
-        $result = $result['items'];
+        $rslt = $result['items'];
         // return  Response::json([
         //     'data' => $result,
         //     'message' => 'Done',
         // ], 200);
-        return view('welcome', compact('result'));
+        foreach ($rslt as $list) {
+            $article = new Article;
+            $article->title = $list['title'];
+            $article->description = $list['description'];
+            $article->link = $list['link'];
+            $article->save();
+        }
     }
 }

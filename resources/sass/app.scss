@@ -41,21 +41,74 @@ body {
     background-color: $light-txt;
 }
 
-.item-content.d-flex.flex-column {
-    width: 500px !important;
-}
 
 img.logo{
     width: 102px;
     height: 52px;
 }
 
+// RSS
+
+.item {
+    &-content {
+        width: 500px !important;
+    }
+    &-content img {
+        height: 200px;
+        width: 250px;
+        margin-right: 10px;
+    }
+    &-list::after {
+        content: "";
+        display: block;
+        width: 80%;
+        height: 1px;
+        background-color: $main-clr;
+        margin-bottom: 10px;
+    }
+}
+
+.article-items {
+    width: 50%;
+    margin: 0 auto;
+    color: $main-clr;
+}
+
+.react-block {
+    font-size: 24px;
+}
+
+.react-block > div {
+    padding: 8px 16px;
+}
+
+
+// END RSS
+
+select {
+    border: none;
+    outline: none;
+    color: $main-clr;
+}
+option {
+    padding: 8px 16px;
+    border-radius: 0;
+    border: 1px solid $main-clr;
+}
+
+// END CONTENT
+
+#app{
+    margin-left: 300px;
+}
+
 .header {
     height: 60px;
+    border-bottom: 2px solid $main-clr;
     z-index: 9999;
     &-left {
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
     }
 
@@ -73,7 +126,6 @@ img.logo{
         &-input {
             width: 250px;
             padding: 6px;
-            color: #ccc;
             font-style: italic;
         }
 
@@ -136,20 +188,34 @@ img.logo{
 
 // END HEADER
 .nav {
-    display: flex;
-    justify-content: center;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
     background-color: $main-clr;
+    border: 2px solid $main-clr;
+    border-top-right-radius: 80px;
 
     &-bar {
-        display: flex;
-        
+        display: block;
+        width: 300px;
+        margin-top: 60px;
+        background-color: $light-txt;
+        border-top-right-radius: 60px;
+        border-bottom-left-radius: 60px;
+
         &-item {
             list-style: none;
-            padding: 8px 15px;    
+            padding: 8px 15px;
+            transition: all .25s linear;    
+        }
+
+        &-item:hover  {
+            background-color: rgba(250, 125, 9, 25%);
         }
     
         &-item > a {
-            color: $light-txt;
+            color: $main-clr;
         }
     }
 }
@@ -165,11 +231,7 @@ img.logo{
 
 // END NAVIGATION
 
-.item-content.d-flex.flex-column {
-    width: 500px !important;
-}
 
-// END CONTENT
 
 // đăng kí cộng tác viên
     &-author{
