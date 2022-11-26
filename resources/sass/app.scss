@@ -195,6 +195,7 @@ option {
     background-color: $main-clr;
     border: 2px solid $main-clr;
     border-top-right-radius: 80px;
+    border-bottom-right-radius: 80px;
 
     &-bar {
         display: block;
@@ -203,7 +204,7 @@ option {
         background-color: $light-txt;
         border-top-right-radius: 60px;
         border-bottom-left-radius: 60px;
-
+        border-bottom-right-radius: 80px;
         &-item {
             list-style: none;
             padding: 8px 15px;

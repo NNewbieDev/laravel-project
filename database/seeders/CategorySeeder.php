@@ -16,28 +16,31 @@ class CategorySeeder extends Seeder
     public function run()
     {
         $arrRSS = [
-            "item" => [
+            [
                 "name" => "Tin mới",
                 "link" => 'https://vnexpress.net/rss/tin-moi-nhat.rss'
-            ], "item" => [
+            ],  [
                 "name" => "Khoa học",
                 "link" => 'https://vnexpress.net/rss/khoa-hoc.rss'
-            ], "item" => [
+            ],  [
                 "name" => "Sức khỏe",
                 "link" => 'https://vnexpress.net/rss/suc-khoe.rss'
-            ], "item" => [
+            ],  [
                 "name" => "Giải trí",
                 "link" => 'https://vnexpress.net/rss/giai-tri.rss'
-            ], "item" => [
+            ],  [
                 "name" => "Kinh doanh",
                 "link" => 'https://vnexpress.net/rss/kinh-doanh.rss'
-            ], "item" => [
+            ],  [
                 "name" => "Du lịch",
                 "link" => 'https://vnexpress.net/rss/du-lich.rss'
             ]
         ];
-
-        foreach ($arrRSS as $item) {
+        foreach ($arrRSS as $items => $item) {
+            $category = new Category;
+            $category->CategoryName = $item['name'];
+            $category->link = $item['link'];
+            $category->save();
         }
     }
 }

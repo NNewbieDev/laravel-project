@@ -61,12 +61,9 @@
         </div>
         <div class="nav">
             <ul class="nav-bar">
-                <li class="nav-bar-item"><a href="{{ route('index') }}">Trang chủ</a></li>
-                <li class="nav-bar-item"><a href="{{ route('index') }}">Khoa học</a></li>
-                <li class="nav-bar-item"><a href="{{ route('index') }}">Kinh doanh</a></li>
-                <li class="nav-bar-item"><a href="{{ route('index') }}">Du lịch</a></li>
-                <li class="nav-bar-item"><a href="{{ route('index') }}">Sức khỏe</a></li>
-                <li class="nav-bar-item"><a href="{{ route('index') }}">Giải trí</a></li>
+                @foreach ($category as $item)
+                    <li class="nav-bar-item"><a href="{{ route('index') }}">{{ $item->CategoryName }}</a></li>
+                @endforeach
             </ul>
         </div>
 
