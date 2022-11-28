@@ -12,8 +12,8 @@ class AuthorController extends Controller
 {
     private $news;
     private $author;
-    private $authorID = 2;
-    private $darkMode = false;
+    private $authorID = 1;
+    private $darkMode = true;
     public function __construct()
     {
         $this->news = new News();
@@ -57,7 +57,7 @@ class AuthorController extends Controller
         $storedPath = $image->move('images', $image->getClientOriginalName());
         $auth = $this->author->getAuthor($this->authorID);
         $auth = $auth[0];
-        $auth = $auth->authorName;
+        $auth = $auth->id;
         $data = [
             'new_title' => $request->title_news,
             'new_content' => $request->content_news,
@@ -120,7 +120,7 @@ class AuthorController extends Controller
         $request->validate([
             'phone_number' => "required|numeric",
             'full_name' => "required|min:10",
-            'address' => "required",
+            'address' => "required"
         ], [
             'phone_number.required' => "Hãy nhập số điện thoại.",
             'phone_number.numeric' => "Định dạng nhập không đúng.",

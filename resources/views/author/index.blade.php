@@ -3,7 +3,7 @@
     {{ $title }}
 @endsection
 @section('header')
-    @include('author.header')
+    @include('author.component.header')
 @endsection
 @section('main')
     <div class="container-fluid text-center py-5"
@@ -12,7 +12,7 @@
             <img src="{{ asset('images') . '/' . $auth->avatar }}" alt="img" class="avatar rounded-circle"
                 style="width:200px;height:200px">
             <h3 class="name mt-1 fs-2" style="color:{{ $darkMode ? 'var(--text-white-100)' : 'var(--text-dark-100)' }}">
-                {{ $auth->authorName }}</h3>
+                {{ $auth->user_name }}</h3>
         </div>
         <div class="row gx-3 gy-3 mt-4 p-xxl-3 p-xl-0 p-lg-3 p-md-4 p-sm-3">
             <div class="col-xl-3 col-lg-4 col-sm-12 col-md-6">
@@ -114,5 +114,5 @@
     }
 @endsection
 @section('footer')
-    @include('author.footer')
+    @include('author.component.footer')
 @endsection

@@ -3,7 +3,7 @@
     {{ $title }}
 @endsection
 @section('header')
-    @include('author.header')
+    @include('author.component.header')
 @endsection
 @section('main')
     <div class="container-fluid text-center py-5"
@@ -55,5 +55,5 @@
     <script type="text/javascript" src="{{ asset('assets/js') . '/avatar.js' }}"></script>
 @endsection
 @section('footer')
-    @include('author.footer')
+    @include('author.component.footer')
 @endsection

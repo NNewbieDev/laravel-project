@@ -16,12 +16,11 @@ class News extends Model
         // $news = DB::select("SELECT * FROM news");
         $news = DB::table("news")
             ->get();
-        // dd($news);
         return $news;
     }
 
     public function addNews($data)
     {
-        DB::insert("INSERT INTO news (NewTitle, NewContent, CatagoryID, Author, PostAt) VALUES (?,?,?,?,?)", [$data['new_title'], $data['new_content'], $data['category'], $data['new_author'], $data['post_at']]);
+        DB::insert("INSERT INTO news (title, content, user_id, post_at) VALUES (?,?,?,?)", [$data['new_title'], $data['new_content'], $data['new_author'], $data['post_at']]);
     }
 }
