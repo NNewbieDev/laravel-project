@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\DB;
 
 class HandleData extends Controller
 {
-    public function getData()
+    public function getData($id)
     {
-        $result = Article::orderBy("created_at", "desc")->paginate(10);
+        $result = Article::where('id', $id)->orderBy("created_at", "desc")->paginate(10);
         $category = Category::all();
         return view('welcome', compact('result', 'category'));
     }
