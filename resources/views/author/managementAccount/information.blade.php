@@ -21,7 +21,7 @@
                         <input name="phone_number" type="text" id="phone_number"
                             class="form-control shadow-none  fs-6 fw-normal p-3 form_input"
                             style="background-color:{{ $darkMode ? 'var(--background-component-color-dark)' : 'var(--background-component-color-light)' }};border-color:#918989;color:{{ $darkMode ? 'var(--text-white-100)' : 'var(--text-dark-100)' }}"
-                            placeholder="&nbsp;" value="{{ old('phone_number') ? old('phone_number') : $auth->phone }}">
+                            placeholder="&nbsp;" value="{{ old('phone_number') ? old('phone_number') : $auth->Phone }}">
                         <label for="phone_number" class="position-absolute px-2 py-1 input_label"
                             style="left:18px;background-color:{{ $darkMode ? 'var(--background-component-color-dark)' : 'var(--background-component-color-light)' }};color:{{ $darkMode ? 'var(--text-white-75)' : 'var(--text-dark-75)' }}">Số
                             điện thoại</label>
@@ -36,7 +36,7 @@
                         <input name="full_name" type="text" id="full_name"
                             class="form-control shadow-none  fs-6 fw-normal p-3 form_input"
                             style="background-color:{{ $darkMode ? 'var(--background-component-color-dark)' : 'var(--background-component-color-light)' }};border-color:#918989;color:{{ $darkMode ? 'var(--text-white-100)' : 'var(--text-dark-100)' }}"
-                            placeholder="&nbsp;" value="{{ old('full_name') ? old('full_name') : $auth->full_name }}">
+                            placeholder="&nbsp;" value="{{ old('full_name') ? old('full_name') : $auth->FullName }}">
                         <label for="full_name" class="position-absolute text-white text-opacity-75 px-2 py-1 input_label"
                             style="left:18px;background-color:{{ $darkMode ? 'var(--background-component-color-dark)' : 'var(--background-component-color-light)' }};color:{{ $darkMode ? 'var(--text-white-75)' : 'var(--text-dark-75)' }}">Họ
                             và tên</label>
@@ -51,7 +51,7 @@
                         <input name="address" type="text" id="address"
                             class="form-control shadow-none fs-6 fw-normal p-3 form_input"
                             style="background-color:{{ $darkMode ? 'var(--background-component-color-dark)' : 'var(--background-component-color-light)' }};border-color:#918989;color:{{ $darkMode ? 'var(--text-white-100)' : 'var(--text-dark-100)' }}"
-                            placeholder="&nbsp;" value="{{ old('address') ? old('address') : $auth->address }}">
+                            placeholder="&nbsp;" value="{{ old('address') ? old('address') : $auth->Address }}">
                         <label for="address" class="position-absolute px-2 py-1 input_label"
                             style="left:18px;background-color:{{ $darkMode ? 'var(--background-component-color-dark)' : 'var(--background-component-color-light)' }};color:{{ $darkMode ? 'var(--text-white-75)' : 'var(--text-dark-75)' }}">Địa
                             chỉ</label>

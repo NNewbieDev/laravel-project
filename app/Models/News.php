@@ -10,17 +10,24 @@ use Illuminate\Support\Facades\DB;
 class News extends Model
 {
     use HasFactory;
+    protected $table = "news";
 
     public function getAllNews()
     {
-        // $news = DB::select("SELECT * FROM news");
-        $news = DB::table("news")
+        return DB::table($this->table)
+            ->join("page", 'page.Id', $this->table . '.PageId')
+            ->select($this->table . '.*', "page.PageName")
             ->get();
-        return $news;
     }
 
     public function addNews($data)
     {
-        DB::insert("INSERT INTO news (title, content, user_id, post_at) VALUES (?,?,?,?)", [$data['new_title'], $data['new_content'], $data['new_author'], $data['post_at']]);
+        DB::table($this->table)->insert([
+            'Title' => $data['news_title'],
+            'Content' => $data['news_content'],
+            'PageId' => $data['page_id'],
+            'UserId' => $data['news_author'],
+            'PostAt' => $data['post_at']
+        ]);
     }
 }

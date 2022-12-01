@@ -21,26 +21,26 @@
                 @if (sizeof($newsList))
                     @foreach ($newsList as $key => $news)
                         <tr>
-                            <td class="align-middle py-2 ps-3 pe-5">
-                                <a href="#" class="fs-6 fw-bold m-0 text-decoration-none"
-                                    style="color:#C27324;padding-right:150px!important;">
-                                    {{ $news->title }}</a>
+                            <td class="align-middle py-2 ps-3" style="padding-right:200px!important;">
+                                <a href="#" class="fs-6 fw-bold m-0 text-decoration-none news_link"
+                                    style="color:#C27324">
+                                    {{ $news->Title }}</a>
                             </td>
                             <td class="align-middle ps-3">
-                                <p class="m-0">{{ $news->user_id }}</p>
+                                <p class="m-0">{{ $news->PageName }}</p>
                             </td>
                             <td class="align-middle ps-3">
-                                <p class="m-0">{{ date('H:i:s d/m/Y', strtotime($news->post_at)) }}</p>
+                                <p class="m-0">{{ date('H:i:s d/m/Y', strtotime($news->PostAt)) }}</p>
                             </td>
-                            <td class="align-middle "><a href="#"><i
+                            <td class="align-middle"><a href="#"><i
                                         class="fa-solid fa-arrow-right text-white text-opacity-75 text-end arow_icon p-3 rounded-circle"
                                         title="Go to news"></i></a>
                             </td>
                         </tr>
                     @endforeach
                 @else
-                    <tr>
-                        <td colspan="4">Chưa có bài đăng nào</td>
+                    <tr class="ps-3">
+                        <td colspan="4" class="ps-3">Chưa có bài đăng nào</td>
                     </tr>
                 @endif
             </tbody>

@@ -15,28 +15,20 @@
             style="background-color: {{ $darkMode ? 'var(--background-component-color-dark)' : 'var(--background-component-color-light)' }}">
             <h4 class="fs-5 fw-normal" style="color:{{ $darkMode ? 'var(--text-white-75)' : 'var(--text-dark-75)' }}">Tạo bài
                 viết mới với tên tài khoản:
-                <b style="color:#c27324;">{{ $auth->user_name }}</b>
+                <b style="color:#c27324;">{{ $auth->UserName }}</b>
             </h4>
             <form action="{{ route('author.post-news') }}" method='POST' enctype="multipart/form-data" class="mt-4 mb-5">
                 @csrf
                 <div class="position-relative mt-3">
-                    <select name="category_news" id="category"
-                        class="form_input form-select shadow-none fs-6 fw-normal p-3"
+                    <select name="page_id" id="page" class="form_input form-select shadow-none fs-6 fw-normal p-3"
                         style="background-color:{{ $darkMode ? 'var(--background-component-color-dark)' : 'var(--background-component-color-light)' }};border-color:#918989;color:{{ $darkMode ? 'var(--text-white-75)' : 'var(--text-dark-75)' }}">
                         <option value>Chọn thể loại bài viết</option>
-                        <option class="fs-5 select_option"
-                            style="color:{{ $darkMode ? 'var(--text-white-75)' : 'var(--text-dark-75)' }}" value="1">
-                            Fashion</option>
-                        <option class="fs-5 select_option"
-                            style="color:{{ $darkMode ? 'var(--text-white-75)' : 'var(--text-dark-75)' }}" value="2">
-                            Technology</option>
-                        <option class="fs-5 select_option"
-                            style="color:{{ $darkMode ? 'var(--text-white-75)' : 'var(--text-dark-75)' }}" value="3">
-                            Cars</option>
-                        <option class="fs-5 select_option"
-                            style="color:{{ $darkMode ? 'var(--text-white-75)' : 'var(--text-dark-75)' }}" value="4">
-                            Block chain
-                        </option>
+                        @foreach ($pages as $page)
+                            <option class="fs-5 select_option"
+                                style="color:{{ $darkMode ? 'var(--text-white-75)' : 'var(--text-dark-75)' }}"
+                                value="{{ $page->Id }}">
+                                {{ $page->PageName }}</option>
+                        @endforeach)
                     </select>
                     @error('category_news')
                         <p class="mt-1 mb-2 fs-6 fw-normal text-danger px-3">
@@ -44,10 +36,10 @@
                             {{ $message }}
                         </p>
                     @enderror
-                    <span class="position-absolute text-white text-opacity-75 px-2 py-1 input_label"
+                    {{-- <span class="position-absolute text-white text-opacity-75 px-2 py-1 input_label"
                         style="left:18px;background-color:{{ $darkMode ? 'var(--background-component-color-dark)' : 'var(--background-component-color-light)' }};color:{{ $darkMode ? 'var(--text-white-75)' : 'var(--text-dark-75)' }}">
                         Chọn thể loại
-                    </span>
+                    </span> --}}
                 </div>
                 <div class="position-relative mt-3">
                     <input name="title_news" type="text" id="title_news" value="{{ old('title_news') }}"
@@ -68,9 +60,8 @@
                 <div class="position-relative mt-3">
                     <textarea name="content_news" id="content_news"
                         class="form-control shadow-none fs-6 fw-normal p-3 form_input resize-none" aria-label="With textarea"
-                        value="{{ old('content_news') }}"
                         style="background-color:{{ $darkMode ? 'var(--background-component-color-dark)' : 'var(--background-component-color-light)' }};border-color:#918989;color:{{ $darkMode ? 'var(--text-white-75)' : 'var(--text-dark-75)' }}"
-                        placeholder="&nbsp;"></textarea>
+                        placeholder="&nbsp;">{{ old('content_news') }}</textarea>
                     <label for="content_news" class="position-absolute px-2 py-1 input_label"
                         style="left:18px;background-color:{{ $darkMode ? 'var(--background-component-color-dark)' : 'var(--background-component-color-light)' }};color:{{ $darkMode ? 'var(--text-white-75)' : 'var(--text-dark-75)' }}">Nội
                         dung bài viết</label>
@@ -84,8 +75,7 @@
                 <div class="position-relative mt-3">
                     <input type="file" accept="image/png, image/jpg, image/jpeg, image/gif" name="image_news"
                         class="form-control shadow-none fs-6 fw-normal p-4 form_input"
-                        style="background-color:{{ $darkMode ? 'var(--background-component-color-dark)' : 'var(--background-component-color-light)' }};color:{{ $darkMode ? 'var(--text-white-75)' : 'var(--text-dark-75)' }};border-color:#918989"
-                        value="{{ old('image_news') }}">
+                        style="background-color:{{ $darkMode ? 'var(--background-component-color-dark)' : 'var(--background-component-color-light)' }};color:{{ $darkMode ? 'var(--text-white-75)' : 'var(--text-dark-75)' }};border-color:#918989">
                     @error('image_news')
                         <p class="mt-1 mb-2 fs-6 fw-normal text-danger px-3">
                             <i class="fa-solid fa-circle-exclamation mr-2"></i>

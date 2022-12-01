@@ -22,7 +22,7 @@
                 <img src="http://localhost:8000/images/cat.jpg" alt="img" class="avatar-item rounded-circle"
                     style="width:40px;height:40px">
             </a>
-            <ul class="dropdown-menu p-2 round-3 nav_author_link_dropdown" style="background-color:#2B2B2C">
+            <ul class="dropdown-menu p-2 round-3 nav_author_link_dropdown mt-2" style="background-color:#2B2B2C">
                 <li><a class="dropdown-item text-white text-opacity-75 fw-light rounded-2"
                         href="{{ route('author.index') }}">Tài khoản</a>
                 </li>
