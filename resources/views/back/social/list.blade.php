@@ -28,17 +28,17 @@
                             @foreach ($Social as $k => $v)
                                 <tr>
                                     <td class="text_align_center">{{ $k + 1 }}</td>
-                                    <td>{{ $v->SocialName }}</td>
+                                    <td>{{ $v->social_name }}</td>
                                     <td>
-                                        @if ($v->Status == 1)
+                                        @if ($v->status == 1)
                                             Bật
                                         @else
                                             Tắt
                                         @endif
                                     </td>
-                                    <td>{{ $v->Sort }}</td>
+                                    <td>{{ $v->sort }}</td>
                                     <td class="text_align_center">
-                                        <a href="{{ url('admin/social/edit/' . $v->Id) }}" title="Chỉnh sửa"
+                                        <a href="{{ url('admin/social/edit/' . $v->id) }}" title="Chỉnh sửa"
                                             class="ad_button">
                                             <i class="fas fa-edit"> </i>
                                         </a>

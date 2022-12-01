@@ -33,9 +33,9 @@ Route::get('/', function () {
 
 //route login
 
-// Route::get('/login', [UserController::class, 'getLogin'])->name("login");
-// Route::post('/login', [UserController::class, 'postLogin']);
-// Route::get('/logout', [UserController::class, 'getLogout']);
+Route::get('/login', [UserController::class, 'getLogin'])->name("login");
+Route::post('/login', [UserController::class, 'postLogin']);
+Route::get('/logout', [UserController::class, 'getLogout']);
 
 //route admin
 

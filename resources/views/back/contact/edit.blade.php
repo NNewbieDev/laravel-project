@@ -29,11 +29,11 @@
                     <div class="form-group">
                         <select class="form-control" name="IsViews">
 
-                            <option value="1" @if ($Contact->IsViews == 1) selected="" @endif>
+                            <option value="1" @if ($Contact->is_view == 1) selected="" @endif>
                                 Trạng thái: Đã xem
                             </option>
 
-                            <option value="0" @if ($Contact->IsViews == 0) selected="" @endif>
+                            <option value="0" @if ($Contact->is_view == 0) selected="" @endif>
                                 Trạng thái: Chưa xem
                             </option>
 
@@ -42,22 +42,22 @@
 
                     <div class="form-group">
                         <label for="exampleInputPassword1">Họ và tên</label>
-                        <input type="text" class="form-control" name="Name" value="{{ $Contact->ContactName }}"
+                        <input type="text" class="form-control" name="Name" value="{{ $Contact->contact_name }}"
                             disabled=''>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Tên email<span class="color_red">*</span></label>
-                        <input type="text" class="form-control" name="Email" value="{{ $Contact->Email }}"
+                        <input type="text" class="form-control" name="Email" value="{{ $Contact->email }}"
                             disabled=''>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Tiêu đề</label>
-                        <input type="text" class="form-control" name="Title" value="{{ $Contact->Title }}"
+                        <input type="text" class="form-control" name="Title" value="{{ $Contact->title }}"
                             disabled=''>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Lời nhắn<span class="color_red">*</span></label>
-                        <textarea name="Message" disabled='' class="form-control" row='7'>{{ $Contact->Message }} </textarea>
+                        <textarea name="Message" disabled='' class="form-control" row='7'>{{ $Contact->message }} </textarea>
                     </div>
                 </div>
                 <!-- /.card-body -->

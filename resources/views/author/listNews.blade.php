@@ -24,13 +24,13 @@
                             <td class="align-middle py-2 ps-3" style="padding-right:200px!important;">
                                 <a href="#" class="fs-6 fw-bold m-0 text-decoration-none news_link"
                                     style="color:#C27324">
-                                    {{ $news->Title }}</a>
+                                    {{ $news->title }}</a>
                             </td>
                             <td class="align-middle ps-3">
-                                <p class="m-0">{{ $news->PageName }}</p>
+                                <p class="m-0">{{ $news->page_name }}</p>
                             </td>
                             <td class="align-middle ps-3">
-                                <p class="m-0">{{ date('H:i:s d/m/Y', strtotime($news->PostAt)) }}</p>
+                                <p class="m-0">{{ date('H:i:s d/m/Y', strtotime($news->post_at)) }}</p>
                             </td>
                             <td class="align-middle"><a href="#"><i
                                         class="fa-solid fa-arrow-right text-white text-opacity-75 text-end arow_icon p-3 rounded-circle"

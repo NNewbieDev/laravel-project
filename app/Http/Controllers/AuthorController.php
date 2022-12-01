@@ -145,7 +145,7 @@ class AuthorController extends Controller
     public function changeAvatar()
     {
         $title = "Thay đổi Avatar";
-        $avatar = $this->author->getAuthor($this->authorID)->Avatar;
+        $avatar = $this->author->getAuthor($this->authorID)->avatar;
         // $avatar = $auth->Avatar;
         $darkMode = $this->darkMode;
         return view("author.managementAccount.avatar", compact("title", "avatar", "darkMode"));

@@ -259,11 +259,11 @@ class BackController extends Controller
         }
 
         $Page = Page::find($id);
-        $Page->Name = $request->Name;
-        $Page->Status = $request->Status;
+        $Page->page_name = $request->name;
+        $Page->status = $request->status;
 
-        $Page->Font = $request->Font;
-        $Page->Sort = $request->Sort;
+        $Page->font = $request->font;
+        $Page->sort = $request->sort;
         $Flag = $Page->save();
         if ($Flag == true) {
             return redirect('admin/page/edit/' . $id)->with(['flash_level' => 'success', 'flash_message' =>

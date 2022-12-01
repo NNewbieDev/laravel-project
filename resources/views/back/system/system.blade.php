@@ -20,35 +20,35 @@
 
                     <div class="form-group">
                         <label for="exampleInputPassword1">Tên công ty <span class="color_red">*</span></label>
-                        <input type="text" class="form-control" name="name" value="{{ $name->Description }}">
+                        <input type="text" class="form-control" name="name" value="{{ $name->description }}">
                     </div>
 
                     <div class="form-group py-2">
                         <label for="exampleInputPassword1">Logo</label></br>
-                        <img class="w-100" src="{{ url('/images/logo/' . $logo->Description) }}" alt="logo" />
+                        <img class="w-100" src="{{ url('/images/logo/' . $logo->description) }}" alt="logo" />
 
                         <input type="file" class="form-control my-3" name="logo">
                     </div>
 
                     <!-- <div class="form-group">
-                                                                       
-                                                                      </div> -->
+                                                                               
+                                                                              </div> -->
 
                     <div class="form-group">
                         <label for="exampleInputPassword1">Email <span class="color_red">*</span></label>
-                        <input type="email" class="form-control" name="email" value="{{ $email->Description }}">
+                        <input type="email" class="form-control" name="email" value="{{ $email->description }}">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Số điện thoại <span class="color_red">*</span></label>
-                        <input type="text" class="form-control" name="phone" value="{{ $phone->Description }}">
+                        <input type="text" class="form-control" name="phone" value="{{ $phone->description }}">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Địa chỉ</label>
-                        <input type="text" class="form-control" name="address" value="{{ $address->Description }}">
+                        <input type="text" class="form-control" name="address" value="{{ $address->description }}">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">No copyright<span class="color_red">*</span></label>
-                        <input type="text" class="form-control" name="copyright" value="{{ $copyright->Description }}">
+                        <input type="text" class="form-control" name="copyright" value="{{ $copyright->description }}">
                     </div>
                 </div>
                 <!-- /.card-body -->

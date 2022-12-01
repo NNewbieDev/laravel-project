@@ -28,22 +28,22 @@
                             @foreach ($Contact as $k => $v)
                                 <tr>
                                     <td class="text_align_center">{{ $k + 1 }}</td>
-                                    <td>{{ $v->ContactName }}</td>
-                                    <td>{{ $v->Email }}</td>
+                                    <td>{{ $v->contact_nae }}</td>
+                                    <td>{{ $v->email }}</td>
                                     <td>
-                                        @if ($v->IsViews == 1)
+                                        @if ($v->isview == 1)
                                             <span class="color-isview">Đã xem</span>
                                         @else
                                             <span class="color-isview1">Chưa xem</span>
                                         @endif
                                     </td>
                                     <td class="text_align_center">
-                                        <a href="{{ url('admin/contact/edit/' . $v->Id) }}" title="Xem"
+                                        <a href="{{ url('admin/contact/edit/' . $v->id) }}" title="Xem"
                                             class="
               ad_button">
                                             <i class="fas fa-eye"></i>
                                         </a>
-                                        <a href="{{ url('admin/contact/delete/' . $v->Id) }}" title="Xóa"
+                                        <a href="{{ url('admin/contact/delete/' . $v->id) }}" title="Xóa"
                                             class="
               ad_button ad_button_delete">
                                             <i class="fas fa-trash-alt"> </i>
