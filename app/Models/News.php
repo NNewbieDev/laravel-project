@@ -15,19 +15,19 @@ class News extends Model
     public function getAllNews()
     {
         return DB::table($this->table)
-            ->join("page", 'page.Id', $this->table . '.PageId')
-            ->select($this->table . '.*', "page.PageName")
+            ->join("page", 'page.id', $this->table . '.page_id')
+            ->select($this->table . '.*', "page.page_name")
             ->get();
     }
 
     public function addNews($data)
     {
         DB::table($this->table)->insert([
-            'Title' => $data['news_title'],
-            'Content' => $data['news_content'],
-            'PageId' => $data['page_id'],
-            'UserId' => $data['news_author'],
-            'PostAt' => $data['post_at']
+            'title' => $data['news_title'],
+            'content' => $data['news_content'],
+            'page_id' => $data['page_id'],
+            'user_id' => $data['news_author'],
+            'post_at' => $data['post_at']
         ]);
     }
 }

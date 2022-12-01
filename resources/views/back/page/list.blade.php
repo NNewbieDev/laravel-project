@@ -28,17 +28,18 @@
                             @foreach ($Page as $k => $v)
                                 <tr>
                                     <td class="text_align_center">{{ $k + 1 }}</td>
-                                    <td>{{ $v->PageName }}</td>
+                                    <td>{{ $v->page_name }}</td>
                                     <td>
-                                        @if ($v->Status == 1)
+                                        @if ($v->status == 1)
                                             Bật
                                         @else
                                             Tắt
                                         @endif
                                     </td>
-                                    <td>{{ $v->Sort }}</td>
+                                    <td>{{ $v->sort }}</td>
                                     <td class="text_align_center">
-                                        <a href="{{ url('admin/page/edit/' . $v->Id) }}" title="Chỉnh sửa" class="ad_button">
+                                        <a href="{{ url('admin/page/edit/' . $v->id) }}" title="Chỉnh sửa"
+                                            class="ad_button">
                                             <i class="fas fa-edit"> </i>
                                         </a>
                                     </td>
