@@ -69,7 +69,7 @@
         <div class="nav">
             <ul class="nav-bar">
                 @foreach ($category as $item)
-                    <li class="nav-bar-item"><a href="{{ route('index') }}"
+                    <li class="nav-bar-item"><a href="{{ url('/' . $item->CategoryID) }}"
                             id="{{ $item->CategoryID }}">{{ $item->CategoryName }}</a></li>
                 @endforeach
             </ul>

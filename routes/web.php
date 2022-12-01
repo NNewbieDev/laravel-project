@@ -2,16 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BackController;
@@ -41,7 +32,7 @@ Route::prefix('author')->name('author.')->group(function () {
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/logout', [App\Http\Controllers\RegisterAuthorController::class, 'logout'])->name('cusLogout');
-Route::get('/', [App\Http\Controllers\HandleData::class, 'getData'])->name('index');
+Route::get('/{id?}', [App\Http\Controllers\HandleData::class, 'getData'])->name('index');
 Route::post('/', [App\Http\Controllers\HandleData::class, 'search']);
 
 Route::prefix('/register-author')->group(function () {
@@ -65,6 +56,7 @@ Route::prefix('/news')->group(function () {
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 
     Route::get('/home', [BackController::class, 'home']);
+
     //staff
     Route::group(['prefix' => 'staff'], function () {
         Route::get('profile', [BackController::class, 'staff_profile']);
@@ -86,6 +78,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         Route::get('list',  [BackController::class, 'page_list']);
         Route::get('edit/{id}', [BackController::class, 'page_edit']);
         Route::post('edit/{id}',  [BackController::class, 'page_edit_post']);
+    });
+
+    //post need check
+    Route::group(['prefix' => 'post-process'], function () {
+        Route::get('list',  [BackController::class, 'post_process_list']);
+        Route::get('accept/{id}', [BackController::class, 'post_process_accept']);
+        Route::get('refuse/{id}', [BackController::class, 'post_process_refuse']);
+        // Route::post('edit/{id}',  [BackController::class, 'page_edit_post']);
     });
 
     //Social Network

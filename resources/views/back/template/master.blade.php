@@ -170,7 +170,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="pages/layout/top-nav.html" class="nav-link">
+                                    <a href="{{ url('admin/post-process/list') }}" class="nav-link">
                                         ★ Danh mục bài duyệt
                                     </a>
                                 </li>

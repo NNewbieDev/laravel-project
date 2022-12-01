@@ -9,9 +9,14 @@ use Illuminate\Support\Facades\DB;
 
 class HandleData extends Controller
 {
-    public function getData($id)
+    public function getData($id = null)
     {
-        $result = Article::where('id', $id)->orderBy("created_at", "desc")->paginate(10);
+        $result = null;
+        if ($id == null) {
+            $result = Article::orderBy("created_at", "desc")->paginate(10);
+        } else {
+            $result = Article::where('CategoryID', $id)->orderBy("created_at", "desc")->paginate(10);
+        }
         $category = Category::all();
         return view('welcome', compact('result', 'category'));
     }
@@ -35,8 +40,4 @@ class HandleData extends Controller
         $category = Category::all();
         return view('welcome', compact('result', 'category'));
     }
-    // public function navigate(Category $category, Request $request)
-    // {
-    //     dd($request->CategoryID);
-    // }
 }

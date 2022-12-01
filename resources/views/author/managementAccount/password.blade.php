@@ -15,7 +15,7 @@
                     style="color:{{ $darkMode ? 'var(--text-white-50)' : 'var(--text-dark-50)' }}">Bạn đang thay đổi mật khẩu
                     cho
                     tài
-                    khoản: <b class="fw-bold" style="color:var(--primary-color);">{{ $auth->UserName }}</b></p>
+                    khoản: <b class="fw-bold" style="color:var(--primary-color);">{{ $auth->user_name }}</b></p>
             </div>
             <div class="py-3 px-4 rounded-4 text-start h-100 mt-3 shadow option"
                 style="background-color: {{ $darkMode ? 'var(--background-component-color-dark)' : 'var(--background-component-color-light)' }}">

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\News;
 use App\Models\Authors;
 use App\Models\Page;
+use App\Models\PostProcess;
 use File;
 
 
@@ -13,12 +14,14 @@ class AuthorController extends Controller
 {
     private $news;
     private $author;
+    private $postProcess;
     private $authorID = 4;
     private $darkMode = false;
     public function __construct()
     {
         $this->news = new News();
         $this->author = new Authors();
+        $this->postProcess = new PostProcess();
         @session_start();
     }
 
@@ -69,6 +72,7 @@ class AuthorController extends Controller
             'path_image' => $storedPath
         ];
         $this->news->addNews($data);
+        $this->postProcess->addPost($data);
         return redirect()->route('author.index');
     }
 
@@ -103,7 +107,6 @@ class AuthorController extends Controller
             "confirmation_password.required" => "Hãy nhập lại mật khẩu mới.",
             "confirmation_password.min" => "Tối thiểu 8 kí tự"
         ]);
-        dd($request->confirmation_password);
         if ($this->author->checkPassword($this->authorID, md5($request->old_password))) {
             $this->author->updatePassword($this->authorID, md5($request->new_password));
         } else {
@@ -145,8 +148,7 @@ class AuthorController extends Controller
     public function changeAvatar()
     {
         $title = "Thay đổi Avatar";
-        $avatar = $this->author->getAuthor($this->authorID)->Avatar;
-        // $avatar = $auth->Avatar;
+        $avatar = $this->author->getAuthor($this->authorID)->avatar;
         $darkMode = $this->darkMode;
         return view("author.managementAccount.avatar", compact("title", "avatar", "darkMode"));
     }
