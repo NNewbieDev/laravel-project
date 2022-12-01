@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
@@ -31,7 +32,8 @@ class RegisterAuthorController extends Controller
                 }
             });
         }
-        return view('custom.register-author');
+        $category = Category::all();
+        return view('custom.register-author', compact('category'));
     }
 
     protected function validator(array $data)

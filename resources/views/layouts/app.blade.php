@@ -28,14 +28,21 @@
         <div class="header row g-0">
             <div class="header-left col-lg-6">
                 <div class="header-logo">
-                    <img src="/images/logo.png" alt="logo" class="logo">
+                    <a href="{{ route('index') }}">
+                        <img src="/images/logo.png" alt="logo" class="logo">
+                    </a>
                 </div>
             </div>
             <div class="header-right col-lg-6 align-self-center ">
                 <div class="header-right-block row g-0 align-items-center ">
                     <div class="header-search col-lg-6 justify-content-end ">
-                        <input type="text" placeholder="Tìm kiếm bài báo..." class="search-input">
-                        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                        <form method="POST" action="{{ route('index') }}" class="header-form d-flex">
+                            @csrf
+                            <input type="text" placeholder="Tìm kiếm bài báo..." class="search-input" name="search">
+                            <button type="submit" class="search-btn">
+                                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                            </button>
+                        </form>
                     </div>
                     <div class="header-account col-lg-6">
                         <div class="account-block">
@@ -62,7 +69,8 @@
         <div class="nav">
             <ul class="nav-bar">
                 @foreach ($category as $item)
-                    <li class="nav-bar-item"><a href="{{ route('index') }}">{{ $item->CategoryName }}</a></li>
+                    <li class="nav-bar-item"><a href="{{ route('index') }}"
+                            id="{{ $item->CategoryID }}">{{ $item->CategoryName }}</a></li>
                 @endforeach
             </ul>
         </div>
@@ -71,6 +79,60 @@
             @yield('content')
         </main>
 
+        <div class="footer ">
+            <div class="row g-0 d-flex justify-content-center ">
+                <div class="footer-category col-lg-8">
+                    <div class="row g-0">
+                        @foreach ($category as $item)
+                            <li class="nav-bar-item col-lg-3"><a
+                                    href="{{ route('index') }}">{{ $item->CategoryName }}</a>
+                            </li>
+                        @endforeach
+                    </div>
+                </div>
+                <div class="footer-contact col-lg-4">
+                    <div class="footer-channel">
+                        <div class="footer-phone row g-0">
+                            <div class="col-lg-6">
+                                <div>Liên hệ tòa soạn</div>
+                                <b>
+                                    <h3 class="phone-number text-bold">
+                                        09123456781
+                                    </h3>
+                                </b>
+                            </div>
+                        </div>
+                        <div class="footer-media row g-0">
+                            <div class="col-lg-1">
+                                <i class="fa-brands fa-facebook" style="color: #4E89AE"></i>
+                            </div>
+                            <div class="col-lg-1">
+                                <i class="fa-brands fa-youtube" style="color: #E64848"></i>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-0">
+                <div class="footer-member col-lg-8">
+                    <h5>Cộng tác viên</h5>
+                    <ul class="member-role row">
+                        <li class="member col-lg-4"> Trần Thị Giáng My</li>
+                        <li class="member col-lg-4"> Nguyễn Phạm Thanh Hoàng </li>
+                        <li class="member col-lg-4"> Nguyễn Thị Kim Ngân</li>
+                        <li class="member col-lg-4"> Bùi Văn Nin</li>
+                        <li class="member col-lg-4"> Phạm Đức Mạnh</li>
+                        <li class="member col-lg-4"> Liêu Hà Phương Huy</li>
+                    </ul>
+                </div>
+                <div class="footer-logo col-lg-4">
+                    <a href="{{ route('index') }}">
+                        <img src="/images/logo.png" alt="logo" class="logo">
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 

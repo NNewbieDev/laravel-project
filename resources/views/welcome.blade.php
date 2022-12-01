@@ -4,10 +4,13 @@
         <div class="content-block d-flex justify-content-center ">
             <div class="articles">
                 <div class="filter text-end">
-                    <select name="filter" id="filter">
-                        <option value="{{ route('latest') }}">Mới nhất</option>
-                        <option value="{{ route('oldest') }}">Cũ nhất</option>
-                    </select>
+                    <div class="filter-dropdown">
+                        <i class="fa-solid fa-filter filter-icon"></i>
+                        <div class="filter-block">
+                            <div class="filter-btn"><a href="{{ route('latest') }} ">Mới nhất</a></div>
+                            <div class="filter-btn"><a href="{{ route('oldest') }} ">Cũ nhất</a></div>
+                        </div>
+                    </div>
                 </div>
                 <div class="article-items ">
                     @foreach ($result as $item)
@@ -20,17 +23,28 @@
                                     {!! $item['description'] !!}
                                 </div>
                             </div>
-                            <div class="react-block d-flex">
-                                <div class="like">
-                                    <i class="fa-solid fa-thumbs-up"></i>
+                            @if (Auth::user())
+                                <div class="react-block d-flex">
+                                    <div class="like">
+                                        <i class="fa-solid fa-thumbs-up"></i>
+                                    </div>
+                                    <div class="comment">
+                                        <i class="fa-solid fa-comment"></i>
+                                    </div>
                                 </div>
-                                <div class="comment">
-                                    <i class="fa-solid fa-comment"></i>
-
+                            @else
+                                <div class="react-block d-flex">
+                                    <div class="not-like">
+                                        <i class="fa-solid fa-thumbs-up"></i>
+                                    </div>
+                                    <div class="not-comment">
+                                        <i class="fa-solid fa-comment"></i>
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
                         </div>
                     @endforeach
+                    <div class="paginate">{{ $result->links() }}</div>
                 </div>
             </div>
         </div>

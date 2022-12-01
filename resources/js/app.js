@@ -7,14 +7,19 @@ account.addEventListener('click', function (e) {
     dropdown.classList.toggle('active');
 })
 
-const selectNav = document.querySelector('#filter');
-selectNav.addEventListener('load', function (e) {
-    if (e.target.value === window.location.pathname) {
-        e.target = selece;
-    }
+const filter = document.querySelector('.filter-icon');
+const filterBlock = document.querySelector('.filter-block');
+filter.addEventListener('click', function (e) {
+    filterBlock.classList.toggle('active');
+    console.log("success");
 });
 
-selectNav.addEventListener('change', function (e) {
-    e.preventDefault();
-    window.location = e.target.value;
-});
+const likes = document.querySelectorAll('.like');
+for (const like of likes) {
+    like.addEventListener('click', function (e) {
+        like.classList.toggle('pick');
+
+    });
+};
+
+
