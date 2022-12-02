@@ -22,7 +22,7 @@
                 <h3 class="card-title">Thông tin trang</h3>
             </div>
             <!-- form start -->
-            <form role="form" action="{{ url('admin/contact/edit/' . $Contact->Id) }}" method="POST">
+            <form role="form" action="{{ url('admin/contact/edit/' . $Contact->id) }}" method="POST">
                 <div class="card-body">
                     {!! csrf_field() !!}
 

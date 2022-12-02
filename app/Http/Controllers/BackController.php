@@ -11,12 +11,15 @@ use App\Models\System;
 use App\Models\Page;
 use App\Models\Social;
 use App\Models\Contact;
+use App\Models\PostProcess;
 use Symfony\Component\HttpFoundation\File\File;
 
 class BackController extends Controller
 {
-    public function _construct()
+    private $postProcess;
+    public function __construct()
     {
+        $this->postProcess = new PostProcess();
         @session_start();
     }
 
@@ -216,19 +219,19 @@ class BackController extends Controller
             ->where('Code', 'copyright')
             ->update(['Description' => $request->copyright]);
 
-        if (!empty($request->file('logo'))) {
+        // if (!empty($request->file('logo'))) {
 
-            $logo = System::where('Status', 1)->where('Code', 'logo')->first();
-            $past = 'images/logo/' . $logo->Description;
-            if (File::exists($past)) {
-                File::delete($past);
-            }
-            //uơload images
-            $name = $request->file('logo')->getClientOriginalName();
-            $request->file('logo')->move('images/logo/', $name);
-            $logo->Description = $name;
-            $logo->save();
-        }
+        //     $logo = System::where('Status', 1)->where('Code', 'logo')->first();
+        //     $past = 'images/logo/' . $logo->Description;
+        //     if (File::exists($past)) {
+        //         File::delete($past);
+        //     }
+        //     //uơload images
+        //     $name = $request->file('logo')->getClientOriginalName();
+        //     $request->file('logo')->move('images/logo/', $name);
+        //     $logo->Description = $name;
+        //     $logo->save();
+        // }
         return redirect('admin/system')->with(['flash_level' => 'success', 'flash_message' =>
         'Cấu hình thành công']);
     }
@@ -275,6 +278,30 @@ class BackController extends Controller
     }
     //page--------------------------------------------------------
 
+    //post process check 
+
+    public function post_process_list()
+    {
+        $postProcessList = $this->postProcess->getAllPost();
+
+        return view('back.postProcess.list', compact('postProcessList'));
+    }
+
+    public function post_process_accept($id)
+    {
+        $postProcessList = $this->postProcess->getPost($id);
+
+        return redirect('admin/post-process/list')->with(['flash_level' => 'success', 'flash_message' =>
+        'Đã duyệt bài thành công']);
+    }
+
+    public function post_process_refuse($id)
+    {
+        $this->postProcess->deletePost($id);
+
+        return redirect('admin/post-process/list')->with(['flash_level' => 'success', 'flash_message' =>
+        'Bài đã không được xét duyệt']);
+    }
 
     //socical network---------------------------------------------
     public function social_list()
@@ -355,7 +382,6 @@ class BackController extends Controller
 
     public function contact_delete(Request $request, $id)
     {
-
         $Contact = Contact::find($id);
         $Flag = $Contact->delete();
 

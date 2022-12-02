@@ -28,10 +28,17 @@
                             @foreach ($Contact as $k => $v)
                                 <tr>
                                     <td class="text_align_center">{{ $k + 1 }}</td>
+<<<<<<< HEAD
                                     <td>{{ $v->contact_nae }}</td>
                                     <td>{{ $v->email }}</td>
                                     <td>
                                         @if ($v->isview == 1)
+=======
+                                    <td>{{ $v->contact_name }}</td>
+                                    <td>{{ $v->email }}</td>
+                                    <td>
+                                        @if ($v->is_view == 1)
+>>>>>>> 6fd057da94127d7c4441bf3e4198a414f39b620f
                                             <span class="color-isview">Đã xem</span>
                                         @else
                                             <span class="color-isview1">Chưa xem</span>
@@ -39,6 +46,7 @@
                                     </td>
                                     <td class="text_align_center">
                                         <a href="{{ url('admin/contact/edit/' . $v->id) }}" title="Xem"
+<<<<<<< HEAD
                                             class="
               ad_button">
                                             <i class="fas fa-eye"></i>
@@ -46,6 +54,13 @@
                                         <a href="{{ url('admin/contact/delete/' . $v->id) }}" title="Xóa"
                                             class="
               ad_button ad_button_delete">
+=======
+                                            class="ad_button">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a href="{{ url('admin/contact/delete/' . $v->id) }}" title="Xóa"
+                                            class="ad_button ad_button_delete">
+>>>>>>> 6fd057da94127d7c4441bf3e4198a414f39b620f
                                             <i class="fas fa-trash-alt"> </i>
                                         </a>
                                     </td>

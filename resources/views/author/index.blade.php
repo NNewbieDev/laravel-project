@@ -12,7 +12,11 @@
             <img src="{{ asset('images') . '/' . $auth->avatar }}" alt="img" class="avatar rounded-circle"
                 style="width:200px;height:200px">
             <h3 class="name mt-1 fs-2" style="color:{{ $darkMode ? 'var(--text-white-100)' : 'var(--text-dark-100)' }}">
+<<<<<<< HEAD
                 {{ Auth::user()->username }}</h3>
+=======
+                {{ $auth->user_name }}</h3>
+>>>>>>> 6fd057da94127d7c4441bf3e4198a414f39b620f
         </div>
         <div class="row gx-3 gy-3 mt-4 p-xxl-3 p-xl-0 p-lg-3 p-md-4 p-sm-3">
             <div class="col-xl-3 col-lg-4 col-sm-12 col-md-6">

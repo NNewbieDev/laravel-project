@@ -2,16 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
+
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BackController;
@@ -64,6 +55,7 @@ Route::prefix('/news')->group(function () {
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 
     Route::get('/home', [BackController::class, 'home']);
+
     //staff
     Route::group(['prefix' => 'staff'], function () {
         Route::get('profile', [BackController::class, 'staff_profile']);
@@ -85,6 +77,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         Route::get('list',  [BackController::class, 'page_list']);
         Route::get('edit/{id}', [BackController::class, 'page_edit']);
         Route::post('edit/{id}',  [BackController::class, 'page_edit_post']);
+    });
+
+    //post need check
+    Route::group(['prefix' => 'post-process'], function () {
+        Route::get('list',  [BackController::class, 'post_process_list']);
+        Route::get('accept/{id}', [BackController::class, 'post_process_accept']);
+        Route::get('refuse/{id}', [BackController::class, 'post_process_refuse']);
+        // Route::post('edit/{id}',  [BackController::class, 'page_edit_post']);
     });
 
     //Social Network
