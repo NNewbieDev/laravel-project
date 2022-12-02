@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string("title");
             $table->longText("description");
-            $table->integer("CategoryID");
+            $table->foreignId("CategoryID")->constrained("categories", "CategoryID");
             $table->string("link");
             $table->timestamps();
         });

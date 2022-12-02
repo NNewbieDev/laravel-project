@@ -56,9 +56,12 @@
                                         <div><a href="{{ route('register') }}" class="register">Đăng ký</a></div>
                                     @endif
                                 @else
-                                    <div><a href="{{ route('cusLogout') }}" class="logout">
-                                            Đăng xuất
-                                        </a></div>
+                                    <div>
+                                        <a href="{{ route('author.index') }}" class="manage">Quản lý tài khoản</a>
+                                    </div>
+                                    <div>
+                                        <a href="{{ route('cusLogout') }}" class="logout">Đăng xuất</a>
+                                    </div>
                                 @endguest
                             </div>
                         </div>
@@ -69,8 +72,11 @@
         <div class="nav">
             <ul class="nav-bar">
                 @foreach ($category as $item)
-                    <li class="nav-bar-item"><a href="{{ route('index') }}"
-                            id="{{ $item->CategoryID }}">{{ $item->CategoryName }}</a></li>
+                    <li class="nav-bar-item">
+                        <a href="{{ route('nav', ['id' => $item->CategoryID, 'name' => $item->CategoryName]) }}">
+                            {{ $item->CategoryName }}
+                        </a>
+                    </li>
                 @endforeach
             </ul>
         </div>

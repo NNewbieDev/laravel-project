@@ -6,7 +6,8 @@
                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
             </a>
             <ul class="dropdown-menu p-2 rounded-3 nav_author_link_dropdown mt-2" style="background-color:#2B2B2C">
-                <li><a class="dropdown-item text-white text-opacity-75 fw-light rounded-2" href="#">Trang
+                <li><a class="dropdown-item text-white text-opacity-75 fw-light rounded-2"
+                        href="{{ route('index') }}">Trang
                         chủ</a></li>
                 <li>
                     <hr class="dropdown-divider bg-light bg-opacity-25">

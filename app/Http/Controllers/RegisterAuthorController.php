@@ -36,13 +36,6 @@ class RegisterAuthorController extends Controller
         return view('custom.register-author', compact('category'));
     }
 
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'username' => ['required', 'string', 'max:255'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
-    }
     /**
      * Show the form for creating a new resource.
      *
@@ -50,6 +43,13 @@ class RegisterAuthorController extends Controller
      */
     public function create(Request $data)
     {
+        $data->validate(
+            [
+                'username' => ['required', 'string', 'max:255'],
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
+            ]
+        );
+
         User::create([
             'username' => $data['username'],
             'password' => Hash::make($data['password'])

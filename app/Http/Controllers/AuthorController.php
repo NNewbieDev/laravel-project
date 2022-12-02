@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\News;
 use App\Models\Authors;
 use App\Models\Page;
+use App\Models\Category;
 use File;
 
 
@@ -34,9 +35,10 @@ class AuthorController extends Controller
     {
         $title = "Tạo bài viết mới";
         $auth = $this->author->getAuthor($this->authorID);
-        $pages = Page::get();
+        // $pages = Page::get();
+        $category = Category::all();
         $darkMode = $this->darkMode;
-        return view("author.addNews", compact("title", "auth", "pages", "darkMode"));
+        return view("author.addNews", compact("title", "auth", "category", "darkMode"));
     }
 
     public function postNews(Request $request)

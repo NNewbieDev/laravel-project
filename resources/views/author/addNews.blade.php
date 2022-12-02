@@ -15,7 +15,7 @@
             style="background-color: {{ $darkMode ? 'var(--background-component-color-dark)' : 'var(--background-component-color-light)' }}">
             <h4 class="fs-5 fw-normal" style="color:{{ $darkMode ? 'var(--text-white-75)' : 'var(--text-dark-75)' }}">Tạo bài
                 viết mới với tên tài khoản:
-                <b style="color:#c27324;">{{ $auth->user_name }}</b>
+                <b style="color:#c27324;">{{ Auth::user()->username }}</b>
             </h4>
             <form action="{{ route('author.post-news') }}" method='POST' enctype="multipart/form-data" class="mt-4 mb-5">
                 @csrf
@@ -23,11 +23,11 @@
                     <select name="page_id" id="page" class="form_input form-select shadow-none fs-6 fw-normal p-3"
                         style="background-color:{{ $darkMode ? 'var(--background-component-color-dark)' : 'var(--background-component-color-light)' }};border-color:#918989;color:{{ $darkMode ? 'var(--text-white-75)' : 'var(--text-dark-75)' }}">
                         <option value>Chọn thể loại bài viết</option>
-                        @foreach ($pages as $page)
+                        @foreach ($category as $page)
                             <option class="fs-5 select_option"
                                 style="color:{{ $darkMode ? 'var(--text-white-75)' : 'var(--text-dark-75)' }}"
-                                value="{{ $page->Id }}">
-                                {{ $page->PageName }}</option>
+                                value="{{ $page->CategoryID }}">
+                                {{ $page->CategoryName }}</option>
                         @endforeach)
                     </select>
                     @error('category_news')

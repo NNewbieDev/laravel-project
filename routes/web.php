@@ -18,30 +18,34 @@ use App\Http\Controllers\BackController;
 
 //route author
 
-Route::prefix('author')->name('author.')->group(function () {
-    //route generate
-    Route::get("/", [AuthorController::class, 'index'])->name('index');
-    Route::get("/add-news", [AuthorController::class, 'addNews'])->name('add-news');
-    Route::post("/post-news", [AuthorController::class, 'postNews'])->name('post-news');
-    Route::get("/list-news", [AuthorController::class, 'listNews'])->name('list-news');
+Route::group(['middleware' => 'auth'], function () {
+    Route::prefix('author')->name('author.')->group(function () {
+        //route generate
+        Route::get("/", [AuthorController::class, 'index'])->name('index');
+        Route::get("/add-news", [AuthorController::class, 'addNews'])->name('add-news');
+        Route::post("/post-news", [AuthorController::class, 'postNews'])->name('post-news');
+        Route::get("/list-news", [AuthorController::class, 'listNews'])->name('list-news');
 
-    //route management
-    Route::prefix('management')->name('management.')->group(function () {
-        Route::get("/password", [AuthorController::class, 'changePassword'])->name('management-password');
-        Route::post("/password", [AuthorController::class, 'changedPassword'])->name('changed-password');
-        Route::get("/information", [AuthorController::class, 'changeInformation'])->name('management-information');
-        Route::post("/information", [AuthorController::class, 'changedInformation'])->name('changed-information');
-        Route::get("/avatar", [AuthorController::class, 'changeAvatar'])->name('management-avatar');
-        Route::post("/avatar", [AuthorController::class, 'updateAvatar'])->name('update-avatar');
+        //route management
+        Route::prefix('management')->name('management.')->group(function () {
+            Route::get("/password", [AuthorController::class, 'changePassword'])->name('management-password');
+            Route::post("/password", [AuthorController::class, 'changedPassword'])->name('changed-password');
+            Route::get("/information", [AuthorController::class, 'changeInformation'])->name('management-information');
+            Route::post("/information", [AuthorController::class, 'changedInformation'])->name('changed-information');
+            Route::get("/avatar", [AuthorController::class, 'changeAvatar'])->name('management-avatar');
+            Route::post("/avatar", [AuthorController::class, 'updateAvatar'])->name('update-avatar');
+        });
     });
 });
 
-// Admin
+// User
 
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/logout', [App\Http\Controllers\RegisterAuthorController::class, 'logout'])->name('cusLogout');
 Route::get('/', [App\Http\Controllers\HandleData::class, 'getData'])->name('index');
+Route::get('/{id}', [App\Http\Controllers\HandleData::class, 'nav'])->name('nav');
+// Route::get('/', [App\Http\Controllers\HandleData::class, 'getData'])->name('index');
 Route::post('/', [App\Http\Controllers\HandleData::class, 'search']);
 
 Route::prefix('/register-author')->group(function () {
@@ -54,13 +58,8 @@ Route::prefix('/news')->group(function () {
     Route::get('/oldest', [App\Http\Controllers\HandleData::class, 'oldest'])->name('oldest');
 });
 
-//route login
 
-Route::get('/login', [UserController::class, 'getLogin'])->name("login");
-Route::post('/login', [UserController::class, 'postLogin']);
-Route::get('/logout', [UserController::class, 'getLogout']);
-
-//route admin
+//Admin
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 
