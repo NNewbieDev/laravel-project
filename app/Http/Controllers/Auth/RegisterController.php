@@ -83,5 +83,8 @@ class RegisterController extends Controller
             'username' => $data['username'],
             'password' => Hash::make($data['password']),
         ]);
+        // hoặc dùng $user = new User;
+        // $user->username = $data['username'];
+        // $user->save();
     }
 }

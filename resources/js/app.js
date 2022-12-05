@@ -11,14 +11,12 @@ const filter = document.querySelector('.filter-icon');
 const filterBlock = document.querySelector('.filter-block');
 filter.addEventListener('click', function (e) {
     filterBlock.classList.toggle('active');
-    console.log("success");
 });
 
 const likes = document.querySelectorAll('.like');
 for (const like of likes) {
     like.addEventListener('click', function (e) {
         like.classList.toggle('pick');
-
     });
 };
 
