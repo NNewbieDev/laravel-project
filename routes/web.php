@@ -45,6 +45,7 @@ Route::prefix('/register-author')->group(function () {
 });
 
 Route::prefix('/news')->group(function () {
+    Route::get('/item/{id}', [App\Http\Controllers\HandleData::class, 'news'])->name('news');
     Route::get('/latest', [App\Http\Controllers\HandleData::class, 'latest'])->name('latest');
     Route::get('/oldest', [App\Http\Controllers\HandleData::class, 'oldest'])->name('oldest');
 });

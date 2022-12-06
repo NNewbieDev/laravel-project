@@ -74,6 +74,9 @@ img.logo{
 
     &-title {
         font-weight: bold;
+        & a {
+            color: $main-clr;
+        }
     }
 }
 
@@ -84,6 +87,8 @@ img.logo{
 
 .react-block {
     font-size: 24px;
+    color: $main-clr;
+
 }
 
 .react-block > div {
@@ -465,6 +470,31 @@ option {
     } 
 
 }
+
+.content {
+    width: 80%;
+    &-title {
+        color: $main-clr;
+    }
+
+    &-img {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 18px;
+    }
+
+    &-img img {
+        height: 250px;
+        width: 400px;
+    }
+
+    &-text {
+        font-size: 18px;
+ 
+    }
+}
+
 
 // Other
 .active {

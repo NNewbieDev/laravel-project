@@ -38,8 +38,12 @@ class CategorySeeder extends Seeder
         ];
         foreach ($arrRSS as $items => $item) {
             $category = new Category;
-            $category->CategoryName = $item['name'];
-            $category->link = $item['link'];
+            if (Category::where('CategoryName', "LIKE", $item['name'])->exists()) {
+                continue;
+            } else {
+                $category->CategoryName = $item['name'];
+                $category->link = $item['link'];
+            }
             $category->save();
         }
     }
