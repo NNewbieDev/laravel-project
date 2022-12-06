@@ -3,25 +3,26 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\News;
-use App\Models\Authors;
 use App\Models\Page;
 use App\Models\PostProcess;
 use App\Models\Category;
-use File;
+use App\Models\User;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
+use Brian2694\Toastr\Facades\Toasrt;
+// use File;
 
 
 class AuthorController extends Controller
 {
     private $news;
-    private $author;
     private $postProcess;
-    private $authorID = 4;
     private $darkMode = false;
     public function __construct()
     {
         $this->news = new News();
-        $this->author = new Authors();
         $this->postProcess = new PostProcess();
         @session_start();
     }
@@ -29,24 +30,20 @@ class AuthorController extends Controller
     public function index()
     {
         $title = "Tài khoản";
-        $auth = $this->author->getAuthor($this->authorID);
         $darkMode   = $this->darkMode;
-        return view("author.index", compact("title", "auth", "darkMode"));
+        return view("author.index", compact("title", "darkMode"));
     }
 
     public function addNews()
     {
         $title = "Tạo bài viết mới";
-        $auth = $this->author->getAuthor($this->authorID);
-        // $pages = Page::get();
         $category = Category::all();
         $darkMode = $this->darkMode;
-        return view("author.addNews", compact("title", "auth", "category", "darkMode"));
+        return view("author.addNews", compact("title", "category", "darkMode"));
     }
 
     public function postNews(Request $request)
     {
-        // dd($request-);
         $request->validate([
             'page_id' => "required",
             'title_news' => "required|max:255",
@@ -62,8 +59,6 @@ class AuthorController extends Controller
         ]);
         $image = $request->file('image_news');
         $storedPath = $image->move('images', $image->getClientOriginalName());
-        // $auth = $this->author->getAuthor($this->authorID);
-        // $auth = $auth->id;
         $authId = $this->authorID;
         $data = [
             'news_title' => $request->title_news,
@@ -89,40 +84,39 @@ class AuthorController extends Controller
     public function changePassword()
     {
         $title = "Quản lí mật khẩu";
-        $auth = $this->author->getAuthor($this->authorID);
         $darkMode = $this->darkMode;
-        return view("author.managementAccount.password", compact("title", "auth", "darkMode"));
+        return view("author.managementAccount.password", compact("title", "darkMode"));
     }
 
     public function changedPassword(Request $request)
     {
         $request->validate([
             'old_password' => "required|min:8",
-            'new_password' => "required|min:8|same:confirmation_password",
-            'confirmation_password' => "required|min:8"
+            'new_password' => "required|min:8|confirmed",
+            'new_password_confirmation' => "required|min:8"
         ], [
             "old_password.required" => "Hãy nhập mật khẩu cũ.",
             "old_password.min" => "Tối thiểu 8 kí tự",
             "new_password.required" => "Hãy nhập mật khẩu mới.",
             "new_password.min" => "Tối thiểu 8 kí tự.",
-            "new_password.same" => "Mật khẩu không trùng khớp với mật khẩu xác nhận.",
-            "confirmation_password.required" => "Hãy nhập lại mật khẩu mới.",
-            "confirmation_password.min" => "Tối thiểu 8 kí tự"
+            "new_password.confirmed" => "Mật khẩu không trùng khớp với mật khẩu xác nhận.",
+            "new_password_confirmation.required" => "Hãy nhập lại mật khẩu mới.",
+            "new_password_confirmation.min" => "Tối thiểu 8 kí tự",
         ]);
-        if ($this->author->checkPassword($this->authorID, md5($request->old_password))) {
-            $this->author->updatePassword($this->authorID, md5($request->new_password));
-        } else {
-            dd("Password is not correct. Please try again");
+        if (!Hash::check($request->old_password, Auth::user()->password)) {
+            return back()->with("error", "Mật khẩu cũ không chính xác!");
         }
+        User::whereId(Auth::id())->update([
+            "password" => Hash::make($request->new_password)
+        ]);
         return redirect()->route('author.index');
     }
 
     public function changeInformation()
     {
         $title = "Quản lí hồ sơ";
-        $auth = $this->author->getAuthor($this->authorID);
         $darkMode = $this->darkMode;
-        return view("author.managementAccount.information", compact("title", "auth", "darkMode"));
+        return view("author.managementAccount.information", compact("title", "darkMode"));
     }
 
     public function changedInformation(Request $request)
@@ -143,16 +137,19 @@ class AuthorController extends Controller
             'full_name' => $request->full_name,
             'address' => $request->address
         ];
-        $this->author->updateInformation($this->authorID, $data);
+        User::whereId(Auth::id())->update([
+            'phone' => $request->phone_number,
+            'fullname' => $request->full_name,
+            'address' => $request->address
+        ]);
         return redirect()->route('author.index');
     }
 
     public function changeAvatar()
     {
         $title = "Thay đổi Avatar";
-        $avatar = $this->author->getAuthor($this->authorID)->avatar;
         $darkMode = $this->darkMode;
-        return view("author.managementAccount.avatar", compact("title", "avatar", "darkMode"));
+        return view("author.managementAccount.avatar", compact("title", "darkMode"));
     }
 
     public function updateAvatar(Request $request)
@@ -163,8 +160,17 @@ class AuthorController extends Controller
             "avatar.required" => "Hãy chọn ảnh cần thay đổi."
         ]);
         $image = $request->file('avatar');
+        $avatarOld = Auth::user()->avatar;
+        File::delete($avatarOld);
         $storedPath = $image->move('images', $image->getClientOriginalName());
-        $this->author->updateAvatar($this->authorID, $image->getClientOriginalName());
+        User::whereId(Auth::id())->update([
+            "avatar" => $image->getClientOriginalName()
+        ]);
+        // $Flag = $user->save();
+        // if ($Flag == true) {
+        //     Toastr::success('Xóa thông tin thành công', 'thành công');
+        //     return redirect()->route('author.index');
+        // }
         return redirect()->route('author.index');
     }
 }

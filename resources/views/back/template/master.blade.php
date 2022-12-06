@@ -35,6 +35,9 @@
     <link rel="stylesheet" href="{{ url('admin/plugins/daterangepicker/daterangepicker.css') }}">
     <!-- summernote -->
     <link rel="stylesheet" href="{{ url('admin/plugins/summernote/summernote-bs4.min.css') }}">
+
+    {{-- Notifications library --}}
+    <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -84,13 +87,19 @@
       </li> -->
 
                 <!-- Messages Dropdown Menu -->
-
+                <?php
+                $message = Session::get('message');
+                if ($message) {
+                    echo '<div class="alert alert-danger" role="alert">' . $message . '</div>';
+                    Session::put('message', null);
+                }
+                ?>
 
                 <!-- Notifications Dropdown Menu -->
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="fas fa-user fa-fw"></i>
-                        Xin chào: <b>{{ Auth::user()->fullname }}</b>
+                        Xin chào: <b>{{ Auth::user()->username }}</b>
                         <i class="fas fa-caret-down"></i>
 
                     </a>
@@ -304,6 +313,9 @@
     <script src="{{ url('admin/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ url('admin/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
 
+    {{-- Notification library --}}
+    <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+    {!! Toastr::message() !!}
 
     <!-- Page specific script -->
     <script>

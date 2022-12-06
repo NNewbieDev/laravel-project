@@ -5,14 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
-// use File;
+use File;
 use App\Models\UserLevel;
 use App\Models\System;
 use App\Models\Page;
 use App\Models\Social;
 use App\Models\Contact;
 use App\Models\PostProcess;
-use Symfony\Component\HttpFoundation\File\File;
+// use Symfony\Component\HttpFoundation\File\File;
+use Brian2694\Toastr\Facades\Toastr;
 
 class BackController extends Controller
 {

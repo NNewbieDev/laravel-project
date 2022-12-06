@@ -20,8 +20,8 @@
         <div class="btn-group">
             <a href="#" class="nav_author_link p-1 rounded-circle mx-2" role="button" data-bs-toggle="dropdown"
                 aria-expanded="false">
-                <img src="http://localhost:8000/images/cat.jpg" alt="img" class="avatar-item rounded-circle"
-                    style="width:40px;height:40px">
+                <img src="{{ asset('images') . '/' . (isset(Auth::user()->avatar) ? Auth::user()->avatar : 'no-avatar.jpg') }}"
+                    alt="img" class="avatar-item rounded-circle" style="width:40px;height:40px">
             </a>
             <ul class="dropdown-menu p-2 round-3 nav_author_link_dropdown mt-2" style="background-color:#2B2B2C">
                 <li><a class="dropdown-item text-white text-opacity-75 fw-light rounded-2"
