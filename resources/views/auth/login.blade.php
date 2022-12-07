@@ -61,10 +61,12 @@
 
                             <div class="row mb-0 justify-content-center">
                                 <div class="col-md-8 offset-md-4 ">
-                                    <button type="submit" class="btn btn-primary">
+                                    <button type="submit" class="btn-login">
                                         Đăng nhập
                                     </button>
-
+                                    <a href="{{ route('register') }}" class="btn-register">Tạo tài khoản
+                                        <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                                    </a>
                                 </div>
                             </div>
                         </form>

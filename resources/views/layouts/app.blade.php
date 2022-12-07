@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <link rel="shortcut icon" href="/images/logo-symbol.png" type="image/x-icon">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -84,6 +84,18 @@
         <main class="py-4">
             @yield('content')
         </main>
+        <div class="warning">
+            <div class="warning-block">
+                <div class="warning-close">
+                    <i class="fa-solid fa-xmark close-icon"></i>
+                </div>
+                <div class="warning-text">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <span> Vui lòng đăng nhập!
+                    </span>
+                </div>
+            </div>
+        </div>
 
         <div class="footer ">
             <div class="row g-0 d-flex justify-content-center ">
