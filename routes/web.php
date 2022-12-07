@@ -35,7 +35,7 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/logout', [App\Http\Controllers\RegisterAuthorController::class, 'logout'])->name('cusLogout');
 Route::get('/', [App\Http\Controllers\HandleData::class, 'getData'])->name('index');
-Route::get('/{id}', [App\Http\Controllers\HandleData::class, 'nav'])->name('nav');
+Route::get('/{id?}', [App\Http\Controllers\HandleData::class, 'nav'])->name('nav');
 // Route::get('/', [App\Http\Controllers\HandleData::class, 'getData'])->name('index');
 Route::post('/', [App\Http\Controllers\HandleData::class, 'search']);
 
@@ -45,7 +45,7 @@ Route::prefix('/register-author')->group(function () {
 });
 
 Route::prefix('/news')->group(function () {
-    Route::get('/item/{id}', [App\Http\Controllers\HandleData::class, 'news'])->name('news');
+    Route::get('/item/{id?}', [App\Http\Controllers\HandleData::class, 'news'])->name('news');
     Route::get('/latest', [App\Http\Controllers\HandleData::class, 'latest'])->name('latest');
     Route::get('/oldest', [App\Http\Controllers\HandleData::class, 'oldest'])->name('oldest');
 });

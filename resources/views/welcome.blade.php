@@ -12,11 +12,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="article-items ">
+                <div class="article-items">
                     @foreach ($result as $item)
                         <div class="item-list">
                             <h3 class="item-title">
-                                <a href="{{ route('news', ['id' => $item->ArticleID]) }}">{{ $item['title'] }}</a>
+                                {{-- {{ dd($item) }} --}}
+                                <a href="{{ route('news', ['id' => $item->id]) }}">{{ $item['title'] }}</a>
                             </h3>
                             {{-- {{ $item['content'] }} --}}
                             <div class="content-block">

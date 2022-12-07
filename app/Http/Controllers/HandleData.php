@@ -42,12 +42,13 @@ class HandleData extends Controller
                     $article->title = $list['title'];
                     $article->description = $list['description'];
                     $article->link = $list['link'];
-                    $article->CategoryID = $rss->CategoryID;
+                    $article->category_id = $rss->id;
                 }
                 $article->save();
             }
         }
         $result = Article::orderBy("created_at", "desc")->paginate(10);
+        // dd($result);
         $category = Category::all();
         return view('welcome', compact('result', 'category'));
     }
@@ -73,16 +74,16 @@ class HandleData extends Controller
     }
     public function nav($id)
     {
-        $result = Article::where('CategoryID', $id)->paginate(10);
+        dd($id);
+        $result = Article::where('category_id', $id)->paginate(10);
         $category = Category::all();
         return view('welcome', compact('result', 'category'));
     }
     public function news($id)
     {
-
         $dom = new \DOMDocument('1.0', 'UTF-8');
         // Lấy nội html từ link
-        $article = Article::where("ArticleID", $id)->first();
+        $article = Article::where("id", $id)->first();
         $contents = (file_get_contents($article->link));
         // fix lỗi html entity từ loadHTML
         $content = mb_convert_encoding($contents, 'HTML-ENTITIES', "UTF-8");
