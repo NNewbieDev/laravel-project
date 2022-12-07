@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Article;
 use App\Models\Category;
+use App\Models\Comment;
+use Illuminate\Support\Facades\Auth;
 use Vedmant\FeedReader\Facades\FeedReader;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 
 class HandleData extends Controller
 {
@@ -77,10 +80,11 @@ class HandleData extends Controller
         $category = Category::all();
         return view('welcome', compact('result', 'category'));
     }
-    public function news($id)
+    public function news(Request $request, $id)
     {
 
         $dom = new \DOMDocument('1.0', 'UTF-8');
+        // Session::flash('id', $id);
         // Lấy nội html từ link
         $article = Article::where("ArticleID", $id)->first();
         $contents = (file_get_contents($article->link));
@@ -89,6 +93,23 @@ class HandleData extends Controller
         @$dom->loadHTML($content);
         $news = $dom->getElementsByTagName("article")->item(0)->nodeValue;
         $category = Category::all();
-        return view('news', compact('news', 'category', 'article'));
+        $comment = Comment::join('articles', "articles.ArticleID", "=", "comments.ArticleID")->select("comments.*")->get();
+        $request->session()->put("key", $article->ArticleID);
+
+        return view('news', compact('news', 'category', 'article', 'comment'));
+    }
+
+    public function comment(Request $request)
+    {
+
+        $comment = new Comment;
+        $comment->UserID = Auth::user()->id;
+        // $article = Article::where("ArticleID", $id)->first();
+        $comment->ArticleID = $request->session()->get("key");
+        $comment->username = Auth::user()->username;
+        $comment->content = $request['comment'];
+        $comment->role = Auth::user()->role;
+        $comment->save();
+        return redirect()->back();
     }
 }

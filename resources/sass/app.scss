@@ -56,7 +56,9 @@ img.logo{
 
 .item {
     &-content {
+        position: relative;
         width: 500px !important;
+        z-index: -100;
     }
     &-content img {
         height: 200px;
@@ -205,6 +207,33 @@ option {
 }
 
 // END HEADER
+
+.btn {
+    &-login, &-register {
+        font-size: 14px;
+    }
+
+    &-login {
+        border: none;
+        background-color: $main-clr;
+        color: $light-txt;
+        padding: 8px 14px;
+        border-radius: 4px;
+    }
+
+    &-register {
+        margin-left: 15px;
+        padding: 8px 14px;
+        color: $main-clr;
+        border-radius: 4px;
+    }
+
+    &-register:hover { 
+        background-color: #e6e2e2;
+        color: $main-clr;
+
+    }
+}
 
 .filter{
     
@@ -475,13 +504,16 @@ option {
     width: 80%;
     &-title {
         color: $main-clr;
+        font-weight: 800;
     }
 
     &-img {
+        position: relative;
         display: flex;
         flex-direction: column;
-        align-items: center;
+        align-items: start;
         font-size: 18px;
+        z-index: -100;
     }
 
     &-img img {
@@ -495,8 +527,129 @@ option {
     }
 }
 
+.comment {
+
+    &-input {
+        display: none;
+        margin-bottom: 20px;
+    }
+
+    &-user {
+        width: 50%;
+        padding: 10px 5px;
+    }
+
+    &-user::placeholder {
+        color: $main-clr;
+        font-style: italic;
+    }
+
+    &-user:focus-visible {
+        border: 2px solid $main-clr;
+        outline: none;
+    }
+
+    &-block h2 {
+        color: #16BFF1;
+        font-weight: 900;
+    }
+
+    &-item {
+        width: 80%;
+        border: 4px double $main-clr;
+        margin-bottom: 10px;
+    }
+
+    &-username {
+        color: $main-clr;
+        margin: 5px 10px;
+        font-weight: 700;
+    }
+
+    &-content {
+        font-size: 18px;
+        margin: 5px 10px;
+        overflow-y: auto;
+    }
+
+    &-item .like {
+        margin-inline: 10px;
+        color: $main-clr;
+        cursor: pointer;
+        font-size: 18px;
+    } 
+}
+
+.warning {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0.5);
+    font-size: 24px;
+    transition: all .5s linear;
+    z-index: 9999;
+    &-block {
+        display: block;
+        background-color: $light-txt;
+        width: 400px;
+        height: 250px;
+        transition: all .5s linear;
+    }
+
+    &-close {
+        color: $light-txt;
+        background-color: $main-clr;
+        text-align: right;
+    }
+
+    .close-icon {
+        padding: 14px 16px;
+        &:hover {
+            cursor: pointer;
+            opacity: .75;
+        }
+    }
+
+    &-text {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: calc( 100% - 52px );
+        color: $main-clr;
+        & span {
+            margin-left: 5px;
+        }
+    }
+}
+
+.post {
+
+    &-icon {
+        font-size: 24px;
+        color: #16BFF1;
+        padding: 15px 16px;
+    }
+
+    &-btn {
+        border: none;
+        background: inherit;
+    }
+
+    &-btn:hover {
+        opacity: .5;
+    }
+}
 
 // Other
+.active-flex {
+    display: flex !important;
+}
+
 .active {
     display: block !important;
 }

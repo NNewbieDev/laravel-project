@@ -27,6 +27,50 @@
                         </div>
                     </div>
                 @endif
+                <div class="comment-input">
+                    <form action="{{ route('comment') }}" method="POST">
+                        @csrf
+                        <input type="text" class="comment-user" placeholder="Hãy để lại bình luận của bạn!"
+                            name="comment">
+                        <button type="submit" class="post-btn">
+                            <i class="fa-solid fa-paper-plane post-icon"></i>
+                        </button>
+                    </form>
+                </div>
+                <div class="comment-block">
+                    <h2>Bình luận</h2>
+                    @foreach ($comment as $item)
+                        @if ($item->ArticleID == Session::get('key'))
+                            <div class="comment-item">
+                                <div class="comment-username">
+                                    @if ($item->role == 0)
+                                        <i class="fa-solid fa-user"></i>
+                                    @else
+                                        @if ($item->role == 1)
+                                            <i class="fa-solid fa-user-pen"></i>
+                                        @else
+                                            <i class="fa-solid fa-user-headset"></i>
+                                        @endif
+                                    @endif
+                                    {{ $item->username }}
+                                </div>
+                                <div class="comment-content">
+                                    {{ $item->content }}
+                                </div>
+                                @if (Auth::user())
+                                    <div class="like">
+                                        <i class="fa-solid fa-thumbs-up"></i>
+                                    </div>
+                                @else
+                                    <div class="not-like">
+                                        <i class="fa-solid fa-thumbs-up"></i>
+                                    </div>
+                                @endif
+                            </div>
+                        @endif
+                    @endforeach
+
+                </div>
             </div>
         </div>
     </div>

@@ -40,12 +40,13 @@ Route::get('/{id}', [App\Http\Controllers\HandleData::class, 'nav'])->name('nav'
 Route::post('/', [App\Http\Controllers\HandleData::class, 'search']);
 
 Route::prefix('/register-author')->group(function () {
-    Route::get('/', [App\Http\Controllers\RegisterAuthorController::class, 'index'])->name('register-author');
-    Route::post('/', [App\Http\Controllers\RegisterAuthorController::class, 'create']);
+    Route::get('/register', [App\Http\Controllers\RegisterAuthorController::class, 'index'])->name('register-author');
+    Route::post('/register', [App\Http\Controllers\RegisterAuthorController::class, 'create']);
 });
 
 Route::prefix('/news')->group(function () {
-    Route::get('/item/{id}', [App\Http\Controllers\HandleData::class, 'news'])->name('news');
+    Route::get('/item/id={id}', [App\Http\Controllers\HandleData::class, 'news'])->name('news');
+    Route::post('/item', [App\Http\Controllers\HandleData::class, 'comment'])->name('comment');
     Route::get('/latest', [App\Http\Controllers\HandleData::class, 'latest'])->name('latest');
     Route::get('/oldest', [App\Http\Controllers\HandleData::class, 'oldest'])->name('oldest');
 });
