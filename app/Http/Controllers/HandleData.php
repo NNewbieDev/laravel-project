@@ -45,13 +45,12 @@ class HandleData extends Controller
                     $article->title = $list['title'];
                     $article->description = $list['description'];
                     $article->link = $list['link'];
-                    $article->category_id = $rss->id;
+                    $article->category_id = $rss->CategoryID;
                 }
                 $article->save();
             }
         }
         $result = Article::orderBy("created_at", "desc")->paginate(10);
-        // dd($result);
         $category = Category::all();
         return view('welcome', compact('result', 'category'));
     }

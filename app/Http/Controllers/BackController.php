@@ -5,14 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
-use File;
+// use File;
+use Illuminate\Support\Facades\File;
 use App\Models\UserLevel;
 use App\Models\System;
 use App\Models\Page;
 use App\Models\Social;
 use App\Models\Contact;
 use App\Models\PostProcess;
-// use Symfony\Component\HttpFoundation\File\File;
 use Brian2694\Toastr\Facades\Toastr;
 
 class BackController extends Controller
@@ -219,20 +219,19 @@ class BackController extends Controller
         System::where('status', 1)
             ->where('Code', 'copyright')
             ->update(['Description' => $request->copyright]);
+        if (!empty($request->file('logo'))) {
 
-        // if (!empty($request->file('logo'))) {
-
-        //     $logo = System::where('Status', 1)->where('Code', 'logo')->first();
-        //     $past = 'images/logo/' . $logo->Description;
-        //     if (File::exists($past)) {
-        //         File::delete($past);
-        //     }
-        //     //uơload images
-        //     $name = $request->file('logo')->getClientOriginalName();
-        //     $request->file('logo')->move('images/logo/', $name);
-        //     $logo->Description = $name;
-        //     $logo->save();
-        // }
+            $logo = System::where('Status', 1)->where('Code', 'logo')->first();
+            $past = 'images/logo/' . $logo->Description;
+            if (File::exists($past)) {
+                File::delete($past);
+            }
+            //uơload images
+            $name = $request->file('logo')->getClientOriginalName();
+            $request->file('logo')->move('images/logo/', $name);
+            $logo->Description = $name;
+            $logo->save();
+        }
         return redirect('admin/system')->with(['flash_level' => 'success', 'flash_message' =>
         'Cấu hình thành công']);
     }
