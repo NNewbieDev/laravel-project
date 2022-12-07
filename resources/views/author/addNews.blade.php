@@ -26,8 +26,8 @@
                         @foreach ($category as $page)
                             <option class="fs-5 select_option"
                                 style="color:{{ $darkMode ? 'var(--text-white-75)' : 'var(--text-dark-75)' }}"
-                                value="{{ $page->CategoryID }}">
-                                {{ $page->CategoryName }}</option>
+                                value="{{ $page->id }}">
+                                {{ $page->category_name }}</option>
                         @endforeach)
                     </select>
                     @error('category_news')

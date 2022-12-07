@@ -77,7 +77,7 @@ class HandleData extends Controller
     }
     public function nav($id)
     {
-        dd($id);
+        // dd($id);
         $result = Article::where('category_id', $id)->paginate(10);
         $category = Category::all();
         return view('welcome', compact('result', 'category'));
