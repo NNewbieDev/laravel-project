@@ -12,8 +12,9 @@
             style="background-color: {{ $darkMode ? 'var(--background-component-color-dark)' : 'var(--background-component-color-light)' }}">
             <form action="{{ route('author.management.update-avatar') }}" method="post" enctype="multipart/form-data">
                 @csrf
-                <img class="rounded-3 mt-4 mb-2" src="{{ asset('images/' . $avatar) }}" alt="avatar"
-                    style="width:150px;height:150px;object-fit:cover">
+                <img class="rounded-3 mt-4 mb-2"
+                    src="{{ asset('images') . '/' . (isset(Auth::user()->avatar) ? Auth::user()->avatar : 'no-avatar.jpg') }}"
+                    alt="avatar" style="width:150px;height:150px;object-fit:cover">
                 <p class="fs-6 fw-light" style="color:{{ $darkMode ? 'var(--text-white-50)' : 'var(--text-dark-75)' }}">
                     Avatar hiện hành</p>
                 <i class="fa-solid fa-arrow-down fs-1 my-4 d-block"

@@ -9,14 +9,11 @@
     <div class="container-fluid text-center py-5"
         style="background-color:{{ $darkMode ? 'var(--background-color-dark)' : 'var(--background-color-light)' }}">
         <div class="d-block">
-            <img src="{{ asset('images') . '/' . $auth->avatar }}" alt="img" class="avatar rounded-circle"
-                style="width:200px;height:200px">
+            {{-- {{ dd(Auth::user()->avatar) }} --}}
+            <img src="{{ asset('images') . '/' . (isset(Auth::user()->avatar) ? Auth::user()->avatar : 'no-avatar.jpg') }}"
+                alt="img" class="avatar rounded-circle" style="width:200px;height:200px">
             <h3 class="name mt-1 fs-2" style="color:{{ $darkMode ? 'var(--text-white-100)' : 'var(--text-dark-100)' }}">
-<<<<<<< HEAD
                 {{ Auth::user()->username }}</h3>
-=======
-                {{ $auth->user_name }}</h3>
->>>>>>> 6fd057da94127d7c4441bf3e4198a414f39b620f
         </div>
         <div class="row gx-3 gy-3 mt-4 p-xxl-3 p-xl-0 p-lg-3 p-md-4 p-sm-3">
             <div class="col-xl-3 col-lg-4 col-sm-12 col-md-6">
@@ -85,7 +82,7 @@
             <div class="col-xl-3 col-lg-4 col-sm-12 col-md-6">
                 <div class=" px-3 rounded-4 text-white text-start h-100 shadow-sm option d-flex align-items-center"
                     style="background-color:{{ $darkMode ? 'var(--background-component-color-dark)' : 'var(--background-component-color-light)' }};min-height:86px">
-                    <a href="{{ route('author.index') }}" id="logout"
+                    <a href="{{ route('cusLogout') }}" id="logout"
                         class="text-uppercase fs-6 border p-2 rounded-3 text-decoration-none option_exit"
                         style="color:{{ $darkMode ? 'var(--text-white-100)' : 'var(--text-dark-100)' }};border-color:{{ $darkMode ? 'var(--text-white-100)' : 'var(--text-dark-75)' }}!important">
                         Thoát
@@ -96,7 +93,7 @@
         </div>
     </div>
 @endsection
-@section('jvscript')
+{{-- @section('jvscript')
     var exitBtn = document.getElementById("logout");
     exitBtn.onclick = (e) => {
     e.preventDefault();
@@ -116,7 +113,7 @@
     }
     }, 1000)
     }
-@endsection
+@endsection --}}
 @section('footer')
     @include('author.component.footer')
 @endsection

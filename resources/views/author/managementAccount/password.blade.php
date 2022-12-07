@@ -15,12 +15,21 @@
                     style="color:{{ $darkMode ? 'var(--text-white-50)' : 'var(--text-dark-50)' }}">Bạn đang thay đổi mật khẩu
                     cho
                     tài
-                    khoản: <b class="fw-bold" style="color:var(--primary-color);">{{ $auth->user_name }}</b></p>
+                    khoản: <b class="fw-bold" style="color:var(--primary-color);">{{ Auth::user()->username }}</b></p>
             </div>
             <div class="py-3 px-4 rounded-4 text-start h-100 mt-3 shadow option"
                 style="background-color: {{ $darkMode ? 'var(--background-component-color-dark)' : 'var(--background-component-color-light)' }}">
                 <form action="{{ route('author.management.changed-password') }}" method='POST' class="mt-4 mb-3">
                     @csrf
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @elseif (session('error'))
+                        <div class="alert alert-danger" role="alert">
+                            {{ session('error') }}
+                        </div>
+                    @endif
                     <div class="position-relative mt-3">
                         <input name="old_password" type="password" id="old_password"
                             class="form-control shadow-none fs-6 fw-normal p-3 form_input"
@@ -52,14 +61,14 @@
                         @enderror
                     </div>
                     <div class="position-relative mt-3">
-                        <input name="confirmation_password" type="password" id="confirmation_password"
+                        <input name="new_password_confirmation" type="password" id="new_password_confirmation"
                             class="form-control shadow-none fs-6 fw-normal p-3 form_input"
                             style="background-color:{{ $darkMode ? 'var(--background-component-color-dark)' : 'var(--background-component-color-light)' }};border-color:#918989;color:{{ $darkMode ? 'var(--text-white-100)' : 'var(--text-dark-100)' }}"
-                            placeholder="&nbsp;" value="{{ old('confirmation_password') }}">
-                        <label for="confirmation_password" class="position-absolute px-2 py-1 input_label"
+                            placeholder="&nbsp;" value="{{ old('new_password_confirmation') }}">
+                        <label for="new_password_confirmation" class="position-absolute px-2 py-1 input_label"
                             style="left:18px;background-color:{{ $darkMode ? 'var(--background-component-color-dark)' : 'var(--background-component-color-light)' }};color:{{ $darkMode ? 'var(--text-white-75)' : 'var(--text-dark-75)' }}">Nhập
                             lại mật khẩu mới</label>
-                        @error('confirmation_password')
+                        @error('new_password_confirmation')
                             <p class="mt-1 mb-2 fs-6 fw-normal text-danger px-3">
                                 <i class="fa-solid fa-circle-exclamation mr-2"></i>
                                 {{ $message }}

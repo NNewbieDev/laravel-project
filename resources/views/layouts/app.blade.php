@@ -29,7 +29,7 @@
             <div class="header-left col-lg-6">
                 <div class="header-logo">
                     <a href="{{ route('index') }}">
-                        <img src="/images/logo.png" alt="logo" class="logo">
+                        <img src="{{ asset('images/logo/logo.jpg') }}" alt="logo" class="logo">
                     </a>
                 </div>
             </div>
@@ -146,7 +146,7 @@
                 </div>
                 <div class="footer-logo col-lg-4">
                     <a href="{{ route('index') }}">
-                        <img src="/images/logo.png" alt="logo" class="logo">
+                        <img src="{{ asset('images/logo/logo.jpg') }}" alt="logo" class="logo">
                     </a>
                 </div>
             </div>

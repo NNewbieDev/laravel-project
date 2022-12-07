@@ -24,7 +24,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get("/information", [AuthorController::class, 'changeInformation'])->name('management-information');
             Route::post("/information", [AuthorController::class, 'changedInformation'])->name('changed-information');
             Route::get("/avatar", [AuthorController::class, 'changeAvatar'])->name('management-avatar');
-            Route::post("/avatar", [AuthorController::class, 'updateAvatar'])->name('update-avatar');
+            Route::post("/avatar", [AuthorController::class, 'updateAvatar'])->whereNumber("id")->name('update-avatar');
         });
     });
 });
