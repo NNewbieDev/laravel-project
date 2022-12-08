@@ -14,12 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('articles', function (Blueprint $table) {
-            $table->id("id");
+            $table->id("ArticleID");
             $table->string("title");
             $table->longText("description");
             $table->string('link');
             // $table->longText("content")->nullable();
-            $table->foreignId("category_id")->constrained("categories", "id");
+            $table->foreignId("CategoryID")->constrained("categories", "CategoryID");
             $table->timestamps();
         });
     }

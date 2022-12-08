@@ -4,12 +4,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="/images/logo-symbol.png" type="image/x-icon">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>News</title>
 
+    <link rel="shortcut icon" href="{{ url('images/logoS.png') }}" type="image/x-icon">
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
@@ -29,7 +29,7 @@
             <div class="header-left col-lg-6">
                 <div class="header-logo">
                     <a href="{{ route('index') }}">
-                        <img src="{{ asset('images/logo/logo.jpg') }}" alt="logo" class="logo">
+                        <img src="{{ url('images/logo.png') }}" alt="logo" class="logo">
                     </a>
                 </div>
             </div>
@@ -146,7 +146,7 @@
                 </div>
                 <div class="footer-logo col-lg-4">
                     <a href="{{ route('index') }}">
-                        <img src="{{ asset('images/logo/logo.jpg') }}" alt="logo" class="logo">
+                        <img src="{{ url('images/logo.png') }}" alt="logo" class="logo">
                     </a>
                 </div>
             </div>

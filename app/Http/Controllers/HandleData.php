@@ -45,7 +45,7 @@ class HandleData extends Controller
                     $article->title = $list['title'];
                     $article->description = $list['description'];
                     $article->link = $list['link'];
-                    $article->category_id = $rss->CategoryID;
+                    $article->CategoryID = $rss->CategoryID;
                 }
                 $article->save();
             }
@@ -76,17 +76,17 @@ class HandleData extends Controller
     }
     public function nav($id)
     {
-        // dd($id);
-        $result = Article::where('category_id', $id)->paginate(10);
+        $result = Article::where('CategoryID', $id)->paginate(10);
         $category = Category::all();
         return view('welcome', compact('result', 'category'));
     }
     public function news(Request $request, $id)
     {
+
         $dom = new \DOMDocument('1.0', 'UTF-8');
         // Session::flash('id', $id);
         // Lấy nội html từ link
-        $article = Article::where("id", $id)->first();
+        $article = Article::where("ArticleID", $id)->first();
         $contents = (file_get_contents($article->link));
         // fix lỗi html entity từ loadHTML
         $content = mb_convert_encoding($contents, 'HTML-ENTITIES', "UTF-8");
