@@ -158,7 +158,8 @@
         </div>
     </div>
     <script>
-        @yield('js')
+        @yield('js-main')
+        @yield('js-flex')
     </script>
 
     {{-- Notification --}}
