@@ -17,6 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('username')->unique();
             $table->string('password');
+            $table->string('email')->unique()->nullable();
+            $table->integer('phone')->nullable();
+            $table->string('address')->nullable();
+            $table->string('avatar')->nullable();
             $table->rememberToken();
             // 0 user 1 author 2 admin
             $table->integer('role')->default(0);
