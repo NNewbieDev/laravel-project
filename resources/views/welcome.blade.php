@@ -35,6 +35,21 @@
                                         <i class="fa-solid fa-comment"></i>
                                     </div>
                                 </div>
+                                @section('js-flex')
+                                    const likes = document.querySelectorAll('.like');
+                                    const comment = document.querySelectorAll('.comment');
+                                    const warning = document.querySelector('.warning');
+                                    const closeWarning = document.querySelector('.close-icon');
+
+                                    for (const like of likes) {
+                                    like.addEventListener('click', function (e) {
+                                    like.classList.toggle('pick');
+                                    });
+                                    };
+                                    comment.addEventListener('click', function (e) {
+                                    showComment.classList.toggle('active');
+                                    });
+                                @endsection
                             @else
                                 <div class="react-block d-flex">
                                     <div class="not-like">
@@ -44,6 +59,29 @@
                                         <i class="fa-solid fa-comment"></i>
                                     </div>
                                 </div>
+                                @section('js-flex')
+                                    const notLikes = document.querySelectorAll('.not-like');
+                                    const notComment = document.querySelectorAll('.not-comment');
+                                    const warning = document.querySelector('.warning');
+                                    const closeWarning = document.querySelector('.close-icon');
+
+
+                                    for (const not of notLikes) {
+                                    not.addEventListener('click', function (e) {
+                                    warning.classList.add('active-flex');
+                                    });
+                                    };
+
+                                    for (const not of notComment) {
+                                    not.addEventListener('click', function (e) {
+                                    warning.classList.add('active-flex');
+                                    });
+                                    };
+
+                                    closeWarning.addEventListener('click', function (e) {
+                                    warning.classList.remove('active-flex');
+                                    });
+                                @endsection
                             @endif
                         </div>
                     @endforeach
@@ -54,35 +92,16 @@
     </div>
 @endsection
 
-@section('js')
+@section('js-main')
     const account = document.querySelector('.account-icon');
     const dropdown = document.querySelector('.dropdown');
     const filter = document.querySelector('.filter-icon');
     const filterBlock = document.querySelector('.filter-block');
-    const notLikes = document.querySelectorAll('.not-like');
-    const notComment = document.querySelectorAll('.not-comment');
-
-    for (const not of notLikes) {
-    not.addEventListener('click', function (e) {
-    warning.classList.add('active-flex');
+    account.addEventListener('click', function (e) {
+    dropdown.classList.toggle('active');
     });
-    };
 
     filter.addEventListener('click', function (e) {
     filterBlock.classList.toggle('active');
-    });
-
-    for (const not of notComment) {
-    not.addEventListener('click', function (e) {
-    warning.classList.add('active-flex');
-    });
-    };
-
-    account.addEventListener('click', function (e) {
-    dropdown.classList.toggle('active');
-    })
-
-    closeWarning.addEventListener('click', function (e) {
-    warning.classList.remove('active-flex');
     });
 @endsection
