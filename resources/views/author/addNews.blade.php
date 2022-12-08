@@ -27,7 +27,7 @@
                             <option class="fs-5 select_option"
                                 style="color:{{ $darkMode ? 'var(--text-white-75)' : 'var(--text-dark-75)' }}"
                                 value="{{ $page->id }}">
-                                {{ $page->category_name }}</option>
+                                {{ $page->CategoryName }}</option>
                         @endforeach)
                     </select>
                     @error('category_news')

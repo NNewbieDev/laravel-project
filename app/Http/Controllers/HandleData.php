@@ -50,34 +50,34 @@ class HandleData extends Controller
                 $article->save();
             }
         }
-        $result = Article::orderBy("created_at", "desc")->paginate(10);
+        $result = Article::orderBy("created_at", "desc")->paginate(15);
         $category = Category::all();
         return view('welcome', compact('result', 'category'));
     }
 
     public function latest()
     {
-        $result = Article::orderBy("created_at", "desc")->paginate(10);
+        $result = Article::orderBy("created_at", "desc")->paginate(15);
         $category = Category::all();
         return view('welcome', compact('result', 'category'));
     }
 
     public function oldest()
     {
-        $result = Article::orderBy("created_at", "asc")->paginate(10);
+        $result = Article::orderBy("created_at", "asc")->paginate(15);
         $category = Category::all();
         return view('welcome', compact('result', 'category'));
     }
     public function search(Request $request)
     {
-        $result = Article::where('title', 'LIKE', "%{$request->search}%")->paginate(10);
+        $result = Article::where('title', 'LIKE', "%{$request->search}%")->paginate(15);
         $category = Category::all();
         return view('welcome', compact('result', 'category'));
     }
     public function nav($id)
     {
         // dd($id);
-        $result = Article::where('category_id', $id)->paginate(10);
+        $result = Article::where('category_id', $id)->paginate(15);
         $category = Category::all();
         return view('welcome', compact('result', 'category'));
     }
@@ -93,8 +93,8 @@ class HandleData extends Controller
         @$dom->loadHTML($content);
         $news = $dom->getElementsByTagName("article")->item(0)->nodeValue;
         $category = Category::all();
-        $comment = Comment::join('articles', "articles.ArticleID", "=", "comments.ArticleID")->select("comments.*")->get();
-        $request->session()->put("key", $article->ArticleID);
+        $comment = Comment::join('articles', "articles.id", "=", "comments.ArticleID")->select("comments.*")->get();
+        $request->session()->put("key", $article->id);
 
         return view('news', compact('news', 'category', 'article', 'comment'));
     }
