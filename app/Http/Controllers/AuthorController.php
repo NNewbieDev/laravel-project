@@ -55,6 +55,7 @@ class AuthorController extends Controller
             "content_news.min" => "Số kí tự cho nội dung quá ít.",
             "image_news.required" => "Hãy chọn ảnh làm bìa nội dung.",
         ]);
+        dd("here)");
         $image = $request->file('image_news');
         $storedPath = $image->move('images', $image->getClientOriginalName());
         $authId = $this->authorID;

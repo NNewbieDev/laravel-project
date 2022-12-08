@@ -27,7 +27,6 @@ class BackController extends Controller
 
     public function home()
     {
-        Toastr::success('Đăng kí tài khoản thành công!', 'Thành công');
         return view('back.home.home');
     }
     // staff----------------------------------------------------------
@@ -67,9 +66,10 @@ class BackController extends Controller
     public function staff_list()
     {
 
-        $User = DB::table('users as a')
-            ->join('users_level as b', 'a.level', '=', 'b.id')
-            ->selectRaw('a.id, a.fullname, a.adress, a.email, a.phone, b.name')->get();
+        // $User = DB::table('users as a')
+        //     ->join('users_level as b', 'a.level', '=', 'b.id')
+        //     ->selectRaw('a.id, a.fullname, a.adress, a.email, a.phone, b.name')->get();
+        $User = DB::table('users')->get();
 
         return view('back.staff.list', compact('User'));
     }

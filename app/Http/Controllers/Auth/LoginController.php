@@ -28,8 +28,6 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         $category = Category::all();
-        Toastr::success('Đăng kí tài khoản thành công!', 'Thành công');
-
         return view('auth.login', compact('category'));
     }
 

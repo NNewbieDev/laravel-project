@@ -16,7 +16,6 @@ class UserController extends Controller
     }
     public function getLogin()
     {
-        dd("adfja");
         return view('auth.login');
     }
 
