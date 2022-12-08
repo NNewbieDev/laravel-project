@@ -28,24 +28,26 @@
 <body>
     <div id="loading"></div>
     <?php
-    $message = Session::get('message');
-    if ($message) {
-        echo '<div class="alert alert-danger" role="alert">' . $message . '</div>';
-        Session::put('message', null);
-    }
+    // $message = Session::get('message');
+    // if ($message) {
+    //     echo '<div class="alert alert-danger" role="alert">' . $message . '</div>';
+    //     Session::put('message', null);
+    // }
+    //
     ?>
-    @if (Session::has('flash_message'))
+    {{-- @if (Session::has('flash_message'))
         <div class="ad_message alert alert-{!! Session::get('flash_level') !!}">
             {!! Session::get('flash_message') !!}
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
-    @endif
+    @endif --}}
     <header>@yield('header')</header>
     <main>@yield('main')</main>
     <footer>@yield('footer')</footer>
     {{-- Notification library --}}
+    <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
     <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
     {!! Toastr::message() !!}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"

@@ -1,6 +1,6 @@
-import './bootstrap';
+// import './bootstrap';
 // import '../css/app.css';
-import '../sass/app.scss';
+// import '../../../resources/sass/app.scss';
 
 const account = document.querySelector('.account-icon');
 const dropdown = document.querySelector('.dropdown');
@@ -19,10 +19,6 @@ for (const not of notLikes) {
         warning.classList.add('active-flex');
     });
 };
-
-filter.addEventListener('click', function (e) {
-    filterBlock.classList.toggle('active');
-});
 
 for (const not of notComment) {
     not.addEventListener('click', function (e) {
@@ -47,3 +43,6 @@ closeWarning.addEventListener('click', function (e) {
     warning.classList.remove('active-flex');
 });
 
+filter.addEventListener('click', function (e) {
+    filterBlock.classList.toggle('active');
+});

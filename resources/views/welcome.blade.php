@@ -53,3 +53,36 @@
         </div>
     </div>
 @endsection
+
+@section('js')
+    const account = document.querySelector('.account-icon');
+    const dropdown = document.querySelector('.dropdown');
+    const filter = document.querySelector('.filter-icon');
+    const filterBlock = document.querySelector('.filter-block');
+    const notLikes = document.querySelectorAll('.not-like');
+    const notComment = document.querySelectorAll('.not-comment');
+
+    for (const not of notLikes) {
+    not.addEventListener('click', function (e) {
+    warning.classList.add('active-flex');
+    });
+    };
+
+    filter.addEventListener('click', function (e) {
+    filterBlock.classList.toggle('active');
+    });
+
+    for (const not of notComment) {
+    not.addEventListener('click', function (e) {
+    warning.classList.add('active-flex');
+    });
+    };
+
+    account.addEventListener('click', function (e) {
+    dropdown.classList.toggle('active');
+    })
+
+    closeWarning.addEventListener('click', function (e) {
+    warning.classList.remove('active-flex');
+    });
+@endsection

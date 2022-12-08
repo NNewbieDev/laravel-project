@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Brian2694\Toastr\Facades\Toastr;
 
 class RegisterController extends Controller
 {
@@ -79,6 +80,7 @@ class RegisterController extends Controller
                 }
             });
         }
+        Toastr::success('Đăng kí tài khoản thành công!', 'Thành công');
         return User::create([
             'username' => $data['username'],
             'password' => Hash::make($data['password']),

@@ -27,6 +27,7 @@ class BackController extends Controller
 
     public function home()
     {
+        Toastr::success('Đăng kí tài khoản thành công!', 'Thành công');
         return view('back.home.home');
     }
     // staff----------------------------------------------------------

@@ -11,9 +11,7 @@ use App\Models\Category;
 use App\Models\User;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
-use Brian2694\Toastr\Facades\Toasrt;
-// use File;
-
+use Brian2694\Toastr\Facades\Toastr;
 
 class AuthorController extends Controller
 {
@@ -104,11 +102,19 @@ class AuthorController extends Controller
             "new_password_confirmation.min" => "Tối thiểu 8 kí tự",
         ]);
         if (!Hash::check($request->old_password, Auth::user()->password)) {
-            return back()->with("error", "Mật khẩu cũ không chính xác!");
+            Toastr::warning('Mật khẩu không chính xác!', 'Sai mật khẩu');
+            return back();
         }
-        User::whereId(Auth::id())->update([
+        $flag = User::whereId(Auth::id())->update([
             "password" => Hash::make($request->new_password)
         ]);
+        if ($flag) {
+            Toastr::success('Thay đổi mật khẩu thành công!', 'Thành công');
+            return redirect()->route('author.index');
+        } else {
+            Toastr::error('Xảy ra lỗi. Hãy thử lại sau!', 'Thất bại');
+            return back();
+        }
         return redirect()->route('author.index');
     }
 
@@ -137,11 +143,18 @@ class AuthorController extends Controller
             'full_name' => $request->full_name,
             'address' => $request->address
         ];
-        User::whereId(Auth::id())->update([
+        $flag = User::whereId(Auth::id())->update([
             'phone' => $request->phone_number,
             'fullname' => $request->full_name,
             'address' => $request->address
         ]);
+        if ($flag) {
+            Toastr::success('Thay đổi thông tin thành công!', 'Thành công');
+            return redirect()->route('author.index');
+        } else {
+            Toastr::error('Lỗi thông tin. Hãy thử lại sau!', 'Thất bại');
+            return back();
+        }
         return redirect()->route('author.index');
     }
 
@@ -163,14 +176,16 @@ class AuthorController extends Controller
         $avatarOld = Auth::user()->avatar;
         File::delete($avatarOld);
         $storedPath = $image->move('images', $image->getClientOriginalName());
-        User::whereId(Auth::id())->update([
+        $flag = User::whereId(Auth::id())->update([
             "avatar" => $image->getClientOriginalName()
         ]);
-        // $Flag = $user->save();
-        // if ($Flag == true) {
-        //     Toastr::success('Xóa thông tin thành công', 'thành công');
-        //     return redirect()->route('author.index');
-        // }
+        if ($flag) {
+            Toastr::success('Thay đổi avatar thành công!', 'Thành công');
+            return redirect()->route('author.index');
+        } else {
+            Toastr::error('Lỗi tải ảnh. Hãy thử lại sau!', 'Thất bại');
+            return back();
+        }
         return redirect()->route('author.index');
     }
 }

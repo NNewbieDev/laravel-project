@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Brian2694\Toastr\Facades\Toastr;
 
 class RegisterAuthorController extends Controller
 {
@@ -23,6 +24,7 @@ class RegisterAuthorController extends Controller
      */
     public function index()
     {
+        dd("dfjkas");
         // $role = DB::table('users')->role;
         // dd(Route::currentRouteName() == "register-author");
         if (Schema::hasTable('users')) {
@@ -50,16 +52,24 @@ class RegisterAuthorController extends Controller
             ]
         );
 
-        User::create([
+        $flag = User::create([
             'username' => $data['username'],
             'password' => Hash::make($data['password'])
         ]);
+        // if ($flag) {
+        //     Toastr::success('Đăng kí tài khoản thành công!', 'Thành công');
+        //     return redirect()->route('login');
+        // } else {
+        //     Toastr::error('Tài khoản đã tồn tại!', 'Thất bại');
+        //     return back();
+        // }
         return redirect()->route('login');
     }
 
     public function logout()
     {
         Auth::logout();
+        Toastr::success('Đăng xuất thành công!', 'Thành công');
         return redirect()->route('index');
     }
     /**

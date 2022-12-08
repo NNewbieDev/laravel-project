@@ -9,6 +9,7 @@
 
     <title>News</title>
 
+
     <link rel="shortcut icon" href="{{ url('images/logoS.png') }}" type="image/x-icon">
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -20,7 +21,11 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @vite(['resources/sass/app.scss'])
+
+
+    {{-- notification --}}
+    <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
 </head>
 
 <body>
@@ -152,6 +157,17 @@
             </div>
         </div>
     </div>
+    <script>
+        @yield('js')
+    </script>
+
+    {{-- Notification --}}
+    <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+    {!! Toastr::message() !!}
+
+    {{-- <script src="{{ asset('assets/js/user.js') }}"></script> --}}
+
 </body>
 
 </html>

@@ -45,8 +45,7 @@ class HandleData extends Controller
                     $article->title = $list['title'];
                     $article->description = $list['description'];
                     $article->link = $list['link'];
-                    // $article->CategoryID = $rss->CategoryID;
-                    $article->category_id = $rss->CategoryID;
+                    $article->CategoryID = $rss->CategoryID;
                 }
                 $article->save();
             }
@@ -87,16 +86,15 @@ class HandleData extends Controller
         $dom = new \DOMDocument('1.0', 'UTF-8');
         // Session::flash('id', $id);
         // Lấy nội html từ link
-        // $article = Article::where("ArticleID", $id)->first();
-        $article = Article::where("category_id", $id)->first();
+        $article = Article::where("ArticleID", $id)->first();
         $contents = (file_get_contents($article->link));
         // fix lỗi html entity từ loadHTML
         $content = mb_convert_encoding($contents, 'HTML-ENTITIES', "UTF-8");
         @$dom->loadHTML($content);
         $news = $dom->getElementsByTagName("article")->item(0)->nodeValue;
         $category = Category::all();
-        $comment = Comment::join('articles', "articles.id", "=", "comments.ArticleID")->select("comments.*")->get();
-        $request->session()->put("key", $article->id);
+        $comment = Comment::join('articles', "articles.ArticleID", "=", "comments.ArticleID")->select("comments.*")->get();
+        $request->session()->put("key", $article->ArticleID);
 
         return view('news', compact('news', 'category', 'article', 'comment'));
     }

@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Models\User;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Brian2694\Toastr\Facades\Toastr;
 
 class LoginController extends Controller
 {
@@ -27,6 +28,8 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         $category = Category::all();
+        Toastr::success('Đăng kí tài khoản thành công!', 'Thành công');
+
         return view('auth.login', compact('category'));
     }
 
