@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string("title");
             $table->longText("description");
             $table->string('link');
-            // $table->longText("content")->nullable();
+            $table->integer("AuthorID")->nullable();
             $table->foreignId("CategoryID")->constrained("categories", "CategoryID");
             // $table->foreignId("AuthorID")->constrained("users", "id")->nullable();
             $table->timestamps();
