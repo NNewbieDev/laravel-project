@@ -24,7 +24,6 @@ class RegisterAuthorController extends Controller
      */
     public function index()
     {
-        dd("dfjkas");
         // $role = DB::table('users')->role;
         // dd(Route::currentRouteName() == "register-author");
         if (Schema::hasTable('users')) {

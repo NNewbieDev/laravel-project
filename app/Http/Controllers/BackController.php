@@ -295,16 +295,31 @@ class BackController extends Controller
     public function post_process_accept($id)
     {
         $post = $this->postProcess->getPost($id);
-        $article = Article::insert([
-            "title" => $post->title,
-            "link" => $post->content,
-            "description" => $post->image,
-            "CategoryID" => $post->category_id,
-            "AuthorID" => $post->author_id,
-            "created_at" => $post->created_at,
-        ]);
+        // $article = Article::insert([
+        //     "title" => $post->title,
+        //     "link" => $post->content,
+        //     "description" => $post->image,
+        //     "CategoryID" => $post->category_id,
+        //     "AuthorID" => $post->author_id,
+        //     "created_at" => $post->created_at
+        // ]);
+        $img = asset('') . $post->image;
+        $content = "
+        <img src='$img' alt='img'/>$post->content
+        ";
+        $article = new Article;
+        $article->title = $post->title;
+        $article->link = $post->content;
+        $article->description = $content;
+        $article->CategoryID = $post->category_id;
+        $article->AuthorID = $post->author_id;
+        $article->created_at = $post->created_at;
+        $flag = $article->save();
         $this->postProcess->deletePost($id);
-        Toastr::success('Bài viết đã được phê duyệt!', 'Thành công');
+        if ($flag == true) {
+            Toastr::success('Bài viết đã được phê duyệt!', 'Thành công');
+            return back();
+        }
         return back();
         // return redirect('admin/post-process/list')->with(['flash_level' => 'success', 'flash_message' =>
         // 'Bài viết đã được phê duyệt']);

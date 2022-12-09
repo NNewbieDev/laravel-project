@@ -87,11 +87,18 @@ class HandleData extends Controller
         // Session::flash('id', $id);
         // Lấy nội html từ link
         $article = Article::where("ArticleID", $id)->first();
-        $contents = (file_get_contents($article->link));
-        // fix lỗi html entity từ loadHTML
-        $content = mb_convert_encoding($contents, 'HTML-ENTITIES', "UTF-8");
-        @$dom->loadHTML($content);
-        $news = $dom->getElementsByTagName("article")->item(0)->nodeValue;
+        // dd($article->AuthorID);
+
+        if (!$article->AuthorID) {
+            $contents = (file_get_contents($article->link));
+            // fix lỗi html entity từ loadHTML
+            $content = mb_convert_encoding($contents, 'HTML-ENTITIES', "UTF-8");
+            @$dom->loadHTML($content);
+            $news = $dom->getElementsByTagName("article")->item(0)->nodeValue;
+        } else {
+            $content = ($article->link);
+            $news = $content;
+        }
         $category = Category::all();
         $comment = Comment::join('articles', "articles.ArticleID", "=", "comments.ArticleID")->select("comments.*")->get();
         $request->session()->put("key", $article->ArticleID);
