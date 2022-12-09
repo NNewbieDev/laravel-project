@@ -28,7 +28,7 @@
                             @foreach ($Page as $k => $v)
                                 <tr>
                                     <td class="text_align_center">{{ $k + 1 }}</td>
-                                    <td>{{ $v->page_name }}</td>
+                                    <td>{{ $v->CategoryName }}</td>
                                     <td>
                                         @if ($v->status == 1)
                                             Bật

@@ -9,8 +9,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use App\Models\UserLevel;
 use App\Models\System;
-use App\Models\Page;
+use App\Models\Article;
+use App\Models\Category;
 use App\Models\Social;
+use App\Models\Role;
 use App\Models\Contact;
 use App\Models\PostProcess;
 use Brian2694\Toastr\Facades\Toastr;
@@ -69,8 +71,10 @@ class BackController extends Controller
         // $User = DB::table('users as a')
         //     ->join('users_level as b', 'a.level', '=', 'b.id')
         //     ->selectRaw('a.id, a.fullname, a.adress, a.email, a.phone, b.name')->get();
-        $User = DB::table('users')->get();
-
+        $User = DB::table('users as a')
+            ->join('role as b', 'a.role', '=', 'b.id')
+            ->selectRaw('a.*, b.role_name')
+            ->get();
         return view('back.staff.list', compact('User'));
     }
 
@@ -113,8 +117,8 @@ class BackController extends Controller
     public function staff_edit(Request $request, $id)
     {
         $User = User::find($id);
-
-        $UserLevel = UserLevel::where('status', 1)->get();
+        // $UserLevel = UserLevel::where('status', 1)->get();
+        $UserLevel = Role::get();
         return view('back.staff.edit', compact('User', 'UserLevel'));
     }
 
@@ -243,7 +247,7 @@ class BackController extends Controller
 
     public function page_list()
     {
-        $Page = Page::get();
+        $Page = Category::get();
 
         return view('back.page.list', compact('Page'));
     }
@@ -251,7 +255,7 @@ class BackController extends Controller
     public function page_edit(Request $request, $id)
     {
 
-        $Page = Page::find($id);
+        $Page = Category::find($id);
         return view('back.page.edit', compact('Page'));
     }
 
@@ -262,7 +266,7 @@ class BackController extends Controller
             'vui lòng điền vào các trường có dấu *']);
         }
 
-        $Page = Page::find($id);
+        $Page = Category::find($id);
         $Page->page_name = $request->name;
         $Page->status = $request->status;
 
@@ -290,18 +294,29 @@ class BackController extends Controller
 
     public function post_process_accept($id)
     {
-        $postProcessList = $this->postProcess->getPost($id);
-
-        return redirect('admin/post-process/list')->with(['flash_level' => 'success', 'flash_message' =>
-        'Đã duyệt bài thành công']);
+        $post = $this->postProcess->getPost($id);
+        $article = Article::insert([
+            "title" => $post->title,
+            "link" => $post->content,
+            "description" => $post->image,
+            "CategoryID" => $post->category_id,
+            "AuthorID" => $post->author_id,
+            "created_at" => $post->created_at,
+        ]);
+        $this->postProcess->deletePost($id);
+        Toastr::success('Bài viết đã được phê duyệt!', 'Thành công');
+        return back();
+        // return redirect('admin/post-process/list')->with(['flash_level' => 'success', 'flash_message' =>
+        // 'Bài viết đã được phê duyệt']);
     }
 
     public function post_process_refuse($id)
     {
         $this->postProcess->deletePost($id);
-
-        return redirect('admin/post-process/list')->with(['flash_level' => 'success', 'flash_message' =>
-        'Bài đã không được xét duyệt']);
+        Toastr::info('Bài viết không được phê duyệt và đang xóa!', 'Thông báo');
+        return back();
+        // return redirect('admin/post-process/list')->with(['flash_level' => 'success', 'flash_message' =>
+        // 'Bài đã không được xét duyệt']);
     }
 
     //socical network---------------------------------------------

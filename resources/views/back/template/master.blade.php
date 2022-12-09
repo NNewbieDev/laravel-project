@@ -138,7 +138,7 @@
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                         data-accordion="false">
 
-                        @if (isset(Auth::user()->level) && Auth::user()->level == 1)
+                        {{-- @if (isset(Auth::user()->level) && Auth::user()->level == 1)
                             <li class="nav-item menu-open">
                                 <a href="{{ url('admin/system') }}" class="nav-link @yield('system') ">
                                     <i class="fas fa-cog fa-fw"></i>
@@ -156,7 +156,24 @@
                                     </p>
                                 </a>
                             </li>
-                        @endif
+                        @endif --}}
+                        <li class="nav-item menu-open">
+                            <a href="{{ url('admin/system') }}" class="nav-link @yield('system') ">
+                                <i class="fas fa-cog fa-fw"></i>
+                                <p>
+                                    Cấu hình hệ thống
+                                </p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item menu-open">
+                            <a href="{{ url('admin/page/list') }}" class="nav-link @yield('page')">
+                                <i class="fas fa-sitemap fa-fw"></i>
+                                <p>
+                                    Quản lý trang
+                                </p>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="far fa-newspaper fa-fw"></i>

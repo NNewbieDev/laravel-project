@@ -10,8 +10,8 @@
         style="background-color:{{ $darkMode ? 'var(--background-color-dark)' : 'var(--background-color-light)' }}">
         <div class="d-block">
             {{-- {{ dd(Auth::user()->avatar) }} --}}
-            <img src="{{ asset('images') . '/' . (isset(Auth::user()->avatar) ? Auth::user()->avatar : 'no-avatar.jpg') }}"
-                alt="img" class="avatar rounded-circle" style="width:200px;height:200px">
+            <img src="{{ asset('') . (isset(Auth::user()->avatar) ? Auth::user()->avatar : 'no-avatar.jpg') }}" alt="img"
+                class="avatar rounded-circle" style="width:200px;height:200px">
             <h3 class="name mt-1 fs-2" style="color:{{ $darkMode ? 'var(--text-white-100)' : 'var(--text-dark-100)' }}">
                 {{ Auth::user()->username }}</h3>
         </div>

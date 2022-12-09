@@ -33,7 +33,7 @@
                                 <tr>
                                     <td class="text_align_center">{{ $k + 1 }}</td>
                                     <td>{{ $v->fullname }}</td>
-                                    <td>{{ $v->username }}</td>
+                                    <td>{{ $v->role_name }}</td>
                                     <td>{{ $v->email }}</td>
                                     <td>{{ $v->phone }}</td>
                                     <td class="text_align_center">

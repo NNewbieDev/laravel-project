@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('link');
             // $table->longText("content")->nullable();
             $table->foreignId("CategoryID")->constrained("categories", "CategoryID");
+            // $table->foreignId("AuthorID")->constrained("users", "id")->nullable();
             $table->timestamps();
         });
     }

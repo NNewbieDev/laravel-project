@@ -15,33 +15,34 @@ class PostProcess extends Model
     {
         return $this->belongsTo(Category::class);
     }
-    // public function getAllPost()
-    // {
-    //     return DB::table($this->table)
-    //         ->join('page', 'page.id', "=", $this->table . ".category_id")
-    //         ->join('user', 'user.id', "=", $this->table . ".user_id")
-    //         ->select($this->table . ".*", "page.page_name", "user.user_name")
-    //         ->get();
-    // }
+    public function getAllPost()
+    {
+        return DB::table($this->table)
+            ->join('categories', 'categories.CategoryID', "=", $this->table . ".category_id")
+            ->join('users', 'users.id', "=", $this->table . ".author_id")
+            ->select($this->table . ".*", "categories.CategoryName", "users.username")
+            ->get();
+    }
 
-    // public function addPost($data)
-    // {
-    //     DB::table($this->table)->insert([
-    //         'title' => $data['news_title'],
-    //         'content' => $data['news_content'],
-    //         'category_id' => $data['page_id'],
-    //         'user_id' => $data['news_author'],
-    //         'created_at' => $data['post_at']
-    //     ]);
-    // }
+    public function addPost($data)
+    {
+        return DB::table($this->table)->insert([
+            'title' => $data['news_title'],
+            'content' => $data['news_content'],
+            'image' => $data['path_image'],
+            'category_id' => $data['category_id'],
+            'author_id' => $data['author_id'],
+            'created_at' => $data['post_at']
+        ]);
+    }
 
-    // public function getPost($id)
-    // {
-    //     return DB::table($this->table)->find($id);
-    // }
+    public function getPost($id)
+    {
+        return DB::table($this->table)->find($id);
+    }
 
-    // public function deletePost($id)
-    // {
-    //     DB::table($this->table)->where("id", $id)->delete();
-    // }
+    public function deletePost($id)
+    {
+        DB::table($this->table)->where("id", $id)->delete();
+    }
 }

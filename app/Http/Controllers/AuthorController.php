@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\News;
-use App\Models\Page;
 use App\Models\PostProcess;
 use App\Models\Category;
 use App\Models\User;
@@ -15,12 +13,10 @@ use Brian2694\Toastr\Facades\Toastr;
 
 class AuthorController extends Controller
 {
-    private $news;
     private $postProcess;
     private $darkMode = false;
     public function __construct()
     {
-        $this->news = new News();
         $this->postProcess = new PostProcess();
         @session_start();
     }
@@ -55,20 +51,24 @@ class AuthorController extends Controller
             "content_news.min" => "Số kí tự cho nội dung quá ít.",
             "image_news.required" => "Hãy chọn ảnh làm bìa nội dung.",
         ]);
-        dd("here)");
         $image = $request->file('image_news');
         $storedPath = $image->move('images', $image->getClientOriginalName());
-        $authId = $this->authorID;
         $data = [
             'news_title' => $request->title_news,
             'news_content' => $request->content_news,
-            'page_id' => $request->page_id,
+            'category_id' => $request->page_id,
             'post_at' => date("Y:m:d H:i:s"),
-            'news_author' => $authId,
+            'author_id' => Auth::id(),
             'path_image' => $storedPath
         ];
-        $this->news->addNews($data);
-        $this->postProcess->addPost($data);
+        $flag = $this->postProcess->addPost($data);
+        if ($flag) {
+            Toastr::success('Bài viết sẽ được kiểm duyệt!', 'Thành công');
+            return redirect()->route('author.index');
+        } else {
+            Toastr::error('Xảy ra lỗi. Hãy thử lại sau!', 'Thất bại');
+            return back();
+        }
         return redirect()->route('author.index');
     }
 
@@ -130,13 +130,12 @@ class AuthorController extends Controller
     {
         $request->validate([
             'phone_number' => "required|numeric",
-            'full_name' => "required|min:10",
+            'full_name' => "required",
             'address' => "required"
         ], [
             'phone_number.required' => "Hãy nhập số điện thoại.",
             'phone_number.numeric' => "Định dạng nhập không đúng.",
             'full_name.required' => "Hãy nhập họ và tên.",
-            'full_name.min' => "Nhập tối thiếu là 10 kí tự.",
             'address.required' => "Hãy nhập địa chỉ đầy đủ.",
         ]);
         $data = [
@@ -178,7 +177,7 @@ class AuthorController extends Controller
         File::delete($avatarOld);
         $storedPath = $image->move('images', $image->getClientOriginalName());
         $flag = User::whereId(Auth::id())->update([
-            "avatar" => $image->getClientOriginalName()
+            "avatar" => $storedPath
         ]);
         if ($flag) {
             Toastr::success('Thay đổi avatar thành công!', 'Thành công');

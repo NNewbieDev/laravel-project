@@ -6,7 +6,6 @@
 
 {{-- @section('contact', 'active') --}}
 
-
 @section('content')
     <div class="col-md-12">
 
@@ -29,8 +28,8 @@
                                 <tr>
                                     <td class="text_align_center">{{ $k + 1 }}</td>
                                     <td><a href="#">{{ $p->title }}</a></td>
-                                    <td>{{ $p->page_name }}</td>
-                                    <td>{{ $p->user_name }}</td>
+                                    <td>{{ $p->CategoryName }}</td>
+                                    <td>{{ $p->username }}</td>
                                     <td class="text_align_center">
                                         <a href="{{ url('admin/post-process/accept/' . $p->id) }}" title="Chấp nhận"
                                             class="ad_button">
