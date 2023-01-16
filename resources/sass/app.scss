@@ -7,6 +7,26 @@
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
 
+// Responsive
+$mobile-width: 480px; 
+$tablet-width: 768px; 
+$desktop-width: 1024px;  
+
+@mixin mobile { @media (max-width: #{$mobile-width - 1px}) {     
+  @content;   
+ } 
+}  
+
+@mixin tablet { @media (min-width: #{$tablet-width}) and (max-width: #{$desktop-width - 1px}) {       
+   @content;   
+ } 
+}  
+
+@mixin desktop {   @media (min-width: #{$desktop-width}) {     
+  @content;  
+ } 
+}
+// =================================================================
 * {
     padding: 0;
     margin: 0;
@@ -115,6 +135,9 @@ option {
 
 #app{
     margin-left: 300px;
+    @include tablet{
+        margin: 0;
+    }
 }
 
 .header {
@@ -122,13 +145,18 @@ option {
     border-bottom: 2px solid $main-clr;
     z-index: 9999;
     &-left {
+        height: 100%;
         display: flex;
         justify-content: flex-start;
         align-items: center;
     }
 
     &-right {
+        height: 100%;
         color: $main-clr;  
+        &-block {
+            height: 100%;
+        }
     }
 
     &-search, &-account {
@@ -298,7 +326,10 @@ option {
     border: 2px solid $main-clr;
     border-top-right-radius: 66px;
     border-bottom-right-radius: 80px;
-
+    @include tablet{
+        position: relative;
+        display: none;
+    }
     &-bar {
         display: block;
         width: 300px;
@@ -344,10 +375,19 @@ option {
         border: 1px solid $main-clr;
         border-radius: 10px;
         opacity: 0.25;
+        @include tablet {
+            display: none;
+        }
     }
 
     &-author__poster {
         position: relative;
+        @include tablet {
+            height: 350px;
+            width: 100%;
+            margin-top: 25px;
+            border: 4px solid #fa9e09;
+        }
     }
 
     &-author__title {
@@ -458,6 +498,10 @@ option {
     color: $light-txt;
     background-color: #fa9e09;
     margin-left: 4.5px;
+    @include tablet {
+        margin: 0;
+        display: flex;
+    }
     & a {
         color: $light-txt;
 
@@ -475,6 +519,9 @@ option {
         display: flex;
         justify-content: center;
         align-items: center;
+        @include tablet {
+            display: none;
+        }
     }
 
     & > .row:nth-child(2){
@@ -485,6 +532,10 @@ option {
         padding-left: 25px;
         padding-top: 15px;
         box-shadow: 0 5px 5px 0 $light-txt;
+        @include tablet{
+            box-shadow: none;
+
+        }
     }
 
     &-member {

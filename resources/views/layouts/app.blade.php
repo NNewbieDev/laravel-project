@@ -31,17 +31,17 @@
 <body>
     <div id="app">
         <div class="header row g-0">
-            <div class="header-left col-lg-6">
+            <div class="header-left col-lg-6 col-md-3">
                 <div class="header-logo">
                     <a href="{{ route('index') }}">
                         <img src="{{ url('images/logo.png') }}" alt="logo" class="logo">
                     </a>
                 </div>
             </div>
-            <div class="header-right col-lg-6 align-self-center ">
-                <div class="header-right-block row g-0 align-items-center ">
-                    <div class="header-search col-lg-6 justify-content-end ">
-                        <form method="POST" action="{{ route('index') }}" class="header-form d-flex">
+            <div class="header-right col-lg-6 col-md-9 align-self-center ">
+                <div class="header-right-block row g-0 align-items-center justify-content-end ">
+                    <div class="header-search col-lg-6 col-md-5 justify-content-end ">
+                        <form action="{{ route('index') }}" method="POST" class="header-form d-flex">
                             @csrf
                             <input type="text" placeholder="Tìm kiếm bài báo..." class="search-input" name="search">
                             <button type="submit" class="search-btn">
@@ -49,7 +49,7 @@
                             </button>
                         </form>
                     </div>
-                    <div class="header-account col-lg-6">
+                    <div class="header-account col-lg-6 col-md-5">
                         <div class="account-block">
                             <i class="fa-solid fa-user account-icon"></i>
                             <div class="dropdown">
@@ -107,7 +107,7 @@
                 <div class="footer-category col-lg-8">
                     <div class="row g-0">
                         @foreach ($category as $item)
-                            <li class="nav-bar-item col-lg-3"><a
+                            <li class="nav-bar-item col-lg-3 col-md-4"><a
                                     href="{{ route('index') }}">{{ $item->CategoryName }}</a>
                             </li>
                         @endforeach
@@ -126,10 +126,10 @@
                             </div>
                         </div>
                         <div class="footer-media row g-0">
-                            <div class="col-lg-1">
+                            <div class="col-lg-1 col-md-1">
                                 <i class="fa-brands fa-facebook" style="color: #4E89AE"></i>
                             </div>
-                            <div class="col-lg-1">
+                            <div class="col-lg-1 col-md-1">
                                 <i class="fa-brands fa-youtube" style="color: #E64848"></i>
                             </div>
 
@@ -141,12 +141,12 @@
                 <div class="footer-member col-lg-8">
                     <h5>Cộng tác viên</h5>
                     <ul class="member-role row">
-                        <li class="member col-lg-4"> Trần Thị Giáng My</li>
-                        <li class="member col-lg-4"> Nguyễn Phạm Thanh Hoàng </li>
-                        <li class="member col-lg-4"> Nguyễn Thị Kim Ngân</li>
-                        <li class="member col-lg-4"> Bùi Văn Nin</li>
-                        <li class="member col-lg-4"> Phạm Đức Mạnh</li>
-                        <li class="member col-lg-4"> Liêu Hà Phương Huy</li>
+                        <li class="member col-lg-4 col-md-6"> Trần Thị Giáng My</li>
+                        <li class="member col-lg-4 col-md-6"> Nguyễn Phạm Thanh Hoàng </li>
+                        <li class="member col-lg-4 col-md-6"> Nguyễn Thị Kim Ngân</li>
+                        <li class="member col-lg-4 col-md-6"> Bùi Văn Nin</li>
+                        <li class="member col-lg-4 col-md-6"> Phạm Đức Mạnh</li>
+                        <li class="member col-lg-4 col-md-6"> Liêu Hà Phương Huy</li>
                     </ul>
                 </div>
                 <div class="footer-logo col-lg-4">

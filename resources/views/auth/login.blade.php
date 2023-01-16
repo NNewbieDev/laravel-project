@@ -15,9 +15,10 @@
                             @csrf
 
                             <div class="row mb-3 justify-content-center">
-                                <label for="username" class="col-md-3 col-form-label text-md-start">Tên tài khoản</label>
+                                <label for="username" class="col-lg-3 col-md-5 col-form-label text-md-start">Tên tài
+                                    khoản</label>
 
-                                <div class="col-md-5">
+                                <div class="col-lg-5 col-md-7">
                                     <input id="username" type="text"
                                         class="form-control @error('username') is-invalid @enderror" name="username"
                                         value="{{ old('username') }}" required autocomplete="username" autofocus>
@@ -31,9 +32,10 @@
                             </div>
 
                             <div class="row mb-3 justify-content-center">
-                                <label for="password" class="col-md-3 col-form-label text-md-start">Mật khẩu</label>
+                                <label for="password" class="col-lg-3 col-md-5 col-form-label text-md-start">Mật
+                                    khẩu</label>
 
-                                <div class="col-md-5">
+                                <div class="col-lg-5 col-md-7">
                                     <input id="password" type="password"
                                         class="form-control @error('password') is-invalid @enderror" name="password"
                                         required autocomplete="current-password">
@@ -60,7 +62,7 @@
                             </div>
 
                             <div class="row mb-0 justify-content-center">
-                                <div class="col-md-8 offset-md-4 ">
+                                <div class="col-lg-8 offset-lg-4 col-md-8 offset-md-2 ">
                                     <button type="submit" class="btn-login">
                                         Đăng nhập
                                     </button>

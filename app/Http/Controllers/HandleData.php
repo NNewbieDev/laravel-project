@@ -70,7 +70,11 @@ class HandleData extends Controller
     }
     public function search(Request $request)
     {
-        $result = Article::where('title', 'LIKE', "%{$request->search}%")->paginate(15);
+        $result = Article::where('title', 'LIKE', "%{$request->search}%")
+            // ->orWhere('title', 'LIKE', "%{$search}%")
+            ->paginate(15);
+        // $result->withPath();
+
         $category = Category::all();
         return view('welcome', compact('result', 'category'));
     }

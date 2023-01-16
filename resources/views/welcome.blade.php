@@ -85,7 +85,7 @@
                             @endif
                         </div>
                     @endforeach
-                    <div class="paginate">{{ $result->onEachSide(1)->links() }}</div>
+                    <div class="paginate">{{ $result->links() }}</div>
                 </div>
             </div>
         </div>

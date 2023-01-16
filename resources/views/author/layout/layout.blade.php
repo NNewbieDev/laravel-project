@@ -44,7 +44,8 @@
         </div>
     @endif --}}
     <header>@yield('header')</header>
-    <main>@yield('main')</main>
+    <main style="background-color:{{ $darkMode ? 'var(--dark-clr)' : 'var(--white-clr)' }}">
+        @yield('main')</main>
     <footer>@yield('footer')</footer>
     {{-- Notification library --}}
     <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
