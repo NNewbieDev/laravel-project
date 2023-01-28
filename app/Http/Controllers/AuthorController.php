@@ -24,7 +24,7 @@ class AuthorController extends Controller
     public function index()
     {
         $title = "Tài khoản";
-        if ($_COOKIE['mode'] == "true") {
+        if ($_COOKIE['mode'] == "dark") {
             $darkMode = true;
         } else {
             $darkMode = false;

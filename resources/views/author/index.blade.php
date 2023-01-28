@@ -17,29 +17,29 @@
         <div class="row gx-3 gy-3 mt-4 p-xxl-3 p-xl-0 p-lg-3 p-md-4 p-sm-3">
             <div class="col-xl-3 col-lg-4 col-sm-12 col-md-6">
                 <div class=" p-3 rounded-4 text-white text-start h-100 shadow-sm option"
-                    style="background-color:{{ $darkMode ? 'var(--dark-clr)' : 'var(--white-clr)' }}">
+                    style="background-color:{{ $darkMode ? 'var(--white-clr)' : 'var(--dark-clr)' }}">
                     <a href="{{ route('author.management.management-avatar') }}"
                         class="option_title fs-5 mb-1 fw-bold text-decoration-none"
-                        style="color:{{ $darkMode ? 'var(--white-clr)' : 'var(--primary-color)' }}">Thay đổi
+                        style="color:{{ $darkMode ? 'var(--dark-clr)' : 'var(--primary-color)' }}">Thay đổi
                         Avatar
                         <i class="fa-solid fa-image"></i>
                     </a>
                     <p class="description fs-6 mb-0 fw-light"
-                        style="color:{{ $darkMode ? 'var(--white-clr)' : 'var(--primary-color)' }}">Chọn ảnh đại diện
+                        style="color:{{ $darkMode ? 'var(--dark-clr)' : 'var(--primary-color)' }}">Chọn ảnh đại diện
                         (PNG/JPG)</p>
                 </div>
             </div>
             <div class="col-xl-3 col-lg-4 col-sm-12 col-md-6">
                 <div class=" p-3 rounded-4 text-white text-start h-100 shadow-sm option"
-                    style="background-color:{{ $darkMode ? 'var(--dark-clr)' : 'var(--white-clr)' }}">
+                    style="background-color:{{ $darkMode ? 'var(--white-clr)' : 'var(--dark-clr)' }}">
                     <a href="{{ route('author.management.management-password') }}"
                         class="option_title fs-5 mb-1 fw-bold text-decoration-none"
-                        style="color:{{ $darkMode ? 'var(--white-clr)' : 'var(--primary-color)' }}">Quản lí mật
+                        style="color:{{ $darkMode ? 'var(--dark-clr)' : 'var(--primary-color)' }}">Quản lí mật
                         khẩu
                         <i class="fa-solid fa-lock"></i>
                     </a>
                     <p class="description fs-6 mb-0 fw-light"
-                        style="color:{{ $darkMode ? 'var(--white-clr)' : 'var(--primary-color)' }}">Đổi mật khẩu, đánh
+                        style="color:{{ $darkMode ? 'var(--dark-clr)' : 'var(--primary-color)' }}">Đổi mật khẩu, đánh
                         giá tính an toàn
                     </p>
                 </div>
@@ -76,24 +76,24 @@
 
             <div class="col-xl-3 col-lg-4 col-sm-12 col-md-6">
                 <div class=" p-3 rounded-4 text-white text-start h-100 shadow-sm option"
-                    style="background-color:{{ $darkMode ? 'var(--dark-clr)' : 'var(--white-clr)' }}">
+                    style="background-color:{{ $darkMode ? 'var(--white-clr)' : 'var(--dark-clr)' }}">
                     <a href="{{ route('author.management.management-information') }}"
                         class="option_title fs-5 mb-1 fw-bold text-decoration-none"
-                        style="color:{{ $darkMode ? 'var(--white-clr)' : 'var(--primary-color)' }}">Điều chỉnh hồ
+                        style="color:{{ $darkMode ? 'var(--dark-clr)' : 'var(--primary-color)' }}">Điều chỉnh hồ
                         sơ
                         <i class="fa-solid fa-gear"></i>
                     </a>
                     <p class="description fs-6 mb-0 fw-light"
-                        style="color:{{ $darkMode ? 'var(--white-clr)' : 'var(--primary-color)' }}">Thông tin cơ bản
+                        style="color:{{ $darkMode ? 'var(--dark-clr)' : 'var(--primary-color)' }}">Thông tin cơ bản
                     </p>
                 </div>
             </div>
             <div class="col-xl-3 col-lg-4 col-sm-12 col-md-6">
                 <div class=" px-3 rounded-4 text-white text-start h-100 shadow-sm option d-flex align-items-center"
-                    style="background-color:{{ $darkMode ? 'var(--dark-clr)' : 'var(--white-clr)' }};min-height:86px">
+                    style="background-color:{{ $darkMode ? 'var(--white-clr)' : 'var(--dark-clr)' }};min-height:86px">
                     <a href="{{ route('cusLogout') }}" id="logout"
                         class="text-uppercase fs-6 border p-2 rounded-3 text-decoration-none option_exit"
-                        style="color:{{ $darkMode ? 'var(--white-clr)' : 'var(--primary-color)' }};border-color:{{ $darkMode ? 'var(--white-clr)' : 'var(--primary-color)' }}!important">
+                        style="color:{{ $darkMode ? 'var(--dark-clr)' : 'var(--primary-color)' }};border-color:{{ $darkMode ? 'var(--dark-clr)' : 'var(--primary-color)' }}!important">
                         Thoát
                         <i class="fa-solid fa-arrow-right-from-bracket"></i>
                     </a>

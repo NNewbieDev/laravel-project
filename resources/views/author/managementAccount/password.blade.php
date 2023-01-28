@@ -7,7 +7,7 @@
 @endsection
 @section('main')
     <div class="container-fluid text-center py-5"
-        style="background-color:{{ $darkMode ? 'var(--dark-clr)' : 'var(--white-clr)' }}">
+        style="background-color:{{ $darkMode ? 'var(--dark-clr)' : 'var(--primary-color)' }}">
         <div class="container" style="width:448px">
             <div class="px-3 py-4 rounded-4 text-start h-100 shadow option"
                 style="background-color: {{ $darkMode ? 'var(--dark-clr)' : 'var(--white-clr)' }};color:#fff">

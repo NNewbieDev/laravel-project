@@ -33,6 +33,15 @@ $desktop-width: 1024px;
     box-sizing: border-box;
 }
 
+html {
+    --txt: #fff;
+    --main-clr: #FF9551;
+}
+html.dark {
+    --txt: #323232;
+    --main-clr:#16BFF1;
+}
+
 ul,ol,li {
     padding: 0;
     margin: 0;
@@ -62,7 +71,7 @@ img {
 }
 
 body {
-    background-color: $light-txt;
+    background-color: var(--txt);
 }
 
 
@@ -90,26 +99,26 @@ img.logo{
         display: block;
         width: 80%;
         height: 1px;
-        background-color: $main-clr;
+        background-color: var(--main-clr);
         margin-bottom: 10px;
     }
 
     &-title {
         font-weight: bold;
         & a {
-            color: $main-clr;
+            color: var(--main-clr);
         }
     }
 }
 
 .article-items {
     margin: 0 auto;
-    color: $main-clr;
+    color: var(--main-clr);
 }
 
 .react-block {
     font-size: 24px;
-    color: $main-clr;
+    color: var(--main-clr);
 
 }
 
@@ -123,12 +132,12 @@ img.logo{
 select {
     border: none;
     outline: none;
-    color: $main-clr;
+    color: var(--main-clr);
 }
 option {
     padding: 8px 16px;
     border-radius: 0;
-    border: 1px solid $main-clr;
+    border: 1px solid var(--main-clr);
 }
 
 // END CONTENT
@@ -142,7 +151,7 @@ option {
 
 .header {
     height: 60px;
-    border-bottom: 2px solid $main-clr;
+    border-bottom: 2px solid var(--main-clr);
     z-index: 9999;
     &-left {
         height: 100%;
@@ -153,7 +162,7 @@ option {
 
     &-right {
         height: 100%;
-        color: $main-clr;  
+        color: var(--main-clr);  
         &-block {
             height: 100%;
         }
@@ -168,7 +177,7 @@ option {
         &-btn {
             border: none;
             background-color: transparent;
-            color: $main-clr;
+            color: var(--main-clr);
         }
         
         &-input {
@@ -178,7 +187,7 @@ option {
         }
 
         &-input:focus-visible {
-            border: 2px solid $main-clr;
+            border: 2px solid var(--main-clr);
             outline: none;
         }
 
@@ -216,22 +225,30 @@ option {
     left: 0;
     min-width: 150px;
     background-color: #fff;
-    border: 3px double $main-clr;
+    border: 3px double var(--main-clr);
     box-shadow: 0 0 5px 2px #ccc;
     z-index: 9;
 }
 
 .dropdown > div {
     padding: 10px;
+    cursor: pointer;
+}
 
+.dropdown > div:hover a,
+.dropdown > div:hover {
+    background-color: var(--main-clr);
+    color: var(--txt);
+    opacity: .75;
 }
 
 .dropdown > div:nth-child(even) {
-    border-top: 1px solid $main-clr;
+    border-top: 1px solid var(--main-clr);
+    border-bottom: 1px solid var(--main-clr);
 }
 
 .dropdown a {
-    color: $main-clr;
+    color: var(--main-clr);
 }
 
 // END HEADER
@@ -243,8 +260,8 @@ option {
 
     &-login {
         border: none;
-        background-color: $main-clr;
-        color: $light-txt;
+        background-color: var(--main-clr);
+        color: var(--txt);
         padding: 8px 14px;
         border-radius: 4px;
     }
@@ -252,13 +269,13 @@ option {
     &-register {
         margin-left: 15px;
         padding: 8px 14px;
-        color: $main-clr;
+        color: var(--main-clr);
         border-radius: 4px;
     }
 
     &-register:hover { 
         background-color: #e6e2e2;
-        color: $main-clr;
+        color: var(--main-clr);
 
     }
 }
@@ -267,7 +284,7 @@ option {
     
     &{
         cursor: pointer;
-        color: $main-clr;
+        color: var(--main-clr);
     }
     
     &-icon {
@@ -277,7 +294,7 @@ option {
     
     &-btn {
         & a {
-            color: $main-clr;
+            color: var(--main-clr);
         }
     }
 
@@ -290,8 +307,8 @@ option {
     position: absolute;
     top: 100%;
     right: 0;
-    border: 1px solid $main-clr;
-    background-color: $light-txt;
+    border: 1px solid var(--main-clr);
+    background-color: var(--txt);
     border-radius: 5px;
     min-width: 70px;
     text-align: left;
@@ -302,7 +319,7 @@ option {
     }
 
     & div:nth-child(even) {
-        border-top: 1px solid $main-clr;
+        border-top: 1px solid var(--main-clr);
     }
 
     & div {
@@ -322,8 +339,8 @@ option {
     left: 0;
     top: 0;
     bottom: 0;
-    background-color: $main-clr;
-    border: 2px solid $main-clr;
+    background-color: var(--main-clr);
+    border: 2px solid var(--main-clr);
     border-top-right-radius: 66px;
     border-bottom-right-radius: 80px;
     @include tablet{
@@ -334,7 +351,7 @@ option {
         display: block;
         width: 300px;
         margin-top: 60px;
-        background-color: $light-txt;
+        background-color: var(--txt);
         border-top-right-radius: 60px;
         border-bottom-left-radius: 60px;
         border-bottom-right-radius: 80px;
@@ -349,13 +366,13 @@ option {
         }
     
         &-item > a {
-            color: $main-clr;
+            color: var(--main-clr);
         }
     }
 }
 
 .form-control {
-    background-color: $light-txt;
+    // background-color: var(--txt);
 }
 
 // END NAVIGATION
@@ -372,7 +389,7 @@ option {
     &-author__poster > img {
         width: 100%;
         height: 100%;
-        border: 1px solid $main-clr;
+        border: 1px solid var(--main-clr);
         border-radius: 10px;
         opacity: 0.25;
         @include tablet {
@@ -395,7 +412,7 @@ option {
         top: 5%;
         left: 50%;
         transform: translateX(-50%);
-        color: $main-clr;
+        color: var(--main-clr);
         min-width: 500px;
 
     }
@@ -406,7 +423,7 @@ option {
         left: 50%;
         transform: translateX(-50%);
         width: 80%;
-        color: $main-clr;
+        color: var(--main-clr);
         font-size: 1.25rem;
     }
 
@@ -415,21 +432,21 @@ option {
         bottom: 5%;
         left: 50%;
         transform: translateX(-50%);
-        background-color: $main-clr;
+        background-color: var(--main-clr);
         border-radius: 8px;
     }
 
     &-author__btn a {
         padding: 16px 32px;
         text-decoration: none;
-        color: $light-txt;
+        color: var(--txt);
         font-size: 1.25rem;
     }
 
 // Đăng kí thường
     &-form {
         font-size: 1.25rem;
-        color: $main-clr;
+        color: var(--main-clr);
     }
 
     &-title {
@@ -444,7 +461,7 @@ option {
 
     &-title__icon {
         padding: 14px 16px;
-        border: 2px solid $main-clr;
+        border: 2px solid var(--main-clr);
         border-radius: 50%;
     }
 
@@ -456,14 +473,14 @@ option {
     }
     
     &-btn:hover  {
-        color: $light-txt;
-        background-color: $main-clr;
+        color: var(--txt);
+        background-color: var(--main-clr);
     }
     
     &-btn {
-        background-color: $light-txt;
-        border: 2px solid $main-clr;
-        color: $main-clr;
+        background-color: var(--txt);
+        border: 2px solid var(--main-clr);
+        color: var(--main-clr);
         border-radius: 8px;
         background-color: transparent;
         padding: 0 40px;
@@ -474,7 +491,7 @@ option {
 
     &-form { 
         font-size: 1.25rem;
-        color: $main-clr;
+        color: var(--main-clr);
     }
 
     &-title {
@@ -489,21 +506,21 @@ option {
 
     &-title__icon {
         padding: 14px 16px;
-        border: 2px solid $main-clr;
+        border: 2px solid var(--main-clr);
         border-radius: 50%;
     }
 }
 // Footer
 .footer {
-    color: $light-txt;
-    background-color: #fa9e09;
+    color: var(--txt);
+    background-color: var(--main-clr);
     margin-left: 4.5px;
     @include tablet {
         margin: 0;
         display: flex;
     }
     & a {
-        color: $light-txt;
+        color: var(--txt);
 
     }
 
@@ -519,30 +536,30 @@ option {
         display: flex;
         justify-content: center;
         align-items: center;
+        background-color: var(--txt);
+        box-shadow: inset 5px 5px #fff;
         @include tablet {
             display: none;
         }
     }
-
+    
     & > .row:nth-child(2){
-        border-top: 1px solid $main-clr;
+        border-top: 1px solid var(--main-clr);
     }
-
+    
     &-channel {
         padding-left: 25px;
         padding-top: 15px;
-        box-shadow: 0 5px 5px 0 $light-txt;
+        box-shadow: 0 5px 5px 0 var(--txt);
         @include tablet{
             box-shadow: none;
-
+            
         }
     }
-
+    
     &-member {
         padding-left: 25px;
         padding-block: 15px;
-        box-shadow: 5px 0 5px 0 $light-txt;
-
     }
 
     .member {
@@ -553,8 +570,8 @@ option {
 
 .content {
     width: 80%;
+    color: var(--main-clr);
     &-title {
-        color: $main-clr;
         font-weight: 800;
     }
 
@@ -591,12 +608,12 @@ option {
     }
 
     &-user::placeholder {
-        color: $main-clr;
+        color: var(--main-clr);
         font-style: italic;
     }
 
     &-user:focus-visible {
-        border: 2px solid $main-clr;
+        border: 2px solid var(--main-clr);
         outline: none;
     }
 
@@ -607,12 +624,12 @@ option {
 
     &-item {
         width: 80%;
-        border: 4px double $main-clr;
+        border: 4px double var(--main-clr);
         margin-bottom: 10px;
     }
 
     &-username {
-        color: $main-clr;
+        color: var(--main-clr);
         margin: 5px 10px;
         font-weight: 700;
     }
@@ -625,7 +642,7 @@ option {
 
     &-item .like {
         margin-inline: 10px;
-        color: $main-clr;
+        color: var(--main-clr);
         cursor: pointer;
         font-size: 18px;
     } 
@@ -646,15 +663,15 @@ option {
     z-index: 9999;
     &-block {
         display: block;
-        background-color: $light-txt;
+        background-color: var(--txt);
         width: 400px;
         height: 250px;
         transition: all .5s linear;
     }
 
     &-close {
-        color: $light-txt;
-        background-color: $main-clr;
+        color: var(--txt);
+        background-color: var(--main-clr);
         text-align: right;
     }
 
@@ -671,7 +688,7 @@ option {
         justify-content: center;
         align-items: center;
         height: calc( 100% - 52px );
-        color: $main-clr;
+        color: var(--main-clr);
         & span {
             margin-left: 5px;
         }
@@ -717,7 +734,7 @@ nav > div:nth-child(1) {
 
 nav > div:nth-child(2) a {
     color: #000;
-    background-color: $main-clr;
+    background-color: var(--main-clr);
 }
 
 .pick {

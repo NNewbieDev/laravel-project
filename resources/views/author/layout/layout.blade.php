@@ -44,7 +44,7 @@
         </div>
     @endif --}}
     <header>@yield('header')</header>
-    <main style="background-color:{{ $darkMode ? 'var(--dark-clr)' : 'var(--white-clr)' }}">
+    <main style="background-color:{{ $_COOKIE['mode'] == 'dark' ? 'var(--primary-color)' : 'var(--white-clr)' }}">
         @yield('main')</main>
     <footer>@yield('footer')</footer>
     {{-- Notification library --}}

@@ -21,7 +21,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss'])
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
 
     {{-- notification --}}
@@ -68,6 +68,10 @@
                                         <a href="{{ route('cusLogout') }}" class="logout">Đăng xuất</a>
                                     </div>
                                 @endguest
+                                <div class="dark-ui">
+                                    Chế độ:
+                                    <i class="fa-solid fa-moon state-mode"></i>
+                                </div>
                             </div>
                         </div>
                     </div>

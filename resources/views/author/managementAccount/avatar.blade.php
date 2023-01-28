@@ -7,9 +7,8 @@
 @endsection
 @section('main')
     <div class="container-fluid text-center py-5"
-        style="background-color:{{ $darkMode ? 'var(--dark-clr)' : 'var(--white-clr)' }}">
-        <div class=" py-3 px-4 rounded-4 text-center h-100 shadow option"
-            style="background-color: {{ $darkMode ? 'var(--dark-clr)' : 'var(--white-clr)' }}">
+        style="background-color:{{ $_COOKIE['mode'] == 'dark' ? 'var(--primary-color)' : 'var(--white-clr)' }}">
+        <div class=" py-3 px-4 rounded-4 text-center h-100 shadow option" style="background-color: var(--white-clr)">
             <form action="{{ route('author.management.update-avatar') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <img class="rounded-3 mt-4 mb-2"

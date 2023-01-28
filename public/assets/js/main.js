@@ -4,9 +4,9 @@ window.addEventListener('load', () => {
     setTimeout(() => {
         loading.style.display = 'none';
     }, 750)
-    if (localStorage.getItem('mode') === null) {
-        localStorage.setItem('mode', "false");
-    }
+    // if (localStorage.getItem('mode') === null) {
+    //     localStorage.setItem('mode', "light");
+    // }
     setCookie('mode', localStorage.getItem("mode"), 365)
 })
 
@@ -18,9 +18,10 @@ function setCookie(cname, cvalue, exdays) {
 }
 
 changeMode.addEventListener('click', () => {
-    if (localStorage.getItem('mode') === "true") {
-        localStorage.setItem('mode', "false");
+    if (localStorage.getItem('mode') == "light") {
+        localStorage.setItem('mode', "dark");
     } else {
-        localStorage.setItem('mode', "true");
+        localStorage.setItem('mode', "light");
     }
+    window.location.reload();
 })

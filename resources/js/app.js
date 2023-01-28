@@ -2,48 +2,30 @@ import './bootstrap';
 // import '../css/app.css';
 import '../sass/app.scss';
 
-const account = document.querySelector('.account-icon');
-const dropdown = document.querySelector('.dropdown');
-const filter = document.querySelector('.filter-icon');
-const filterBlock = document.querySelector('.filter-block');
-const likes = document.querySelectorAll('.like');
-const comment = document.querySelectorAll('.comment');
-const showComment = document.querySelector('.comment-input');
-const warning = document.querySelector('.warning');
-const closeWarning = document.querySelector('.close-icon');
-const notLikes = document.querySelectorAll('.not-like');
-const notComment = document.querySelectorAll('.not-comment');
+const modeUI = document.querySelector('.dark-ui');
+const stateMode = document.querySelector(".state-mode");
+const html = document.querySelector('html')
+window.addEventListener('load', function () {
+    if (localStorage.getItem('mode') == 'dark') {
+        stateMode.classList.replace("fa-sun", "fa-moon");
+        html.className = 'dark';
+    }
+    else {
+        stateMode.classList.replace("fa-moon", "fa-sun");
+        html.classList.remove("dark");
+    }
 
-for (const not of notLikes) {
-    not.addEventListener('click', function (e) {
-        warning.classList.add('active-flex');
-    });
-};
-
-filter.addEventListener('click', function (e) {
-    filterBlock.classList.toggle('active');
-});
-
-for (const not of notComment) {
-    not.addEventListener('click', function (e) {
-        warning.classList.add('active-flex');
-    });
-};
-
-for (const like of likes) {
-    like.addEventListener('click', function (e) {
-        like.classList.toggle('pick');
-    });
-};
-account.addEventListener('click', function (e) {
-    dropdown.classList.toggle('active');
 })
 
-comment.addEventListener('click', function (e) {
-    showComment.classList.toggle('active');
-});
-
-closeWarning.addEventListener('click', function (e) {
-    warning.classList.remove('active-flex');
-});
+modeUI.addEventListener('click', function (e) {
+    if (localStorage.getItem("mode") == "dark") {
+        localStorage.setItem('mode', 'light');
+        stateMode.classList.replace("fa-moon", "fa-sun");
+        html.classList.remove("dark");
+    } else {
+        localStorage.setItem('mode', 'dark');
+        stateMode.classList.replace("fa-sun", "fa-moon");
+        html.className = 'dark';
+    }
+})
 
