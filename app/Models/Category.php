@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-    use HasFactory;
-    protected $table = "categories";
+          use HasFactory;
+          protected $table = "categories";
 
-    protected $fillable = ['CategoryID', 'CategoryName'];
-    public function article()
-    {
-        return $this->belongsTo(Article::class);
-    }
+          protected $fillable = ['id', 'name', 'link'];
+          public function article()
+          {
+                    return $this->belongsTo(Article::class);
+          }
 }
