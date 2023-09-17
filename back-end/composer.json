@@ -12,6 +12,7 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.1",
+        "tymon/jwt-auth": "^2.0",
         "vedmant/laravel-feed-reader": "^1.5"
     },
     "require-dev": {

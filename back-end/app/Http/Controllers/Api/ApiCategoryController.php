@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ApiCategoryController extends Controller
 {
@@ -17,7 +18,7 @@ class ApiCategoryController extends Controller
           public function index()
           {
                     $category = Category::all();
-                    return CategoryResource::collection($category);
+                    return response(CategoryResource::collection($category), Response::HTTP_OK);
           }
 
           /**
@@ -28,7 +29,10 @@ class ApiCategoryController extends Controller
            */
           public function store(Request $request)
           {
-                    //
+                    $category = new Category;
+                    $category->name = $request->name;
+                    $category->link = $request->link;
+                    return response("", Response::HTTP_CREATED);
           }
 
           /**

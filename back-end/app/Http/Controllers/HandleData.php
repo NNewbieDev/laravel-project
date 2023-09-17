@@ -103,12 +103,10 @@ class HandleData extends Controller
           {
 
                     $comment = new Comment;
-                    $comment->UserID = Auth::user()->id;
+                    $comment->userID = Auth::user()->id;
                     // $article = Article::where("ArticleID", $id)->first();
-                    $comment->ArticleID = $request->session()->get("key");
-                    $comment->username = Auth::user()->username;
+                    $comment->articleID = $request->session()->get("key");
                     $comment->content = $request['comment'];
-                    $comment->role = Auth::user()->role;
                     $comment->save();
                     return redirect()->back();
           }

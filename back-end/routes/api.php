@@ -20,3 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('article/', [App\Http\Controllers\Api\ApiArticleController::class, "index"])->name('article.index');
+Route::get('article/{id}', [App\Http\Controllers\Api\ApiCommentController::class, "show"]);
+Route::group(['middleware' => 'jwt.auth'], function () {
+          Route::get('user-info', 'UserController@getUserInfo');
+});

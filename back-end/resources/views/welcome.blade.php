@@ -16,7 +16,7 @@
                     @foreach ($result as $item)
                         <div class="item-list">
                             <h3 class="item-title">
-                                <a href="{{ route('news', ['id' => $item->ArticleID]) }}">{{ $item['title'] }}</a>
+                                <a href="{{ route('news', ['id' => $item->id]) }}">{{ $item['title'] }}</a>
                             </h3>
                             {{-- {{ $item['content'] }} --}}
                             <div class="content-block">

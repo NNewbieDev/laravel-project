@@ -40,7 +40,7 @@
                 <div class="comment-block">
                     <h2>Bình luận</h2>
                     @foreach ($comment as $item)
-                        @if ($item->ArticleID == Session::get('key'))
+                        @if ($item->articleID == Session::get('key'))
                             <div class="comment-item">
                                 <div class="comment-username">
                                     @if ($item->role == 0)
