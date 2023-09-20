@@ -8,7 +8,7 @@ const App = () => {
   const { user } = useStateContext();
   return (
     <div className="font-serif">
-      <div className="">{user.username}</div>
+      {/* <div className="">{user.username}</div> */}
       <Header />
       <Router>
         <Route path="/login" element={<Login />} />
