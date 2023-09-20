@@ -17,7 +17,7 @@ class ApiArticleController extends Controller
            */
           public function index()
           {
-                    $articles =  Article::paginate(10);
+                    $articles =  Article::where('status', 'ACCEPT')->orderBy('created_at', 'desc')->paginate(10);
 
                     return response(ArticleResource::collection($articles), Response::HTTP_OK);
           }

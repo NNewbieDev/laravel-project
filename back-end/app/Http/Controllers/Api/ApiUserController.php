@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Hash;
 
 class ApiUserController extends Controller
 {
@@ -31,6 +34,23 @@ class ApiUserController extends Controller
                     }
 
                     return $this->respondWithToken($token);
+          }
+
+          public function register(Request $request)
+          {
+                    dd($request);
+                    // if ($request->hasFile('image')) {
+                    $filename = $request->avatar->getClientOriginalName();
+                    $request->avatar->storeAs('images', $filename, 'public');
+                    // }
+                    User::create([
+                              'username' => $request['username'],
+                              'password' => Hash::make($request['password']),
+                              'email' => $request['email'],
+                              'phone' => $request['phone'],
+                              // 'avatar' => $filename
+                    ]);
+                    return response("Đăng ký thành công", Response::HTTP_CREATED);
           }
 
           /**

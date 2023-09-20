@@ -16,6 +16,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 |
 */
 
+Route::post('/register', [App\Http\Controllers\Api\ApiUserController::class, 'register']);
 
 Route::group([
           'middleware' => 'api',
@@ -25,8 +26,8 @@ Route::group([
                     return auth('api')->user();
           });
           Route::post('/login', [App\Http\Controllers\Api\ApiUserController::class, 'login']);
-          Route::post('logout', 'AuthController@logout');
-          Route::post('refresh', 'AuthController@refresh');
+          Route::post('logout', [App\Http\Controllers\Api\ApiUserController::class, 'logout']);
+          Route::post('refresh', [App\Http\Controllers\Api\ApiUserController::class, 'refresh']);
           Route::post('/me', [App\Http\Controllers\Api\ApiUserController::class, 'me']);
 });
 

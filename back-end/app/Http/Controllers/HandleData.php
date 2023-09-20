@@ -46,11 +46,12 @@ class HandleData extends Controller
                                                   $article->description = $list['description'];
                                                   $article->link = $list['link'];
                                                   $article->categoryID = $rss->id;
+                                                  $article->status = "ACCEPT";
                                         }
                                         $article->save();
                               }
                     }
-                    $result = Article::orderBy("created_at", "desc")->paginate(10);
+                    $result = Article::where("status", 'ACCEPT')->orderBy("created_at", "desc")->paginate(10);
                     $category = Category::all();
                     return view('welcome', compact('result', 'category'));
           }
@@ -70,13 +71,13 @@ class HandleData extends Controller
           }
           public function search(Request $request)
           {
-                    $result = Article::where('title', 'LIKE', "%{$request->search}%")->paginate(10);
+                    $result = Article::where('title', 'LIKE', "%{$request->search}%")->where("status", "ACCEPT")->paginate(10);
                     $category = Category::all();
                     return view('welcome', compact('result', 'category'));
           }
           public function nav($id)
           {
-                    $result = Article::where('categoryID', $id)->paginate(10);
+                    $result = Article::where('categoryID', $id)->where('status', 'ACCEPT')->paginate(10);
                     $category = Category::all();
                     return view('welcome', compact('result', 'category'));
           }
