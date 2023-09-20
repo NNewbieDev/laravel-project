@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\ApiArticleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,12 +16,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-          return $request->user();
+
+Route::group([
+          'middleware' => 'api',
+          'prefix' => 'auth'
+], function ($router) {
+          Route::get('/user', function () {
+                    return auth('api')->user();
+          });
+          Route::post('/login', [App\Http\Controllers\Api\ApiUserController::class, 'login']);
+          Route::post('logout', 'AuthController@logout');
+          Route::post('refresh', 'AuthController@refresh');
+          Route::post('/me', [App\Http\Controllers\Api\ApiUserController::class, 'me']);
 });
 
 Route::get('article/', [App\Http\Controllers\Api\ApiArticleController::class, "index"])->name('article.index');
 Route::get('article/{id}', [App\Http\Controllers\Api\ApiCommentController::class, "show"]);
-Route::group(['middleware' => 'jwt.auth'], function () {
-          Route::get('user-info', 'UserController@getUserInfo');
-});
+// Route::group(['middleware' => 'jwt.auth'], function () {
+//           Route::get('user-info', 'UserController@getUserInfo');
+// });

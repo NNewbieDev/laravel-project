@@ -1,8 +1,18 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{html,js}"],
+  darkMode: "class",
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        dark: "#191a1f",
+        "green-btn": "#0cbc87",
+        "gray-form": "#e8effd",
+      },
+    },
+    //     fontFamily: {
+    //       podkova: ["Podkova", "serif"],
+    //     },
   },
   plugins: [],
 };
