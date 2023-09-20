@@ -6,6 +6,7 @@ const SERVER = "http://localhost:8000";
 export const endpoints = {
   login: "/api/auth/login",
   user: "/api/auth/user",
+  register: "/api/auth/register",
 };
 
 export const authApi = () => {
