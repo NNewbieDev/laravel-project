@@ -16,7 +16,8 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 |
 */
 
-Route::post('/register', [App\Http\Controllers\Api\ApiUserController::class, 'register']);
+// Route::post('register', [App\Http\Controllers\Api\ApiUserController::class, 'register']);
+Route::post('register', [App\Http\Controllers\Api\ApiUserController::class, 'register']);
 
 Route::group([
           'middleware' => 'api',

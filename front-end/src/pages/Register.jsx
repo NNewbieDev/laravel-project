@@ -21,7 +21,7 @@ const Register = () => {
 
       for (let field in user) if (field !== "") form.append(field, user[field]);
 
-      form.append("avatar", avatar.current.files[0]);
+      //       form.append("avatar", avatar.current.files[0]);
 
       let res = await Apis.post(endpoints["register"], form);
       console.log(res.data);
@@ -110,9 +110,9 @@ const Register = () => {
             placeholder="*****"
           />
         </div>
-        <div className="flex flex-col my-4 text-gray-600">
+        {/* <div className="flex flex-col my-4 text-gray-600">
           <input type="file" ref={avatar} />
-        </div>
+        </div> */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between">
           <div className="">
             <input

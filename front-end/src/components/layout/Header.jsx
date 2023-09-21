@@ -29,7 +29,8 @@ import {
   PuzzlePieceIcon,
   GiftIcon,
 } from "@heroicons/react/24/outline";
- 
+import { useStateContext } from "../../context/ContextProvider";
+import { Link } from "react-router-dom";
 const colors = {
   blue: "bg-blue-50 text-blue-500",
   orange: "bg-orange-50 text-orange-500",
@@ -40,7 +41,7 @@ const colors = {
   cyan: "bg-cyan-50 text-cyan-500",
   pink: "bg-pink-50 text-pink-500",
 };
- 
+
 const navListMenuItems = [
   {
     color: "blue",
@@ -102,15 +103,19 @@ const navListMenuItems = [
     description: "List of all our open-source projects, it's all free.",
   },
 ];
- 
+
 function NavListMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
- 
+
   const renderItems = navListMenuItems.map(
     ({ icon, title, description, color }, key) => (
-      <a href="#" key={key}>
-        <MenuItem className="hidden bg-white items-center gap-3 rounded-lg p-5 hover:bg-slate-200">
+      <Link to={"#"} key={key}>
+        <MenuItem
+          className={`${
+            isMenuOpen ? "flex" : "hidden"
+          } text-black my-3 bg-white items-center gap-3 rounded-lg p-3 hover:bg-slate-200 `}
+        >
           <div className={`rounded-lg p-5 ${colors[color]}`}>
             {React.createElement(icon, {
               strokeWidth: 2,
@@ -130,10 +135,10 @@ function NavListMenu() {
             </Typography>
           </div>
         </MenuItem>
-      </a>
+      </Link>
     )
   );
- 
+
   return (
     <React.Fragment>
       <Menu
@@ -141,7 +146,7 @@ function NavListMenu() {
         handler={setIsMenuOpen}
         offset={{ mainAxis: 20 }}
         placement="bottom"
-        allowHover={true}
+        //         allowHover={false}
       >
         <MenuHandler>
           <Typography as="div" variant="small" className="font-normal">
@@ -177,7 +182,7 @@ function NavListMenu() {
     </React.Fragment>
   );
 }
- 
+
 function NavList() {
   return (
     <List className=" mt-4 mb-6 p-0 lg:mt-0 lg:mb-0 lg:flex-row lg:p-1">
@@ -188,12 +193,12 @@ function NavList() {
         color="blue-gray"
         className="font-normal"
       >
-        <ListItem className="flex items-center gap-2 py-2 pr-4">
+        <ListItem className="flex items-center gap-2 ">
           <CubeTransparentIcon className="h-[18px] w-[18px]" />
           Blocks
         </ListItem>
       </Typography>
-      <NavListMenu className="hidden"/>
+      <NavListMenu />
       <Typography
         as="a"
         href="#"
@@ -209,43 +214,58 @@ function NavList() {
     </List>
   );
 }
- 
+
 export default function Footer() {
   const [openNav, setOpenNav] = React.useState(false);
- 
+  const { user, dispatch } = useStateContext();
   React.useEffect(() => {
     window.addEventListener(
       "resize",
       () => window.innerWidth >= 960 && setOpenNav(false)
     );
   }, []);
- 
+
   return (
-    <Navbar className="bg-slate-400  px-4 py-3">
+    <Navbar className="bg-slate-400 rounded-none rounded-bl-2xl rounded-br-2xl z-10 px-4 py-3 ">
       <div className="flex items-center justify-between text-blue-gray-900">
-        <Typography
-          as="a"
-          href="#"
-          variant="h6"
-          className="mr-4 cursor-pointer py-1.5 lg:ml-2"
+        <Link
+          to={"/"}
+          className="w-10 bg-white rounded-full md:w-12 flex items-center justify-center"
         >
-          Material Tailwind
-        </Typography>
+          <img src="/logo-symbol.png" alt="News" />
+        </Link>
         <div className="hidden lg:block">
           <NavList />
         </div>
         <div className="hidden gap-2 lg:flex">
-          <Button variant="text" size="sm" color="blue-gray">
-            Sign In
-          </Button>
-          <Button variant="gradient" size="sm">
-              Sign Up
-            </Button>
+          {user === null ? (
+            <>
+              <Button variant="text" size="sm" color="blue-gray">
+                <Link to={"/login"}>Đăng nhập</Link>
+              </Button>
+              <Button variant="gradient" size="sm">
+                <Link to={"/register"}>Đăng ký</Link>
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button variant="text" size="sm" color="blue-gray">
+                {/* Đăng nhập */}
+              </Button>
+              <Button
+                onClick={() => dispatch({ type: "logout" })}
+                variant="gradient"
+                size="sm"
+              >
+                Đăng xuất
+              </Button>
+            </>
+          )}
         </div>
         <IconButton
           variant="text"
           color="blue-gray"
-          className="lg:hidden"
+          className="lg:hidden flex justify-center items-center"
           onClick={() => setOpenNav(!openNav)}
         >
           {openNav ? (
@@ -259,10 +279,10 @@ export default function Footer() {
         <NavList />
         <div className="flex w-full flex-nowrap items-center gap-2 lg:hidden">
           <Button variant="outlined" size="sm" color="blue-gray" fullWidth>
-            Sign In
+            <Link to={"/login"}>Đăng nhập</Link>
           </Button>
           <Button variant="gradient" size="sm" fullWidth>
-            Sign Up
+            <Link to={"/register"}>Đăng ký</Link>
           </Button>
         </div>
       </Collapse>

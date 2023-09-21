@@ -17,7 +17,7 @@ class ApiUserController extends Controller
            */
           public function __construct()
           {
-                    $this->middleware('auth:api', ['except' => ['login']]);
+                    $this->middleware('auth:api', ['except' => ['login', 'register']]);
           }
 
           /**
@@ -38,18 +38,21 @@ class ApiUserController extends Controller
 
           public function register(Request $request)
           {
-                    dd($request);
-                    // if ($request->hasFile('image')) {
-                    $filename = $request->avatar->getClientOriginalName();
-                    $request->avatar->storeAs('images', $filename, 'public');
-                    // }
-                    User::create([
-                              'username' => $request['username'],
-                              'password' => Hash::make($request['password']),
-                              'email' => $request['email'],
-                              'phone' => $request['phone'],
-                              // 'avatar' => $filename
-                    ]);
+
+                    $user = new User;
+                    $user->username = $request->username;
+                    $user->password = Hash::make($request->password);
+                    $user->email = $request->email;
+                    $user->phone = $request->phone;
+                    $user->save();
+
+                    // User::create([
+                    //           'username' => $request['username'],
+                    //           'password' => Hash::make($request['password']),
+                    //           'email' => $request['email'],
+                    //           'phone' => $request['phone'],
+                    //           // 'avatar' => $filename
+                    // ]);
                     return response("Đăng ký thành công", Response::HTTP_CREATED);
           }
 
@@ -82,7 +85,7 @@ class ApiUserController extends Controller
            */
           public function refresh()
           {
-                    return $this->respondWithToken(auth('api')->refresh());
+                    return $this->respondWithToken(auth()->refresh());
           }
 
           /**
