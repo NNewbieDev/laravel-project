@@ -107,14 +107,15 @@ const navListMenuItems = [
 function NavListMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
+  
+
 
   const renderItems = navListMenuItems.map(
     ({ icon, title, description, color }, key) => (
       <Link to={"#"} key={key}>
         <MenuItem
-          className={`${
-            isMobileMenuOpen ? "flex" : "hidden"
-          } text-black my-3 bg-white items-center gap-3 rounded-lg p-3 hover:bg-slate-200 `}
+          className={`${isMobileMenuOpen ? "flex" : "hidden"
+            } text-black my-3 bg-white items-center gap-3 rounded-lg p-3 hover:bg-slate-200 `}
         >
           <div className={`rounded-lg p-5 ${colors[color]}`}>
             {React.createElement(icon, {
@@ -146,7 +147,7 @@ function NavListMenu() {
         handler={setIsMenuOpen}
         offset={{ mainAxis: 20 }}
         placement="bottom"
-        //         allowHover={false}
+      //         allowHover={false}
       >
         <MenuHandler>
           <Typography as="div" variant="small" className="font-normal">
@@ -159,21 +160,19 @@ function NavListMenu() {
               Resources
               <ChevronDownIcon
                 strokeWidth={2.5}
-                className={`hidden h-3 w-3 transition-transform lg:block ${
-                  isMenuOpen ? "rotate-180" : ""
-                }`}
+                className={`hidden h-3 w-3 transition-transform lg:block ${isMenuOpen ? "rotate-180" : ""
+                  }`}
               />
               <ChevronDownIcon
                 strokeWidth={2.5}
-                className={`block h-3 w-3 transition-transform lg:hidden ${
-                  isMobileMenuOpen ? "rotate-180" : ""
-                }`}
+                className={`block h-3 w-3 transition-transform lg:hidden ${isMobileMenuOpen ? "rotate-180" : ""
+                  }`}
               />
             </ListItem>
           </Typography>
         </MenuHandler>
-        <MenuList className="hidden max-w-screen-xl rounded-xl lg:block">
-          <ul className="grid grid-cols-4 gap-y-2">{renderItems}</ul>
+        <MenuList className="hidden max-w-screen-xl max-h-72 rounded-xl lg:block">
+          {renderItems}
         </MenuList>
       </Menu>
       <div className="block lg:hidden">
@@ -184,8 +183,25 @@ function NavListMenu() {
 }
 
 function NavList() {
+  const { user, dispatch } = useStateContext();
+
+  const login = (evt) => {
+    evt.preventDefault();
+
+    const process = async () => {
+      try {
+        dispatch({
+          type: "logout",
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    process();
+  };
+  
   return (
-    <List className=" mt-4 mb-6 p-0 lg:mt-0 lg:mb-0 lg:flex-row lg:p-1">
+    <List className=" mt-4 mb-6 p-0 lg:mt-0 lg:mb-0 lg:flex-row lg:p-1 items-center">
       <Typography
         as="a"
         href="#"
@@ -208,7 +224,12 @@ function NavList() {
       >
         <ListItem className="flex items-center gap-2 ">
           <UserCircleIcon className="h-[18px] w-[18px]" />
-          Account
+          {user === null ? "Account" 
+          :<> <div>{user.username}</div>
+              <Button onClick={(e) => login(e)} className="py-1 px-3" style={{backgroundColor: "black"}}>
+                Đăng xuất
+              </Button>
+          </> }
         </ListItem>
       </Typography>
     </List>

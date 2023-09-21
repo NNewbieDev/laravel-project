@@ -6,16 +6,12 @@ const SITEMAP = [
     links: ["About Us", "Careers", "Our Team", "Projects"],
   },
   {
-    title: "Help Center",
+    title: "Hỗ Trợ",
     links: ["Discord", "Twitter", "GitHub", "Contact Us"],
   },
   {
-    title: "Resources",
+    title: "Danh Mục",
     links: ["Blog", "Newsletter", "Free Products", "Affiliate Program"],
-  },
-  {
-    title: "Products",
-    links: ["Templates", "UI Kits", "Icons", "Mockups"],
   },
 ];
  
@@ -23,6 +19,8 @@ const currentYear = new Date().getFullYear();
  
 export default function Footer() {
   return (
+    <>
+    <hr className="mt-10"></hr>  
     <footer className="relative w-full">
       <div className="mx-auto w-full max-w-7xl px-8">
         <div className="mx-auto grid w-full grid-cols-1 gap-8 py-12 md:grid-cols-2 lg:grid-cols-4">
@@ -55,8 +53,7 @@ export default function Footer() {
             variant="small"
             className="mb-4 text-center font-normal text-blue-gray-900 md:mb-0"
           >
-            &copy; {currentYear} <a href="https://material-tailwind.com/">Material Tailwind</a>. All
-            Rights Reserved.
+            &copy; {currentYear} Trọng Nhân - Phương Huy.
           </Typography>
           <div className="flex gap-4 text-blue-gray-900 sm:justify-center">
             <Typography as="a" href="#" className="opacity-80 transition-opacity hover:opacity-100">
@@ -104,5 +101,6 @@ export default function Footer() {
         </div>
       </div>
     </footer>
+    </>
   );
 }
