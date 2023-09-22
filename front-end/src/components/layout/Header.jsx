@@ -28,6 +28,7 @@ import {
   FaceSmileIcon,
   PuzzlePieceIcon,
   GiftIcon,
+  HomeIcon,
 } from "@heroicons/react/24/outline";
 import { useStateContext } from "../../context/ContextProvider";
 import { Link } from "react-router-dom";
@@ -107,7 +108,7 @@ const navListMenuItems = [
 function NavListMenu() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
-  
+
 
 
   const renderItems = navListMenuItems.map(
@@ -157,7 +158,7 @@ function NavListMenu() {
               onClick={() => setIsMobileMenuOpen((cur) => !cur)}
             >
               <Square3Stack3DIcon className="h-[18px] w-[18px]" />
-              Resources
+              Danh mục
               <ChevronDownIcon
                 strokeWidth={2.5}
                 className={`hidden h-3 w-3 transition-transform lg:block ${isMenuOpen ? "rotate-180" : ""
@@ -183,38 +184,25 @@ function NavListMenu() {
 }
 
 function NavList() {
-  const { user, dispatch } = useStateContext();
+  const { user } = useStateContext();
 
-  const login = (evt) => {
-    evt.preventDefault();
-
-    const process = async () => {
-      try {
-        dispatch({
-          type: "logout",
-        });
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    process();
-  };
-  
   return (
     <List className=" mt-4 mb-6 p-0 lg:mt-0 lg:mb-0 lg:flex-row lg:p-1 items-center">
       <Typography
         as="a"
-        href="#"
+        href="/"
         variant="small"
         color="blue-gray"
         className="font-normal"
       >
         <ListItem className="flex items-center gap-2 ">
-          <CubeTransparentIcon className="h-[18px] w-[18px]" />
-          Blocks
+          <HomeIcon className="h-[18px] w-[18px]" />
+          Trang chủ
         </ListItem>
       </Typography>
+
       <NavListMenu />
+
       <Typography
         as="a"
         href="#"
@@ -223,16 +211,25 @@ function NavList() {
         className="font-normal"
       >
         <ListItem className="flex items-center gap-2 ">
-          <UserCircleIcon className="h-[18px] w-[18px]" />
-          {user === null ? "Account" 
-          :<> <div>{user.username}</div>
-              <Button onClick={(e) => login(e)} className="py-1 px-3" style={{backgroundColor: "black"}}>
-                Đăng xuất
-              </Button>
-          </> }
+          <HomeIcon className="h-[18px] w-[18px]" />
+          Thống kê
         </ListItem>
       </Typography>
-    </List>
+
+      <Typography
+        as="a"
+        href="#"
+        variant="small"
+        color="blue-gray"
+        className="font-normal"
+      >
+        <ListItem className="flex items-center gap-2 ">
+          <div>{user === null || user.avatar === null ? <UserCircleIcon className="h-[18px] w-[18px]" /> : <div>{user.avatar}</div>}</div>
+
+          <div>{user === null ? "Account" : <>{user.username}</>}</div>
+        </ListItem>
+      </Typography>
+    </List >
   );
 }
 
@@ -270,13 +267,14 @@ export default function Header() {
             </>
           ) : (
             <>
-              <Button variant="text" size="sm" color="blue-gray">
+              <Button variant="text" size="sm" color="blue-gray" >
                 {/* Đăng nhập */}
               </Button>
               <Button
                 onClick={() => dispatch({ type: "logout" })}
                 variant="gradient"
                 size="sm"
+                className="py-2 px-3" style={{ backgroundColor: "black" }}
               >
                 Đăng xuất
               </Button>

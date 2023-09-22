@@ -16,7 +16,6 @@ const App = () => {
   //   }, []);
   return (
     <div >
-      {/* <div className="">{user.username}</div> */}
       <Header />
       <Router>
         <Route path="/" element={<Home />} />

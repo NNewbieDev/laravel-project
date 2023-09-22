@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useStateContext } from "../context/ContextProvider";
 import Apis, { authApi, endpoints } from "../config/Apis";
 import cookie from "react-cookies";
+
 const Login = () => {
   const { dispatch } = useStateContext();
   const [username, setUsername] = useState("");
@@ -68,7 +69,7 @@ const Login = () => {
             name="password"
             id="password"
             value={password}
-            placeholder="*****"
+            placeholder="*******"
             required
           />
         </div>
