@@ -28,6 +28,7 @@ import {
   FaceSmileIcon,
   PuzzlePieceIcon,
   GiftIcon,
+  HomeIcon,
 } from "@heroicons/react/24/outline";
 import { useStateContext } from "../../context/ContextProvider";
 import { Link } from "react-router-dom";
@@ -156,7 +157,7 @@ function NavListMenu() {
               onClick={() => setIsMobileMenuOpen((cur) => !cur)}
             >
               <Square3Stack3DIcon className="h-[18px] w-[18px]" />
-              Resources
+              Danh mục
               <ChevronDownIcon
                 strokeWidth={2.5}
                 className={`hidden h-3 w-3 transition-transform lg:block ${
@@ -172,8 +173,8 @@ function NavListMenu() {
             </ListItem>
           </Typography>
         </MenuHandler>
-        <MenuList className="hidden max-w-screen-xl rounded-xl lg:block">
-          <ul className="grid grid-cols-4 gap-y-2">{renderItems}</ul>
+        <MenuList className="hidden max-w-screen-xl max-h-72 rounded-xl lg:block">
+          {renderItems}
         </MenuList>
       </Menu>
       <div className="block lg:hidden">
@@ -184,8 +185,25 @@ function NavListMenu() {
 }
 
 function NavList() {
+  const { user } = useStateContext();
+
   return (
-    <List className=" mt-4 mb-6 p-0 lg:mt-0 lg:mb-0 lg:flex-row lg:p-1">
+    <List className=" mt-4 mb-6 p-0 lg:mt-0 lg:mb-0 lg:flex-row lg:p-1 items-center">
+      <Typography
+        as="a"
+        href="/"
+        variant="small"
+        color="blue-gray"
+        className="font-normal"
+      >
+        <ListItem className="flex items-center gap-2 ">
+          <HomeIcon className="h-[18px] w-[18px]" />
+          Trang chủ
+        </ListItem>
+      </Typography>
+
+      <NavListMenu />
+
       <Typography
         as="a"
         href="#"
@@ -194,17 +212,28 @@ function NavList() {
         className="font-normal"
       >
         <ListItem className="flex items-center gap-2 ">
-          <CubeTransparentIcon className="h-[18px] w-[18px]" />
-          Blocks
+          <HomeIcon className="h-[18px] w-[18px]" />
+          Thống kê
         </ListItem>
       </Typography>
-      <NavListMenu />
-      <Typography variant="small" color="blue-gray" className="font-normal">
-        <ListItem>
-          <Link to={"/profile"} className="flex items-center gap-2 ">
-            <UserCircleIcon className="h-[18px] w-[18px]" />
-            Account
-          </Link>
+
+      <Typography
+        as="a"
+        href="#"
+        variant="small"
+        color="blue-gray"
+        className="font-normal"
+      >
+        <ListItem className="flex items-center gap-2 ">
+          <div>
+            {user === null || user.avatar === null ? (
+              <UserCircleIcon className="h-[18px] w-[18px]" />
+            ) : (
+              <div>{user.avatar}</div>
+            )}
+          </div>
+
+          <div>{user === null ? "Account" : <>{user.username}</>}</div>
         </ListItem>
       </Typography>
     </List>
@@ -252,6 +281,8 @@ export default function Header() {
                 onClick={() => dispatch({ type: "logout" })}
                 variant="text"
                 size="sm"
+                className="py-2 px-3"
+                style={{ backgroundColor: "black" }}
               >
                 Đăng xuất
               </Button>
