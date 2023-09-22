@@ -10,6 +10,7 @@ const Register = () => {
     phone: "",
     confirmPass: "",
   });
+  const [loading, setLoading] = useState(false);
   const avatar = useRef();
   const nav = useNavigate();
 
@@ -17,6 +18,7 @@ const Register = () => {
     e.preventDefault();
 
     const process = async () => {
+      setLoading(true);
       let form = new FormData();
 
       for (let field in user) if (field !== "") form.append(field, user[field]);
@@ -24,7 +26,6 @@ const Register = () => {
       //       form.append("avatar", avatar.current.files[0]);
 
       let res = await Apis.post(endpoints["register"], form);
-      console.log(res.data);
       if (res.status === 201) {
         nav("/login");
       }
@@ -95,6 +96,7 @@ const Register = () => {
             type="password"
             name="password"
             id="password"
+            minLength={8}
             required
             placeholder="*****"
           />
@@ -106,6 +108,7 @@ const Register = () => {
             type="password"
             name="confirm"
             id="confirm"
+            minLength={8}
             required
             placeholder="*****"
           />
@@ -115,11 +118,15 @@ const Register = () => {
         </div> */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between">
           <div className="">
-            <input
-              className="bg-green-btn text-white font-semibold px-14 py-3 rounded-md my-4 cursor-pointer hover:bg-green-700 transition-colors duration-300"
-              type="submit"
-              value={"Đăng ký"}
-            />
+            {loading ? (
+              <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-green-btn border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_2s_linear_infinite]"></div>
+            ) : (
+              <input
+                className="bg-green-btn text-white font-semibold px-14 py-3 rounded-md my-4 cursor-pointer hover:bg-green-700 transition-colors duration-300"
+                type="submit"
+                value={"Đăng ký"}
+              />
+            )}
           </div>
           <div className="">
             Đã có tài khoản

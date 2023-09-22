@@ -7,6 +7,7 @@ const Login = () => {
   const { dispatch } = useStateContext();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const nav = useNavigate();
 
   const login = (evt) => {
@@ -14,6 +15,7 @@ const Login = () => {
 
     const process = async () => {
       try {
+        setLoading(true);
         let res = await Apis.post(endpoints["login"], {
           username: username,
           password: password,
@@ -82,11 +84,15 @@ const Login = () => {
         </div>
         <div className="flex flex-col sm:flex-row sm:items-center justify-between">
           <div className="">
-            <input
-              className="bg-green-btn text-white font-semibold px-10 py-3 rounded-md my-4 cursor-pointer hover:bg-green-700 transition-colors duration-300"
-              type="submit"
-              value={"Đăng nhập"}
-            />
+            {loading ? (
+              <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-green-btn border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_2s_linear_infinite]"></div>
+            ) : (
+              <input
+                className="bg-green-btn text-white font-semibold px-14 py-3 rounded-md my-4 cursor-pointer hover:bg-green-700 transition-colors duration-300"
+                type="submit"
+                value={"Đăng nhập"}
+              />
+            )}
           </div>
           <div className="">
             Bạn chưa có tài khoản?

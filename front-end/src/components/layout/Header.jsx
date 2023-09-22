@@ -199,16 +199,12 @@ function NavList() {
         </ListItem>
       </Typography>
       <NavListMenu />
-      <Typography
-        as="a"
-        href="#"
-        variant="small"
-        color="blue-gray"
-        className="font-normal"
-      >
-        <ListItem className="flex items-center gap-2 ">
-          <UserCircleIcon className="h-[18px] w-[18px]" />
-          Account
+      <Typography variant="small" color="blue-gray" className="font-normal">
+        <ListItem>
+          <Link to={"/profile"} className="flex items-center gap-2 ">
+            <UserCircleIcon className="h-[18px] w-[18px]" />
+            Account
+          </Link>
         </ListItem>
       </Typography>
     </List>
@@ -254,7 +250,7 @@ export default function Header() {
               </Button>
               <Button
                 onClick={() => dispatch({ type: "logout" })}
-                variant="gradient"
+                variant="text"
                 size="sm"
               >
                 Đăng xuất
@@ -280,12 +276,33 @@ export default function Header() {
           {" "}
           <NavList />
           <div className="flex w-full flex-nowrap items-center gap-2 lg:hidden">
-            <Button variant="outlined" size="sm" color="blue-gray" fullWidth>
-              <Link to={"/login"}>Đăng nhập</Link>
-            </Button>
-            <Button variant="text" size="sm" fullWidth>
-              <Link to={"/register"}>Đăng ký</Link>
-            </Button>
+            {user === null ? (
+              <>
+                <Button
+                  variant="outlined"
+                  size="sm"
+                  color="blue-gray"
+                  fullWidth
+                >
+                  <Link to={"/login"}>Đăng nhập</Link>
+                </Button>
+                <Button variant="text" size="sm" fullWidth>
+                  <Link to={"/register"}>Đăng ký</Link>
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  variant="outlined"
+                  size="sm"
+                  onClick={() => dispatch({ type: "logout" })}
+                  color="blue-gray"
+                  fullWidth
+                >
+                  Đăng xuất
+                </Button>
+              </>
+            )}
           </div>
         </>
       )}

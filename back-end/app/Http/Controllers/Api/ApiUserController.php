@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Facades\JWTFactory;
 
 class ApiUserController extends Controller
 {
@@ -27,12 +29,13 @@ class ApiUserController extends Controller
            */
           public function login()
           {
-                    $credentials = request(['username', 'password']);
+                    // return request(['username', 'password']);
+                    $credentials =  request(['username', 'password']);
 
                     if (!$token = auth()->attempt($credentials)) {
                               return response()->json(['error' => 'Unauthorized'], 401);
                     }
-
+                    // dd($token);
                     return $this->respondWithToken($token);
           }
 
@@ -100,7 +103,7 @@ class ApiUserController extends Controller
                     return response()->json([
                               'access_token' => $token,
                               'token_type' => 'bearer',
-                              'expires_in' => auth('api')->factory()->getTTL() * 60
+                              'expires_in' => JWTFactory::getTTL() * 60
                     ]);
           }
 }

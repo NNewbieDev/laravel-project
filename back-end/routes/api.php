@@ -26,14 +26,15 @@ Route::group([
           Route::get('/user', function () {
                     return auth('api')->user();
           });
-          Route::post('/login', [App\Http\Controllers\Api\ApiUserController::class, 'login']);
+          Route::post('login', [App\Http\Controllers\Api\ApiUserController::class, 'login']);
           Route::post('logout', [App\Http\Controllers\Api\ApiUserController::class, 'logout']);
           Route::post('refresh', [App\Http\Controllers\Api\ApiUserController::class, 'refresh']);
           Route::post('/me', [App\Http\Controllers\Api\ApiUserController::class, 'me']);
 });
 
 Route::get('article/', [App\Http\Controllers\Api\ApiArticleController::class, "index"])->name('article.index');
-Route::get('article/{id}', [App\Http\Controllers\Api\ApiCommentController::class, "show"]);
+Route::get('article/{id}', [App\Http\Controllers\Api\ApiCommentController::class, "show"])->name('article.show');
+Route::get('category/', [App\Http\Controllers\Api\ApiCategoryControllerController::class, "index"])->name('category.index');
 // Route::group(['middleware' => 'jwt.auth'], function () {
 //           Route::get('user-info', 'UserController@getUserInfo');
 // });
