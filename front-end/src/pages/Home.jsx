@@ -3,7 +3,7 @@ import Apis, { endpoints } from '../config/Apis';
 import { MySpinner } from '../components/layout';
 import { library, icon } from '@fortawesome/fontawesome-svg-core'
 import { faCamera } from '@fortawesome/free-solid-svg-icons'
-import { Input } from '@material-tailwind/react';
+
 
 library.add(faCamera)
 
@@ -28,11 +28,12 @@ const Home = () => {
     <>
       <section className="mt-10 mx-auto w-full max-w-7xl px-8">
         <div >
-
+          Phần section trống có thể chạy hình ảnh
         </div>
       </section>
 
       <section className='mb-28'>
+
         {/* Search engine chưa xử lý */}
         <form className='mt-10 mx-auto w-full max-w-7xl'>
           <label htmlFor="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
@@ -49,7 +50,7 @@ const Home = () => {
 
         <div className="mt-10 mx-auto w-full max-w-7xl pl-16">
           <h1 className="text-2xl"><i class="fa-solid fa-question-circle"></i>TIN NÓNG 24H</h1>
-          <p>Tin nóng, tin nhanh toàn quốc, update liên tục 24h</p>
+          <p>Tin nóng, tin nhanh toàn quốc, cập nhật liên tục 24h</p>
         </div>
 
         {/* Menu tin tức chính */}

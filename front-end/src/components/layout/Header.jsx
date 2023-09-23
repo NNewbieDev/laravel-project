@@ -265,23 +265,21 @@ export default function Header() {
         <div className="hidden gap-2 lg:flex">
           {user === null ? (
             <>
-              <Button variant="text" size="sm" color="blue-gray">
+              <Button variant="text" size="lg" color="blue-gray" className="py-2 px-2">
                 <Link to={"/login"}>Đăng nhập</Link>
               </Button>
-              <Button variant="text" size="sm">
+              <Button variant="text" size="lg" className="py-2 ps-2">
                 <Link to={"/register"}>Đăng ký</Link>
               </Button>
             </>
           ) : (
             <>
-              <Button variant="text" size="sm" color="blue-gray">
-                {/* Đăng nhập */}
-              </Button>
               <Button
                 onClick={() => dispatch({ type: "logout" })}
                 variant="text"
-                size="sm"
+                size="lg"
                 className="py-2 px-3"
+                color="white"
                 style={{ backgroundColor: "black" }}
               >
                 Đăng xuất
@@ -311,13 +309,13 @@ export default function Header() {
               <>
                 <Button
                   variant="outlined"
-                  size="sm"
+                  size="lg"
                   color="blue-gray"
                   fullWidth
                 >
                   <Link to={"/login"}>Đăng nhập</Link>
                 </Button>
-                <Button variant="text" size="sm" fullWidth>
+                <Button variant="text" size="lg" fullWidth>
                   <Link to={"/register"}>Đăng ký</Link>
                 </Button>
               </>
