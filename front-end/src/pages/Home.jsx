@@ -3,6 +3,7 @@ import Apis, { endpoints } from '../config/Apis';
 import { MySpinner } from '../components/layout';
 import { library, icon } from '@fortawesome/fontawesome-svg-core'
 import { faCamera } from '@fortawesome/free-solid-svg-icons'
+import { useSearchParams } from 'react-router-dom';
 
 
 library.add(faCamera)
@@ -11,15 +12,26 @@ const camera = icon({ prefix: 'fas', iconName: 'camera' })
 
 const Home = () => {
   const [article, setArticle] = useState([]);
+  const [q] = useSearchParams();
 
   useEffect(() => {
     async function fecthArticle() {
-      const e = endpoints['article'];
-      const res = await Apis.get(e);
+      let e = endpoints['article'];
+
+      let categoryID = q.get("categoryID");
+                if (categoryID !== null) {
+                    e = `${e}?categoryID=${categoryID}`;
+                } else {
+                    let kw = q.get("kw");
+                    if (kw !== null)
+                        e = `${e}?kw=${kw}`;
+                }
+
+      let res = await Apis.get(e);
       setArticle(res.data);
     }
     fecthArticle()
-  }, [])
+  }, [q])
 
   if (article === null)
     <MySpinner />
