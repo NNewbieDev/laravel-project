@@ -26,12 +26,13 @@ class ApiCommentController extends Controller
            * @param  \Illuminate\Http\Request  $request
            * @return \Illuminate\Http\Response
            */
-          public function store(Request $request)
+          public function store(Request $request, $id)
           {
                     $comment = new Comment;
-                    // $comment->userID = Auth::user()->id;
+                    // $comment->userID = 1;
                     // $article = Article::where("ArticleID", $id)->first();
                     // $comment->articleID = $request->session()->get("key");
+                    $comment->articleID = $id;
                     $comment->content = $request['comment'];
                     $comment->save();
                     return response("Bạn đã bình luận", Response::HTTP_CREATED);

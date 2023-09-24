@@ -110,7 +110,7 @@ const Profile = () => {
                 className="w-24 h-24 flex justify-center items-center"
               >
                 <img
-                  src={avatarURL}
+                  src={avatarURL || user.avatar}
                   alt="avatar"
                   className="border border-slate-400 p-1 w-full h-full  cursor-pointer rounded-full "
                 />

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Cloudinary\Cloudinary;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
@@ -57,6 +58,26 @@ class ApiUserController extends Controller
                     //           // 'avatar' => $filename
                     // ]);
                     return response("Đăng ký thành công", Response::HTTP_CREATED);
+          }
+
+          public function update(Request $request)
+          {
+                    // dd(auth()->user());
+                    // return auth()->user();
+                    $user = User::find(auth()->user()->id);
+                    // dd(auth()->user());
+                    $user->email = $request->email;
+                    $user->phone = $request->phone;
+                    //check if file exist 
+                    if ($request->hasFile('avatar')) {
+                              $response = cloudinary()->upload($request->file('avatar')->getRealPath())->getSecurePath();
+
+                              $user->avatar = $response;
+                              $user->save();
+                              return response("Cập nhật thành công", Response::HTTP_OK);
+                    } else {
+                              return response("Cập nhật thất bại", Response::HTTP_CREATED);
+                    }
           }
 
           /**

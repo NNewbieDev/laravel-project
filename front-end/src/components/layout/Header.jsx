@@ -189,16 +189,10 @@ function NavList() {
 
   return (
     <List className=" mt-4 mb-6 p-0 lg:mt-0 lg:mb-0 lg:flex-row lg:p-1 items-center">
-      <Typography
-        as="a"
-        href="/"
-        variant="small"
-        color="blue-gray"
-        className="font-normal"
-      >
+      <Typography variant="small" color="blue-gray" className="font-normal">
         <ListItem className="flex items-center gap-2 ">
           <HomeIcon className="h-[18px] w-[18px]" />
-          Trang chủ
+          <Link to={"/"}>Trang chủ</Link>
         </ListItem>
       </Typography>
 
@@ -217,23 +211,25 @@ function NavList() {
         </ListItem>
       </Typography>
 
-      <Typography
-        as="a"
-        href="#"
-        variant="small"
-        color="blue-gray"
-        className="font-normal"
-      >
-        <ListItem className="flex items-center gap-2 ">
-          <div>
-            {user === null || user.avatar === null ? (
-              <UserCircleIcon className="h-[18px] w-[18px]" />
-            ) : (
-              <div>{user.avatar}</div>
-            )}
-          </div>
+      <Typography variant="small" color="blue-gray" className="font-normal">
+        <ListItem>
+          <Link to={"/profile"} className="flex items-center gap-2 ">
+            <div>
+              {user === null || user.avatar === null ? (
+                <UserCircleIcon className="h-[18px] w-[18px]" />
+              ) : (
+                <div>
+                  <img
+                    src={user.avatar}
+                    alt="avatar"
+                    className="w-10 h-10 rounded-full border border-black p-1"
+                  />
+                </div>
+              )}
+            </div>
 
-          <div>{user === null ? "Account" : <>{user.username}</>}</div>
+            <div>{user === null ? "Account" : <>{user.username}</>}</div>
+          </Link>
         </ListItem>
       </Typography>
     </List>
@@ -262,14 +258,18 @@ export default function Header() {
         <div className="hidden lg:block">
           <NavList />
         </div>
-        <div className="hidden gap-2 lg:flex">
+        <div className="hidden gap-2  lg:flex">
           {user === null ? (
             <>
               <Button variant="text" size="sm" color="blue-gray">
-                <Link to={"/login"}>Đăng nhập</Link>
+                <Link to={"/login"} className="text-lg">
+                  Đăng nhập
+                </Link>
               </Button>
               <Button variant="text" size="sm">
-                <Link to={"/register"}>Đăng ký</Link>
+                <Link to={"/register"} className="text-lg">
+                  Đăng ký
+                </Link>
               </Button>
             </>
           ) : (
@@ -281,8 +281,7 @@ export default function Header() {
                 onClick={() => dispatch({ type: "logout" })}
                 variant="text"
                 size="sm"
-                className="py-2 px-3"
-                style={{ backgroundColor: "black" }}
+                className="py-2 px-3 text-lg"
               >
                 Đăng xuất
               </Button>

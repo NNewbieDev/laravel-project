@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CategoryResource;
+use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Http;
 
 class ApiCategoryController extends Controller
 {
@@ -43,7 +45,8 @@ class ApiCategoryController extends Controller
            */
           public function show($id)
           {
-                    //
+                    $article = Article::where('categoryID', $id)->where("status", "ACCEPT")->orderBy('created_at', "desc")->paginate();
+                    return response($article, Response::HTTP_OK);
           }
 
           /**

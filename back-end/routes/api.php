@@ -29,12 +29,18 @@ Route::group([
           Route::post('login', [App\Http\Controllers\Api\ApiUserController::class, 'login']);
           Route::post('logout', [App\Http\Controllers\Api\ApiUserController::class, 'logout']);
           Route::post('refresh', [App\Http\Controllers\Api\ApiUserController::class, 'refresh']);
-          Route::post('/me', [App\Http\Controllers\Api\ApiUserController::class, 'me']);
+          Route::post('update', [App\Http\Controllers\Api\ApiUserController::class, 'update']);
+          Route::post('me', [App\Http\Controllers\Api\ApiUserController::class, 'me']);
 });
 
 Route::get('article/', [App\Http\Controllers\Api\ApiArticleController::class, "index"])->name('article.index');
-Route::get('article/{id}', [App\Http\Controllers\Api\ApiCommentController::class, "show"])->name('article.show');
-Route::get('category/', [App\Http\Controllers\Api\ApiCategoryControllerController::class, "index"])->name('category.index');
+Route::get('article/{id}', [App\Http\Controllers\Api\ApiArticleController::class, "show"])->name('article.show');
+Route::post('article/{id}/accept', [App\Http\Controllers\Api\ApiArticleController::class, "accept"])->name('article.accept');
+Route::post('article/{id}/delete', [App\Http\Controllers\Api\ApiArticleController::class, "destroy"])->name('article.destroy');
+
+Route::post('article/{id}/comment', [App\Http\Controllers\Api\ApiCommentController::class, "store"])->name('comment.store');
+Route::get('category/', [App\Http\Controllers\Api\ApiCategoryController::class, "index"])->name('category.index');
+Route::get('category/{id}', [App\Http\Controllers\Api\ApiCategoryController::class, "show"])->name('category.show');
 // Route::group(['middleware' => 'jwt.auth'], function () {
 //           Route::get('user-info', 'UserController@getUserInfo');
 // });

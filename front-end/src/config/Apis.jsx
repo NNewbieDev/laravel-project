@@ -8,6 +8,7 @@ export const endpoints = {
   user: "/api/auth/user",
   register: "/api/register",
   article: "/api/article",
+  category: "/api/category",
   detail: (id) => "/api/article/{id}",
 };
 
