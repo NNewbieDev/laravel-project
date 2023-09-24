@@ -4,6 +4,7 @@ import { MySpinner } from "../components/layout";
 import { library, icon } from "@fortawesome/fontawesome-svg-core";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { Input } from "@material-tailwind/react";
+import { useSearchParams } from "react-router-dom";
 
 library.add(faCamera);
 
@@ -11,12 +12,23 @@ const camera = icon({ prefix: "fas", iconName: "camera" });
 
 const Home = () => {
   const [article, setArticle] = useState([]);
+  const [q] = useSearchParams();
   const [paginate, setPaginate] = useState([]);
 
   useEffect(() => {
     async function fecthArticle() {
       let e = endpoints["article"];
-      const res = await Apis.get(e);
+
+      let categoryID = q.get("categoryID");
+      if (categoryID !== null) {
+        e = `${e}?categoryID=${categoryID}`;
+      } else {
+        let kw = q.get("kw");
+        if (kw !== null) e = `${e}?kw=${kw}`;
+      }
+
+      let res = await Apis.get(e);
+      setArticle(res.data);
       const cate = await Apis.get(endpoints["category"]);
       console.log(cate);
       //       cái này là đầy đủ các attribute ông cần
@@ -27,14 +39,14 @@ const Home = () => {
       setArticle(res.data.data);
     }
     fecthArticle();
-  }, []);
+  }, [q]);
 
   if (article === null) <MySpinner />;
 
   return (
     <>
       <section className="mt-10 mx-auto w-full max-w-7xl px-8">
-        <div></div>
+        <div>Phần section trống có thể chạy hình ảnh</div>
       </section>
 
       <section className="mb-28">
