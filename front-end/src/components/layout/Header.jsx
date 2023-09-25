@@ -73,36 +73,36 @@ const navListMenuItems = [
     ),
     description: "We are always looking for talented people. Join us!",
   },
-  {
-    color: "blue-gray",
-    icon: FolderIcon,
-    title: "Legal",
-    description: "All the stuff that we dan from legal made us add.",
-  },
-  {
-    color: "purple",
-    icon: RocketLaunchIcon,
-    title: "Products",
-    description: "Checkout our products that helps a startup running.",
-  },
-  {
-    color: "teal",
-    icon: FaceSmileIcon,
-    title: "Icons",
-    description: "Set of beautiful icons that you can use in your project.",
-  },
-  {
-    color: "cyan",
-    icon: PuzzlePieceIcon,
-    title: "UI Kits",
-    description: "High quality UI Kits helps you to 2x faster.",
-  },
-  {
-    color: "pink",
-    icon: GiftIcon,
-    title: "Open Source",
-    description: "List of all our open-source projects, it's all free.",
-  },
+  // {
+  //   color: "blue-gray",
+  //   icon: FolderIcon,
+  //   title: "Legal",
+  //   description: "All the stuff that we dan from legal made us add.",
+  // },
+  // {
+  //   color: "purple",
+  //   icon: RocketLaunchIcon,
+  //   title: "Products",
+  //   description: "Checkout our products that helps a startup running.",
+  // },
+  // {
+  //   color: "teal",
+  //   icon: FaceSmileIcon,
+  //   title: "Icons",
+  //   description: "Set of beautiful icons that you can use in your project.",
+  // },
+  // {
+  //   color: "cyan",
+  //   icon: PuzzlePieceIcon,
+  //   title: "UI Kits",
+  //   description: "High quality UI Kits helps you to 2x faster.",
+  // },
+  // {
+  //   color: "pink",
+  //   icon: GiftIcon,
+  //   title: "Open Source",
+  //   description: "List of all our open-source projects, it's all free.",
+  // },
 ];
 
 function NavListMenu() {
@@ -173,7 +173,7 @@ function NavListMenu() {
             </ListItem>
           </Typography>
         </MenuHandler>
-        <MenuList className="hidden max-w-screen-xl max-h-72 rounded-xl lg:block">
+        <MenuList className="hidden max-w-screen-xl max-h-auto rounded-xl lg:block">
           {renderItems}
         </MenuList>
       </Menu>
@@ -258,7 +258,7 @@ export default function Header() {
         <div className="hidden lg:block">
           <NavList />
         </div>
-        <div className="hidden gap-2  lg:flex">
+        <div className="hidden gap-2 lg:flex">
           {user === null ? (
             <>
               <Button

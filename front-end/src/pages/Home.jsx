@@ -3,8 +3,9 @@ import Apis, { endpoints } from "../config/Apis";
 import { MySpinner } from "../components/layout";
 import { library, icon } from "@fortawesome/fontawesome-svg-core";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
-import { Input } from "@material-tailwind/react";
 import { useSearchParams } from "react-router-dom";
+import { Button, IconButton } from "@material-tailwind/react";
+import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 
 library.add(faCamera);
 
@@ -28,13 +29,15 @@ const Home = () => {
       }
 
       let res = await Apis.get(e);
-      setArticle(res.data);
+      // setArticle(res.data);
+
       const cate = await Apis.get(endpoints["category"]);
       console.log(cate);
       //       cái này là đầy đủ các attribute ông cần
       console.log(res.data);
       //       cái này là để ông lấy phân trang
       console.log(res.data.links);
+      
       setPaginate(res.data.links);
       setArticle(res.data.data);
     }
@@ -49,7 +52,8 @@ const Home = () => {
         <div>Phần section trống có thể chạy hình ảnh</div>
       </section>
 
-      <section className="mb-28">
+      {/* section content */}
+      <section className="mb-10">
         {/* Search engine chưa xử lý */}
         <form className="mt-10 mx-auto w-full max-w-7xl">
           <label
@@ -163,6 +167,35 @@ const Home = () => {
             <a href="#" className="fw-bold text-body text-primary-hover"><u>View all categories</u></a>
           </div>
         </div> */}
+      </section>
+
+      <section className="mt-10 mx-auto w-full max-w-7xl px-8 mb-24 ">
+        <div className="flex items-center gap-4 justify-center">
+          <Button
+            variant="text"
+            className="flex items-center gap-2"
+            onClick=""
+          >
+            <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
+          </Button>
+          <div className="flex items-center gap-2 justify-center ">
+            <IconButton variant="outlined">1</IconButton>
+            <IconButton variant="outlined">2</IconButton>
+            <IconButton variant="outlined">3</IconButton>
+            <IconButton variant="outlined">...</IconButton>
+            <IconButton variant="outlined">5</IconButton>
+            <IconButton variant="outlined">6</IconButton>
+          </div>
+          <Button
+            variant="text"
+            className="flex items-center gap-2"
+            onClick=""
+            
+          >
+            Next
+            <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+          </Button>
+        </div>
       </section>
     </>
   );
