@@ -34,9 +34,12 @@ Route::group([
 });
 
 Route::get('article/', [App\Http\Controllers\Api\ApiArticleController::class, "index"])->name('article.index');
+Route::post('article/create', [App\Http\Controllers\Api\ApiArticleController::class, "store"])->name('article.store');
 Route::get('article/{id}', [App\Http\Controllers\Api\ApiArticleController::class, "show"])->name('article.show');
 Route::post('article/{id}/accept', [App\Http\Controllers\Api\ApiArticleController::class, "accept"])->name('article.accept');
 Route::post('article/{id}/delete', [App\Http\Controllers\Api\ApiArticleController::class, "destroy"])->name('article.destroy');
+
+Route::post('search', [App\Http\Controllers\Api\ApiArticleController::class, "search"])->name('article.search');
 
 Route::post('article/{id}/comment', [App\Http\Controllers\Api\ApiCommentController::class, "store"])->name('comment.store');
 Route::get('category/', [App\Http\Controllers\Api\ApiCategoryController::class, "index"])->name('category.index');

@@ -28,6 +28,8 @@ class ApiReportController extends Controller
           public function store(Request $request)
           {
                     $report = new Report;
+                    $report->userID = auth()->user()->id;
+                    $report->articleID = $request->articleID;
                     $report->content = $request->content;
                     $report->save();
                     return response("Cảm ơn bạn đã báo cáo", Response::HTTP_CREATED);

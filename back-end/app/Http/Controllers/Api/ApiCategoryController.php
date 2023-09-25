@@ -45,7 +45,7 @@ class ApiCategoryController extends Controller
            */
           public function show($id)
           {
-                    $article = Article::where('categoryID', $id)->where("status", "ACCEPT")->orderBy('created_at', "desc")->paginate();
+                    $article = Article::where('categoryID', $id)->where("status", "ACCEPT")->orderBy('created_at', "desc")->paginate(10);
                     return response($article, Response::HTTP_OK);
           }
 

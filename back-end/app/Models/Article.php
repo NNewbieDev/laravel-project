@@ -12,6 +12,10 @@ class Article extends Model
           protected $fillable = ['title', 'description'];
           public function category()
           {
-                    return $this->belongsTo(Category::class);
+                    return $this->belongsTo(Category::class, "categoryID");
+          }
+          public function user()
+          {
+                    return $this->belongsTo(User::class);
           }
 }

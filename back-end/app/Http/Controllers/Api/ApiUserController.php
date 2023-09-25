@@ -87,6 +87,7 @@ class ApiUserController extends Controller
            */
           public function me()
           {
+                    dd(auth()->user()->id);
                     return response()->json(auth()->user());
           }
 

@@ -13,6 +13,6 @@ class Category extends Model
           protected $fillable = ['id', 'name', 'link'];
           public function article()
           {
-                    return $this->belongsTo(Article::class);
+                    return $this->hasMany(Article::class);
           }
 }
