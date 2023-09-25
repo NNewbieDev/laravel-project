@@ -3,7 +3,7 @@ import Apis, { endpoints } from "../config/Apis";
 import { MySpinner } from "../components/layout";
 import { library, icon } from "@fortawesome/fontawesome-svg-core";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Button, IconButton } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 
@@ -15,6 +15,7 @@ const Home = () => {
   const [article, setArticle] = useState([]);
   const [q] = useSearchParams();
   const [paginate, setPaginate] = useState([]);
+
 
   useEffect(() => {
     async function fecthArticle() {
@@ -37,12 +38,21 @@ const Home = () => {
       console.log(res.data);
       //       cái này là để ông lấy phân trang
       console.log(res.data.links);
-      
+
+      console.log(res.data.data);
       setPaginate(res.data.links);
       setArticle(res.data.data);
     }
     fecthArticle();
   }, [q]);
+
+  const pagination = async (page) => {
+    let e = endpoints["article"];
+    e = `${e}/?page=${page}`
+    let res = await Apis.get(e);
+    setArticle(res.data.data);
+    setPaginate(res.data.links);
+  }
 
   if (article === null) <MySpinner />;
 
@@ -175,22 +185,26 @@ const Home = () => {
             variant="text"
             className="flex items-center gap-2"
             onClick=""
+            disabled="true"
           >
             <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
           </Button>
           <div className="flex items-center gap-2 justify-center ">
-            <IconButton variant="outlined">1</IconButton>
-            <IconButton variant="outlined">2</IconButton>
-            <IconButton variant="outlined">3</IconButton>
-            <IconButton variant="outlined">...</IconButton>
-            <IconButton variant="outlined">5</IconButton>
-            <IconButton variant="outlined">6</IconButton>
+            {paginate.slice(1,-1).map((page) => { return ( 
+              <>
+            {page.active === true ?
+              <Button onClick={() => pagination(page.label)} variant="outlined" className="px-3" style={{borderColor: "black"}}>{page.label}</Button>
+            : <Button onClick={() => pagination(page.label)} variant="outlined" className="px-3">{page.label}</Button>
+            }
+              </>
+            );}) }
+           
           </div>
           <Button
             variant="text"
             className="flex items-center gap-2"
             onClick=""
-            
+            disabled="true"
           >
             Next
             <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
