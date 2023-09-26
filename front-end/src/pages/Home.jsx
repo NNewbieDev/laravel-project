@@ -28,7 +28,7 @@ const Home = () => {
       }
 
       let res = await Apis.get(e);
-      setArticle(res.data);
+      //       setArticle(res.data);
       const cate = await Apis.get(endpoints["category"]);
       console.log(cate);
       //       cái này là đầy đủ các attribute ông cần

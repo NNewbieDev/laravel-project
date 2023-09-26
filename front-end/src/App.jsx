@@ -7,7 +7,7 @@ import Footer from "./components/layout/Footer";
 import Apis, { endpoints } from "./config/Apis";
 const App = () => {
   return (
-    <div className="font-mono">
+    <div className="font-display">
       <Header />
       <Router>
         <Route path="/" element={<Home />} />

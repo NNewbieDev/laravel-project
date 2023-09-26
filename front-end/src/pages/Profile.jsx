@@ -2,6 +2,15 @@ import React, { useEffect, useRef, useState } from "react";
 import { useStateContext } from "../context/ContextProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar } from "@fortawesome/free-regular-svg-icons";
+import {
+  faChartBar,
+  faChartColumn,
+  faFile,
+  faHeart,
+  faUser,
+  faUserGroup,
+} from "@fortawesome/free-solid-svg-icons";
+
 const Profile = () => {
   const { user } = useStateContext();
 
@@ -80,8 +89,50 @@ const Profile = () => {
           </div>
           <div className="flex justify-center gap-5 mt-4">
             <div className="bg-blue-400 hover:bg-blue-600 cursor-pointer text-white py-2 px-8 rounded-lg font-semibold text-lg">
-              Follow
+              Theo dõi
             </div>
+          </div>
+        </div>
+      </div>
+      {/* other */}
+      <div className="mt-8 mx-auto md:w-2/3 flex flex-col gap-5 sm:flex-row flex-wrap sm:justify-evenly">
+        <div className="flex gap-5 border border-slate-400 p-3 rounded-lg ">
+          <div className="bg-green-100 text-green-400 text-3xl rounded-lg w-20 h-20 flex items-center justify-center">
+            <FontAwesomeIcon icon={faUserGroup} />
+          </div>
+          <div className="flex flex-col justify-center pr-5 text-neutral-800 font-semibold text-2xl">
+            <div className="">124K</div>
+            <div className="">Lượt xem </div>
+          </div>
+        </div>
+        {/*  */}
+        <div className="flex gap-5 border border-slate-400 p-3 rounded-lg ">
+          <div className="bg-blue-100 text-blue-400 text-3xl rounded-lg w-20 h-20 flex items-center justify-center">
+            <FontAwesomeIcon icon={faFile} />
+          </div>
+          <div className="flex flex-col justify-center pr-5 text-neutral-800 font-semibold text-2xl">
+            <div className="">124</div>
+            <div className="">Bài viết</div>
+          </div>
+        </div>
+        {/*  */}
+        <div className="flex gap-5 border border-slate-400 p-3 rounded-lg ">
+          <div className="bg-pink-100 text-pink-400 text-3xl rounded-lg w-20 h-20 flex items-center justify-center">
+            <FontAwesomeIcon icon={faHeart} />
+          </div>
+          <div className="flex flex-col justify-center pr-5 text-neutral-800 font-semibold text-2xl">
+            <div className="">100</div>
+            <div className="">Lượt thích </div>
+          </div>
+        </div>
+        {/*  */}
+        <div className="flex gap-5 border border-slate-400 p-3 rounded-lg ">
+          <div className="bg-sky-100 text-sky-400 text-3xl rounded-lg w-20 h-20 flex items-center justify-center">
+            <FontAwesomeIcon icon={faChartColumn} />
+          </div>
+          <div className="flex flex-col justify-center pr-5 text-neutral-800 font-semibold text-2xl">
+            <div className="">10k</div>
+            <div className="">Follewers </div>
           </div>
         </div>
       </div>

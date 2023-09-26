@@ -30,6 +30,8 @@ import {
   GiftIcon,
   HomeIcon,
 } from "@heroicons/react/24/outline";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChartColumn } from "@fortawesome/free-solid-svg-icons";
 import { useStateContext } from "../../context/ContextProvider";
 import { Link } from "react-router-dom";
 const colors = {
@@ -198,17 +200,12 @@ function NavList() {
 
       <NavListMenu />
 
-      <Typography
-        as="a"
-        href="#"
-        variant="small"
-        color="blue-gray"
-        className="font-normal"
-      >
-        <ListItem className="flex items-center gap-2 ">
-          <HomeIcon className="h-[18px] w-[18px]" />
+      <Typography variant="small" color="blue-gray" className="font-normal">
+        <Link to={"/statis"} className="flex items-center gap-2 ">
+          {/* <HomeIcon className="h-[18px] w-[18px]" /> */}
+          <FontAwesomeIcon icon={faChartColumn} />
           Thống kê
-        </ListItem>
+        </Link>
       </Typography>
 
       <Typography variant="small" color="blue-gray" className="font-normal">
