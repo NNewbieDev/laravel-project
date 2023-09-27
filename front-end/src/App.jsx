@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Route, Routes as Router } from "react-router-dom";
 import { Header } from "./components/layout";
-import { CreatePost, Home, Login, Profile, Register } from "./pages";
-import { useStateContext } from "./context/ContextProvider";
+import { CreatePost, Home, Login, Profile, Register, ArticleDetail } from "./pages";
 import Footer from "./components/layout/Footer";
-import Apis, { endpoints } from "./config/Apis";
+
 const App = () => {
   return (
     <div className="font-mono">
@@ -15,6 +14,8 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/create-post" element={<CreatePost />} />
+        <Route path="/article/:articleId" element={<ArticleDetail />} />
+
       </Router>
       <Footer />
     </div>

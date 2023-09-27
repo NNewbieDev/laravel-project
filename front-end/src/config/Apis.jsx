@@ -9,7 +9,7 @@ export const endpoints = {
   register: "/api/register",
   article: "/api/article",
   category: "/api/category",
-  detail: (id) => "/api/article/{id}",
+  detail: (id) => `/api/article/${id}`,
 };
 
 export const authApi = () => {
