@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Apis, { endpoints } from '../config/Apis';
 import { TagIcon } from '@heroicons/react/24/outline';
+import { MySpinner } from "../components/layout";
 
 const ArticleDetail = () => {
     const [article, setArticle] = useState([]);
@@ -26,20 +27,22 @@ const ArticleDetail = () => {
                             {article.category.name}
                         </span>: null
                         } */}
-                        <h5 className="flex justify-center mb-8 text-2xl text-neutral-800 dark:text-neutral-50">
+                        <h5 className="flex justify-center mt-5 mb-8 capitalize text-2xl text-neutral-800 dark:text-neutral-50">
                             {article.title}
                         </h5>
-                        <p className=" mb-4 text-base text-neutral-600 dark:text-neutral-200">
+                        <Link aria-disabled="true">
+                        <p className=" lg:px-10 mb-4 text-lg text-neutral-600 dark:text-neutral-200">
                             <div
                                 dangerouslySetInnerHTML={{ __html: article.description }}
                             />
                         </p>
+                        </Link>
                         {article.content !== null ?
-                            <p className="mb-4 text-base text-neutral-600 dark:text-neutral-200">
+                            <p className=" lg:px-10 mb-4 text-lg text-neutral-600 dark:text-neutral-200">
                                 <div
                                     dangerouslySetInnerHTML={{ __html: article.content }}
                                 />
-                            </p> : null
+                            </p> :  <MySpinner />
                         }
                         <span class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center w-fit px-2.5 py-0.5 rounded mr-2 dark:bg-gray-700 dark:text-gray-400 border border-gray-500">
                             <svg class="w-2.5 h-2.5 mr-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
