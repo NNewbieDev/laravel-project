@@ -34,7 +34,7 @@ Route::group([
 });
 Route::post('article/create', [App\Http\Controllers\Api\ApiArticleController::class, "store"])->name('article.store');
 
-Route::get('article/', [App\Http\Controllers\Api\ApiArticleController::class, "index"])->middleware('checkRole:1')->name('article.index');
+Route::get('article/', [App\Http\Controllers\Api\ApiArticleController::class, "index"])->name('article.index');
 Route::get('article/{id}', [App\Http\Controllers\Api\ApiArticleController::class, "show"])->name('article.show');
 Route::post('article/{id}/accept', [App\Http\Controllers\Api\ApiArticleController::class, "accept"])->name('article.accept');
 Route::post('article/{id}/delete', [App\Http\Controllers\Api\ApiArticleController::class, "destroy"])->name('article.destroy');
