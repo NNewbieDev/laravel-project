@@ -9,6 +9,7 @@ export const endpoints = {
   register: "/api/register",
   article: "/api/article",
   category: "/api/category",
+  create: "/api/article/create",
   detail: (id) => "/api/article/{id}",
 };
 

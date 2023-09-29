@@ -62,7 +62,7 @@ const Profile = () => {
   }
 
   return (
-    <div className="p-4">
+    <div className="p-4 mt-24">
       {/* thumnail */}
       <div className="lg:w-3/4 lg:mx-auto">
         <div className="bg-blue-400 w-full h-40 md:h-52 rounded-lg"></div>

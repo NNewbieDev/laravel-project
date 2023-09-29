@@ -12,8 +12,9 @@ const StateProvider = createContext();
 
 const ContextProvider = ({ children }) => {
   const [user, dispatch] = useReducer(UserReducer, cookie.load("user") || null);
+  const [isLogin, setIsLogin] = useState(false);
   return (
-    <StateProvider.Provider value={{ user, dispatch }}>
+    <StateProvider.Provider value={{ user, dispatch, isLogin, setIsLogin }}>
       {children}
     </StateProvider.Provider>
   );

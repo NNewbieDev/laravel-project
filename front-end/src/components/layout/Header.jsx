@@ -1,343 +1,177 @@
-import React, { useEffect, useState } from "react";
-import {
-  Navbar,
-  Collapse,
-  Typography,
-  Button,
-  IconButton,
-  List,
-  ListItem,
-  Menu,
-  MenuHandler,
-  MenuList,
-  MenuItem,
-  Chip,
-} from "@material-tailwind/react";
-import {
-  ChevronDownIcon,
-  UserCircleIcon,
-  CubeTransparentIcon,
-  Bars3Icon,
-  XMarkIcon,
-  FlagIcon,
-  ChatBubbleOvalLeftIcon,
-  UsersIcon,
-  FolderIcon,
-  Square3Stack3DIcon,
-  RocketLaunchIcon,
-  FaceSmileIcon,
-  PuzzlePieceIcon,
-  GiftIcon,
-  HomeIcon,
-} from "@heroicons/react/24/outline";
+import React, { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChartColumn } from "@fortawesome/free-solid-svg-icons";
-import { useStateContext } from "../../context/ContextProvider";
+import {
+  faAddressCard,
+  faBars,
+  faCaretLeft,
+  faDoorOpen,
+  faGear,
+  faHome,
+  faPlusCircle,
+  faRightToBracket,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-const colors = {
-  blue: "bg-blue-50 text-blue-500",
-  orange: "bg-orange-50 text-orange-500",
-  green: "bg-green-50 text-green-500",
-  "blue-gray": "bg-blue-gray-50 text-blue-gray-500",
-  purple: "bg-purple-50 text-purple-500",
-  teal: "bg-teal-50 text-teal-500",
-  cyan: "bg-cyan-50 text-cyan-500",
-  pink: "bg-pink-50 text-pink-500",
-};
+import { useStateContext } from "../../context/ContextProvider";
+//
 
-const navListMenuItems = [
-  {
-    color: "blue",
-    icon: FlagIcon,
-    title: "About us",
-    description: "Learn about our story and our mission statement.",
-  },
-  {
-    color: "orange",
-    icon: ChatBubbleOvalLeftIcon,
-    title: "Press",
-    description: "News and writings, press releases, and resources",
-  },
-  {
-    color: "green",
-    icon: UsersIcon,
-    title: (
-      <div className="flex items-center gap-1">
-        Careers{" "}
-        <Chip
-          size="sm"
-          color="green"
-          variant="ghost"
-          value="We're hiring!"
-          className="capitalize"
-        />
-      </div>
-    ),
-    description: "We are always looking for talented people. Join us!",
-  },
-  {
-    color: "blue-gray",
-    icon: FolderIcon,
-    title: "Legal",
-    description: "All the stuff that we dan from legal made us add.",
-  },
-  {
-    color: "purple",
-    icon: RocketLaunchIcon,
-    title: "Products",
-    description: "Checkout our products that helps a startup running.",
-  },
-  {
-    color: "teal",
-    icon: FaceSmileIcon,
-    title: "Icons",
-    description: "Set of beautiful icons that you can use in your project.",
-  },
-  {
-    color: "cyan",
-    icon: PuzzlePieceIcon,
-    title: "UI Kits",
-    description: "High quality UI Kits helps you to 2x faster.",
-  },
-  {
-    color: "pink",
-    icon: GiftIcon,
-    title: "Open Source",
-    description: "List of all our open-source projects, it's all free.",
-  },
-];
+const Header = () => {
+  const [active, setActive] = useState(false);
+  const { user, dispatch } = useStateContext();
+  const resize = useRef();
+  const width = useRef();
+  useEffect(() => {
+    const load = () => {
+      if (width.current > 640) {
+        setActive(true);
+      }
+      if (width.current <= 630) {
+        setActive(false);
+      }
+    };
+    window.addEventListener("resize", () => {
+      width.current = window.innerWidth;
+      load();
+    });
+    window.addEventListener("load", () => {
+      width.current = window.innerWidth;
+      load();
+    });
+  }, [width.current]);
 
-function NavListMenu() {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
-
-  const renderItems = navListMenuItems.map(
-    ({ icon, title, description, color }, key) => (
-      <Link to={"#"} key={key}>
-        <MenuItem
-          className={`${
-            isMobileMenuOpen ? "flex" : "hidden"
-          } text-black my-3 bg-white items-center gap-3 rounded-lg p-3 hover:bg-slate-200 `}
-        >
-          <div className={`rounded-lg p-5 ${colors[color]}`}>
-            {React.createElement(icon, {
-              strokeWidth: 2,
-              className: "h-6 w-6",
-            })}
-          </div>
-          <div>
-            <Typography
-              variant="h6"
-              color="blue-gray"
-              className="flex items-center text-sm"
-            >
-              {title}
-            </Typography>
-            <Typography variant="small" color="gray" className="font-normal">
-              {description}
-            </Typography>
-          </div>
-        </MenuItem>
-      </Link>
-    )
-  );
+  const logout = () => {
+    dispatch({ type: "logout" });
+  };
 
   return (
-    <React.Fragment>
-      <Menu
-        open={isMenuOpen}
-        handler={setIsMenuOpen}
-        offset={{ mainAxis: 20 }}
-        placement="bottom"
-        //         allowHover={false}
-      >
-        <MenuHandler>
-          <Typography as="div" variant="small" className="font-normal">
-            <ListItem
-              className="flex items-center gap-2"
-              selected={isMenuOpen || isMobileMenuOpen}
-              onClick={() => setIsMobileMenuOpen((cur) => !cur)}
-            >
-              <Square3Stack3DIcon className="h-[18px] w-[18px]" />
-              Danh mục
-              <ChevronDownIcon
-                strokeWidth={2.5}
-                className={`hidden h-3 w-3 transition-transform lg:block ${
-                  isMenuOpen ? "rotate-180" : ""
-                }`}
-              />
-              <ChevronDownIcon
-                strokeWidth={2.5}
-                className={`block h-3 w-3 transition-transform lg:hidden ${
-                  isMobileMenuOpen ? "rotate-180" : ""
-                }`}
-              />
-            </ListItem>
-          </Typography>
-        </MenuHandler>
-        <MenuList className="hidden max-w-screen-xl max-h-72 rounded-xl lg:block">
-          {renderItems}
-        </MenuList>
-      </Menu>
-      <div className="block lg:hidden">
-        <Collapse open={isMobileMenuOpen}>{renderItems}</Collapse>
-      </div>
-    </React.Fragment>
-  );
-}
-
-function NavList() {
-  const { user } = useStateContext();
-
-  return (
-    <List className=" mt-4 mb-6 p-0 lg:mt-0 lg:mb-0 lg:flex-row lg:p-1 items-center">
-      <Typography variant="small" color="blue-gray" className="font-normal">
-        <ListItem className="flex items-center gap-2 ">
-          <HomeIcon className="h-[18px] w-[18px]" />
-          <Link to={"/"}>Trang chủ</Link>
-        </ListItem>
-      </Typography>
-
-      <NavListMenu />
-
-      <Typography variant="small" color="blue-gray" className="font-normal">
-        <Link to={"/statis"} className="flex items-center gap-2 ">
-          {/* <HomeIcon className="h-[18px] w-[18px]" /> */}
-          <FontAwesomeIcon icon={faChartColumn} />
-          Thống kê
+    <div className="fixed top-0 left-0 right-0 h-20 bg-white z-40 border drop-shadow-lg flex items-center justify-between">
+      <div className="px-10 py-2">
+        <Link to={"/"}>
+          <img src="/logo.png" alt="" className="w-20" />
         </Link>
-      </Typography>
-
-      <Typography variant="small" color="blue-gray" className="font-normal">
-        <ListItem>
-          <Link to={"/profile"} className="flex items-center gap-2 ">
-            <div>
-              {user === null || user.avatar === null ? (
-                <UserCircleIcon className="h-[18px] w-[18px]" />
-              ) : (
-                <div>
-                  <img
-                    src={user.avatar}
-                    alt="avatar"
-                    className="w-10 h-10 rounded-full border border-black p-1"
-                  />
+      </div>
+      {active && (
+        <div className="absolute sm:relative transition duration-500 w-full sm:max-w-fit bg-white top-[100%] sm:top-0 sm:flex sm:px-10 flex-col sm:flex-row sm:items-center gap-3 z-40">
+          <div className="group relative">
+            <Link
+              to={"/"}
+              className="flex gap-2 hover:cursor-pointer px-3 py-2 hover:bg-neutral-200 rounded-lg"
+            >
+              <div className="">
+                <FontAwesomeIcon icon={faHome} />
+              </div>
+              <div className="">Trang chủ</div>
+            </Link>
+          </div>
+          {/*  */}
+          <div className="group relative">
+            <div className="flex gap-2 hover:cursor-pointer px-3 py-2 group-hover:bg-neutral-200 rounded-lg">
+              <div className="">
+                <FontAwesomeIcon icon={faGear} />
+              </div>
+              <div className="">Tiện ích</div>
+            </div>
+            {/*  */}
+            <div className="group-hover:flex sm:rounded-lg flex-col rounded-lg sm:min-w-[300px] p-3 drop-shadow-xl sm:absolute hidden bg-white sm:top-10 sm:right-0">
+              <Link
+                to={"/create-post"}
+                className="flex gap-2 hover:cursor-pointer px-10 py-2 hover:bg-neutral-200 rounded-lg"
+              >
+                <div className="">
+                  <FontAwesomeIcon icon={faPlusCircle} />
                 </div>
+                <div className="">Tạo bài viết</div>
+              </Link>
+              <div className="flex gap-2 hover:cursor-pointer px-10 py-2 hover:bg-neutral-200 rounded-lg">
+                <div className="">
+                  <FontAwesomeIcon icon={faGear} />
+                </div>
+                <div className="">Các chức năng quản lý</div>
+              </div>
+            </div>
+          </div>
+          {/*  */}
+          <div className="group relative">
+            <div className="flex gap-2 hover:cursor-pointer px-3 py-2 group-hover:bg-neutral-200 rounded-lg">
+              {user === null ? (
+                <>
+                  <div className="">
+                    <FontAwesomeIcon icon={faUser} />
+                  </div>
+                  <div className="">Tài khoản</div>
+                </>
+              ) : (
+                <>
+                  <div className="flex gap-2 items-center">
+                    <div className=" rounded-full border border-black flex justify-center items-center p-1">
+                      <img
+                        src={user.avatar}
+                        alt="avatar"
+                        className="rounded-full h-8 w-8"
+                      />
+                    </div>
+                    <div className="">{user.username}</div>
+                  </div>
+                </>
               )}
             </div>
-
-            <div>{user === null ? "Account" : <>{user.username}</>}</div>
-          </Link>
-        </ListItem>
-      </Typography>
-    </List>
-  );
-}
-
-export default function Header() {
-  const [openNav, setOpenNav] = useState(false);
-  const { user, dispatch } = useStateContext();
-  useEffect(() => {
-    window.addEventListener(
-      "resize",
-      () => window.innerWidth >= 960 && setOpenNav(false)
-    );
-  }, []);
-
-  return (
-    <Navbar className=" text-black rounded-none rounded-bl-2xl rounded-br-2xl z-10 px-8 py-3  drop-shadow-md">
-      <div className="flex items-center justify-between text-blue-gray-900">
-        <Link
-          to={"/"}
-          className="w-10 md:w-16 flex items-center justify-center"
-        >
-          <img src="/logo.png" alt="News" />
-        </Link>
-        <div className="hidden lg:block">
-          <NavList />
-        </div>
-        <div className="hidden gap-2  lg:flex">
-          {user === null ? (
-            <>
-              <Button
-                variant="text"
-                size="lg"
-                color="blue-gray"
-                className="py-2 px-2"
-              >
-                <Link to={"/login"} className="text-lg">
-                  Đăng nhập
-                </Link>
-              </Button>
-              <Button variant="text" size="lg" className="py-2 ps-2">
-                <Link to={"/register"} className="text-lg">
-                  Đăng ký
-                </Link>
-              </Button>
-            </>
-          ) : (
-            <>
-              <Button
-                onClick={() => dispatch({ type: "logout" })}
-                variant="text"
-                size="sm"
-                className="py-2 px-3 text-lg"
-              >
-                Đăng xuất
-              </Button>
-            </>
-          )}
-        </div>
-        <IconButton
-          variant="text"
-          color="blue-gray"
-          className="lg:hidden flex justify-center items-center"
-          onClick={() => setOpenNav(!openNav)}
-        >
-          {openNav ? (
-            <XMarkIcon className="h-6 w-6" strokeWidth={2} />
-          ) : (
-            <Bars3Icon className="h-6 w-6" strokeWidth={2} />
-          )}
-        </IconButton>
-      </div>
-      {openNav && (
-        <>
-          {" "}
-          <NavList />
-          <div className="flex w-full flex-nowrap items-center gap-2 lg:hidden">
             {user === null ? (
-              <>
-                <Button
-                  variant="outlined"
-                  size="lg"
-                  color="blue-gray"
-                  fullWidth
+              <div className="group-hover:flex sm:rounded-lg flex-col rounded-lg sm:min-w-[200px] p-3 drop-shadow-xl sm:absolute hidden bg-white sm:top-10 sm:right-0">
+                <Link
+                  to={"/login"}
+                  className="flex gap-2 hover:cursor-pointer px-10 py-2 hover:bg-neutral-200 rounded-lg"
                 >
-                  <Link to={"/login"}>Đăng nhập</Link>
-                </Button>
-                <Button variant="text" size="lg" fullWidth>
-                  <Link to={"/register"}>Đăng ký</Link>
-                </Button>
-              </>
+                  <div className="">
+                    <FontAwesomeIcon icon={faRightToBracket} />
+                  </div>
+                  <div className="">Đăng nhập</div>
+                </Link>
+                <Link
+                  to={"/register"}
+                  className="flex gap-2 hover:cursor-pointer px-10 py-2 hover:bg-neutral-200 rounded-lg"
+                >
+                  <div className="">
+                    <FontAwesomeIcon icon={faAddressCard} />
+                  </div>
+                  <div className="">Đăng ký</div>
+                </Link>
+              </div>
             ) : (
-              <>
-                <Button
-                  variant="outlined"
-                  size="sm"
-                  onClick={() => dispatch({ type: "logout" })}
-                  color="blue-gray"
-                  fullWidth
+              <div className="group-hover:flex sm:rounded-lg flex-col rounded-lg sm:min-w-[300px] p-3 drop-shadow-xl sm:absolute hidden bg-white sm:top-10 sm:right-0">
+                <Link
+                  to={"/profile"}
+                  className="flex gap-2 hover:cursor-pointer px-10 py-2 hover:bg-neutral-200 rounded-lg"
                 >
-                  Đăng xuất
-                </Button>
-              </>
+                  <div className="">
+                    <FontAwesomeIcon icon={faUser} />
+                  </div>
+                  <div className="">Thông tin tài khoản</div>
+                </Link>
+                <div
+                  onClick={logout}
+                  className="flex gap-2 hover:cursor-pointer px-10 py-2 hover:bg-neutral-200 rounded-lg"
+                >
+                  <div className="">
+                    <FontAwesomeIcon icon={faDoorOpen} />
+                  </div>
+                  <div className="">Đăng xuất</div>
+                </div>
+              </div>
             )}
           </div>
-        </>
+        </div>
       )}
-      {/* <Collapse open={openNav}>
-       
-      </Collapse> */}
-    </Navbar>
+      <div
+        onClick={() => setActive((prev) => !prev)}
+        className="px-10 py-2 flex sm:hidden items-center justify-center "
+      >
+        <FontAwesomeIcon
+          icon={faBars}
+          className="p-3 transition duration-500 text-2xl hover:cursor-pointer text-sky-500 hover:bg-slate-200 rounded-full"
+        />
+      </div>
+    </div>
   );
-}
+};
+
+export default Header;

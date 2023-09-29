@@ -21,6 +21,7 @@ class ApiArticleController extends Controller
            *
            * @return \Illuminate\Http\Response
            */
+
           public function index()
           {
                     $arrRSS = Category::all();
@@ -85,7 +86,7 @@ class ApiArticleController extends Controller
                     $article->title = $request->title;
                     $article->description = $request->description;
                     $article->user_id = auth()->user()->id;
-                    $article->categoryID = $request->categoryID;
+                    $article->categoryID = $request->category;
                     $article->content = $request->content;
                     // dd(auth()->user()->id);
 
