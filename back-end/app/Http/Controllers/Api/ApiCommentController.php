@@ -29,7 +29,7 @@ class ApiCommentController extends Controller
           public function store(Request $request, $id)
           {
                     $comment = new Comment;
-                    // $comment->userID = 1;
+                    $comment->userID = 1;
                     // $article = Article::where("ArticleID", $id)->first();
                     // $comment->articleID = $request->session()->get("key");
                     $comment->articleID = $id;

@@ -13,7 +13,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { useStateContext } from "../../context/ContextProvider";
-//
+
 
 const Header = () => {
   const [active, setActive] = useState(false);
@@ -44,7 +44,7 @@ const Header = () => {
   };
 
   return (
-    <div className="fixed top-0 left-0 right-0 h-20 bg-white z-40 border drop-shadow-lg flex items-center justify-between">
+    <div className=" fixed top-0 left-0 right-0 h-20 bg-white z-40 border drop-shadow-lg flex items-center justify-between">
       <div className="px-10 py-2">
         <Link to={"/"}>
           <img src="/logo.png" alt="" className="w-20" />

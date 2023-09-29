@@ -57,8 +57,9 @@ const Home = () => {
     return <MySpinner />;
 
   return (
+  
     <>
-      <section className="mt-20 mx-auto w-full max-w-7xl px-8">
+      <section className="mt-32 mx-auto w-full max-w-7xl px-8">
         <div>Phần section trống có thể chạy hình ảnh</div>
       </section>
 
