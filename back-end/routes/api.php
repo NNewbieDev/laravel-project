@@ -32,12 +32,12 @@ Route::group([
           Route::post('update', [App\Http\Controllers\Api\ApiUserController::class, 'update']);
           Route::post('me', [App\Http\Controllers\Api\ApiUserController::class, 'me']);
 });
-Route::post('article/create', [App\Http\Controllers\Api\ApiArticleController::class, "store"])->name('article.store');
+Route::post('article/create', [App\Http\Controllers\Api\ApiArticleController::class, "store"])->middleware(["api", "checkRole:1"])->name('article.store');
 
-Route::get('article/', [App\Http\Controllers\Api\ApiArticleController::class, "index"])->middleware('checkRole:1')->name('article.index');
+Route::get('article/', [App\Http\Controllers\Api\ApiArticleController::class, "index"])->name('article.index');
 Route::get('article/{id}', [App\Http\Controllers\Api\ApiArticleController::class, "show"])->name('article.show');
-Route::post('article/{id}/accept', [App\Http\Controllers\Api\ApiArticleController::class, "accept"])->name('article.accept');
-Route::post('article/{id}/delete', [App\Http\Controllers\Api\ApiArticleController::class, "destroy"])->name('article.destroy');
+Route::post('article/{id}/accept', [App\Http\Controllers\Api\ApiArticleController::class, "accept"])->middleware(["api", "checkRole:1", "checkRole:2"])->name('article.accept');
+Route::post('article/{id}/delete', [App\Http\Controllers\Api\ApiArticleController::class, "destroy"])->middleware(["api", "checkRole:1", "checkRole:2"])->name('article.destroy');
 
 Route::post('search', [App\Http\Controllers\Api\ApiArticleController::class, "search"])->name('article.search');
 
