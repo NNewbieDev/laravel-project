@@ -14,13 +14,13 @@ class CheckRole
            * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
            * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
            */
-          public function handle(Request $request, Closure $next, $role)
+          public function handle(Request $request, Closure $next, $role, $other)
           {
                     $user = auth()->user();
-
-                    if ($user && $user->role_id == $role) {
-                              return response('Unauthorized', 401);
+                    // dd($role);
+                    if ($user && ($user->role_id == $role || $user->role_id == $other)) {
+                              return $next($request);
                     }
-                    return $next($request);
+                    return response('Unauthorized', 401);
           }
 }

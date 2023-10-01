@@ -130,6 +130,29 @@ class ApiArticleController extends Controller
            */
           public function update(Request $request, $id)
           {
+                    $article = Article::find($id);
+                    if (auth()->user()->id == $article->user_id) {
+                              // dd($request->title);
+                              $article->title = $request->title;
+                              $article->description = $request->description;
+                              $article->categoryID = $request->category;
+                              $article->content = $request->content;
+                              // dd(auth()->user()->id);
+                              //check if file exist 
+                              if ($request->hasFile('image')) {
+                                        $article->save();
+                                        $response = cloudinary()->upload($request->file('image')->getRealPath())->getSecurePath();
+                                        $article->image = $response;
+                              }
+
+                              if ($article->save()) {
+                                        return response("Cập nhật thành công", Response::HTTP_OK);
+                              } else {
+                                        return response("Cập nhật thất bại", Response::HTTP_CREATED);
+                              }
+                    } else {
+                              return response("Không thể thực hiện chức năng này", Response::HTTP_FORBIDDEN);
+                    }
           }
 
           /**

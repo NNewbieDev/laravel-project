@@ -15,9 +15,10 @@ class ApiCommentController extends Controller
            *
            * @return \Illuminate\Http\Response
            */
-          public function index()
+          public function index($id)
           {
-                    //
+                    $comment =  Comment::where("articleID", $id)->orderBy("created_at", "desc")->paginate(10);
+                    return response($comment, Response::HTTP_OK);
           }
 
           /**
@@ -29,7 +30,7 @@ class ApiCommentController extends Controller
           public function store(Request $request, $id)
           {
                     $comment = new Comment;
-                    // $comment->userID = 1;
+                    $comment->userID = auth()->user()->id;
                     // $article = Article::where("ArticleID", $id)->first();
                     // $comment->articleID = $request->session()->get("key");
                     $comment->articleID = $id;

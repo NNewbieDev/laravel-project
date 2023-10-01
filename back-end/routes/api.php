@@ -29,21 +29,40 @@ Route::group([
           Route::post('login', [App\Http\Controllers\Api\ApiUserController::class, 'login']);
           Route::post('logout', [App\Http\Controllers\Api\ApiUserController::class, 'logout']);
           Route::post('refresh', [App\Http\Controllers\Api\ApiUserController::class, 'refresh']);
-          Route::post('update', [App\Http\Controllers\Api\ApiUserController::class, 'update']);
+          // PUT Truyen bang raw data
+          Route::put('update', [App\Http\Controllers\Api\ApiUserController::class, 'update']);
+          Route::put('update/password', [App\Http\Controllers\Api\ApiUserController::class, 'changePassword']);
+          Route::put('{id}/role-up', [App\Http\Controllers\Api\ApiUserController::class, 'levelUp'])->middleware("checkRole:3,3");
+          Route::post('{id}/delete', [App\Http\Controllers\Api\ApiUserController::class, 'destroy'])->middleware("checkRole:3,3");
           Route::post('me', [App\Http\Controllers\Api\ApiUserController::class, 'me']);
+          Route::get('user/get', [App\Http\Controllers\Api\ApiUserController::class, 'getUsers'])->middleware("checkRole:3,3");
 });
-Route::post('article/create', [App\Http\Controllers\Api\ApiArticleController::class, "store"])->middleware(["api", "checkRole:1"])->name('article.store');
 
-Route::get('article/', [App\Http\Controllers\Api\ApiArticleController::class, "index"])->name('article.index');
-Route::get('article/{id}', [App\Http\Controllers\Api\ApiArticleController::class, "show"])->name('article.show');
-Route::post('article/{id}/accept', [App\Http\Controllers\Api\ApiArticleController::class, "accept"])->middleware(["api", "checkRole:1", "checkRole:2"])->name('article.accept');
-Route::post('article/{id}/delete', [App\Http\Controllers\Api\ApiArticleController::class, "destroy"])->middleware(["api", "checkRole:1", "checkRole:2"])->name('article.destroy');
+Route::prefix("article")->group(function () {
+          Route::get('/', [App\Http\Controllers\Api\ApiArticleController::class, "index"])->name('article.index');
+          Route::post('/create', [App\Http\Controllers\Api\ApiArticleController::class, "store"])->middleware(["api", "checkRole:2,3"])->name('article.store');
+          Route::post('/{id}/delete', [App\Http\Controllers\Api\ApiArticleController::class, "destroy"])->middleware(["api", "checkRole:2,3"])->name('article.destory');
+          // PUT Truyen bang raw data
+          Route::put('{id}/update', [App\Http\Controllers\Api\ApiArticleController::class, "update"])->middleware(["api", "checkRole:2,3"])->name('article.update');
+          Route::put('/{id}/accept', [App\Http\Controllers\Api\ApiArticleController::class, "accept"])->middleware(["api", "checkRole:3,3"])->name('article.accept');
+          Route::get('/{id}', [App\Http\Controllers\Api\ApiArticleController::class, "show"])->name('article.show');
+          // Comment
+          Route::post('/{id}/comment', [App\Http\Controllers\Api\ApiCommentController::class, "store"])->name('comment.store');
+          Route::get('/{id}/comment', [App\Http\Controllers\Api\ApiCommentController::class, "index"])->name('comment.index');
+});
 
 Route::post('search', [App\Http\Controllers\Api\ApiArticleController::class, "search"])->name('article.search');
 
-Route::post('article/{id}/comment', [App\Http\Controllers\Api\ApiCommentController::class, "store"])->name('comment.store');
-Route::get('category/', [App\Http\Controllers\Api\ApiCategoryController::class, "index"])->name('category.index');
-Route::get('category/{id}', [App\Http\Controllers\Api\ApiCategoryController::class, "show"])->name('category.show');
-// Route::group(['middleware' => 'jwt.auth'], function () {
-//           Route::get('user-info', 'UserController@getUserInfo');
-// });
+Route::prefix("category")->group(function () {
+          Route::get('/', [App\Http\Controllers\Api\ApiCategoryController::class, "index"])->name('category.index');
+          Route::get('/{id}', [App\Http\Controllers\Api\ApiCategoryController::class, "show"])->name('category.show');
+});
+
+Route::prefix("report")->group(function () {
+          Route::post("/add", [App\Http\Controllers\Api\ApiReportController::class, "store"])->middleware(["api"])->name('report.store');
+});
+
+Route::prefix("rating")->group(function () {
+          Route::post("/add", [App\Http\Controllers\Api\ApiRatingController::class, "store"])->middleware(["api"])->name('rating.store');
+          Route::get("{id}/get", [App\Http\Controllers\Api\ApiRatingController::class, "show"])->middleware(["api"])->name('rating.show');
+});

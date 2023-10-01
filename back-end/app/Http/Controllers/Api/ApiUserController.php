@@ -80,6 +80,14 @@ class ApiUserController extends Controller
                     }
           }
 
+          public function changePassword(Request $request)
+          {
+                    $user = User::find(auth()->user()->id);
+                    $user->password = Hash::make($request->newPass);
+                    $user->save();
+                    return response("Cập nhật thành công", Response::HTTP_OK);
+          }
+
           /**
            * Get the authenticated User.
            *
@@ -111,6 +119,27 @@ class ApiUserController extends Controller
           public function refresh()
           {
                     return $this->respondWithToken(auth()->refresh());
+          }
+
+          public function getUsers()
+          {
+                    $user = User::paginate(10);
+                    return response($user, Response::HTTP_OK);
+          }
+
+          public function levelUp($id)
+          {
+                    $user = User::find($id);
+                    $user->role_id = 2;
+                    $user->save();
+                    return response("Đã nâng cấp vai trò", Response::HTTP_OK);
+          }
+
+          public function destroy($id)
+          {
+                    $user = User::find($id);
+                    $user->destroy();
+                    return response("Tài khoản đã được xóa", Response::HTTP_ACCEPTED);
           }
 
           /**

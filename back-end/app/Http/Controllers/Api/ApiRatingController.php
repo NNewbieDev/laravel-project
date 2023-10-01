@@ -25,9 +25,11 @@ class ApiRatingController extends Controller
            * @param  \Illuminate\Http\Request  $request
            * @return \Illuminate\Http\Response
            */
-          public function store(Request $request)
+          public function store(Request $request, $id)
           {
                     $rating = new Rating();
+                    $rating->userID = auth()->user()->id;
+                    $rating->articleID = $id;
                     $rating->rate = $request->rate;
                     $rating->save();
                     return response("Cảm ơn bạn đã đánh giá", Response::HTTP_CREATED);
@@ -41,7 +43,8 @@ class ApiRatingController extends Controller
            */
           public function show($id)
           {
-                    //
+                    $rating = Rating::where("articleID", $id);
+                    return response($rating->rate, Response::HTTP_OK);
           }
 
           /**
