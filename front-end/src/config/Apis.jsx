@@ -10,7 +10,7 @@ export const endpoints = {
   article: "/api/article",
   category: "/api/category",
   create: "/api/article/create",
-  search: (id) => `/api/search${id}`,
+  search: "/api/search",
   detail: (id) => `/api/article/${id}`,
 };
 

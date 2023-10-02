@@ -6,6 +6,7 @@ import { faCamera } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Button, IconButton } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
+import moment from "moment";
 
 library.add(faCamera);
 
@@ -23,26 +24,21 @@ const Home = () => {
     async function fecthArticle() {
       try {
         let e = endpoints["article"];
-        let cateId = q.get("cateId");
-        if (cateId !== null) {
-          e = `${e}?cateId=${cateId}`;
-        } else {
-          let kw = q.get("kw");
-          if (kw !== null)
-            e = `${e}?kw=${kw}`;
-        }
-
+        let kw = q.get("kw");
+        // if (kw !== null) {
+        //   e = `${e}?kw=${kw}`;
+        // }
         let res = await Apis.get(e);
         //       // setArticle(res.data);
 
         const cate = await Apis.get(endpoints["category"]);
-        console.log(cate);
-        //       cái này là đầy đủ các attribute ông cần
-        console.log(res.data);
-        //       cái này là để ông lấy phân trang
-        console.log(res.data.links);
+        // console.log(cate);
+        // //       cái này là đầy đủ các attribute ông cần
+        // console.log(res.data);
+        // //       cái này là để ông lấy phân trang
+        // console.log(res.data.links);
 
-        console.log(res.data.data);
+        // console.log(res.data.data);
         setPaginate(res.data.links);
         setArticle(res.data.data);
       } catch (ex) {
@@ -50,6 +46,8 @@ const Home = () => {
       }
     }
     fecthArticle();
+
+
 
     //danh mục
     const loadCategory = async () => {
@@ -65,17 +63,47 @@ const Home = () => {
 
   const search = (evt) => {
     evt.preventDefault();
-
-    nav(`/?kw=${kw}`);
+    const process = async () => {
+      try {
+        let res = await Apis.post(endpoints["search"], {
+          title: kw,
+        });
+        setPaginate(res.data.links);
+        setArticle(res.data.data);
+      } catch (err) {
+        console.error("Loi ne:" + err);
+      }
+    };
+    process();
   }
+
+  const articleByCate = (evt, cateId) => {
+    console.log(cateId)
+    evt.preventDefault();
+    const process = async () => {
+      try {
+        let res = await Apis.post(endpoints["search"], {
+          cateId: cateId,
+        });
+        setPaginate(res.data.links);
+        setArticle(res.data.data);
+        console.log(res.data.data)
+      } catch (err) {
+        console.error("Loi ne:" + err);
+      }
+    };
+    process();
+  }
+
   const pagination = async (page) => {
     let e = endpoints["article"];
     e = `${e}/?page=${page}`;
     let res = await Apis.get(e);
     setArticle(res.data.data);
     setPaginate(res.data.links);
+    nav(`/?kw=${kw}`);
   };
-  
+
   if (article === null)
     return <MySpinner />;
 
@@ -84,10 +112,9 @@ const Home = () => {
     <>
       <section className="flex justify-center text-lg mt-28 mx-auto w-full max-w-7xl px-8">
         {category.map((c) => {
-          let h = `/?cateId=${c.id}`;
           return (
             <div className="inline-flex ">
-              <a title={c.name} href={h} className="mx-3 py-2 px-3 hover:bg-neutral-200 rounded-lg"> {c.name}</a>
+              <a title={c.name} onClick={(e) => articleByCate(e, c.id)} className="mx-3 py-2 px-3 hover:bg-neutral-200 rounded-lg"> {c.name}</a>
 
             </div>
           );
@@ -96,7 +123,7 @@ const Home = () => {
 
       {/* section content */}
       <section className="mb-10">
-        {/* Search engine chưa xử lý */}
+        {/* Search engine đang xử lý */}
         <form onSubmit={search} className="mt-7 mx-auto w-full max-w-7xl">
           <label
             htmlFor="default-search"
@@ -123,8 +150,8 @@ const Home = () => {
               </svg>
             </div>
             <input
-              type="search"
-              onChange={e => setKw(e.target.value)}
+              type="text"
+              onChange={(e) => setKw(e.target.value)}
               value={kw}
               className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Tìm kiếm..."
@@ -165,7 +192,7 @@ const Home = () => {
                       </p>
                     </Link>
                     <p className="text-xs text-neutral-500 dark:text-neutral-300">
-                      {a.updated_at}
+                      { moment(a.updated_at).utc().format('HH:mm DD-MM-YYYY')}
                     </p>
 
                   </div>
