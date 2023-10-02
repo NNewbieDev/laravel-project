@@ -115,9 +115,18 @@ class ApiArticleController extends Controller
 
           public function search(Request $request)
           {
-                    $result = Article::with("user")->where('title', 'LIKE', "%{$request->title}%")->where("status", "ACCEPT")->paginate(10);
+            $result = Article::with("user");
+            if ($request->exists('cateId')) {
+                $result = $result->where('categoryid', $request->cateId);
+            }
+
+            if ($request->exists('title')) {
+                $result = $result->where('title', 'LIKE', "%{$request->title}%");
+            }
+                
+            $result = $result->where("status", "ACCEPT")->paginate(10);
                     // dd($result->get("categoryID"));
-                    return response($result, Response::HTTP_OK);
+            return response($result, Response::HTTP_OK);
           }
 
 
