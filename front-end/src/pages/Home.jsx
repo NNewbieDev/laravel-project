@@ -3,9 +3,10 @@ import Apis, { endpoints } from "../config/Apis";
 import { MySpinner } from "../components/layout";
 import { library, icon } from "@fortawesome/fontawesome-svg-core";
 import { faCamera } from "@fortawesome/free-solid-svg-icons";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Button, IconButton } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
+import moment from "moment";
 
 library.add(faCamera);
 
@@ -15,35 +16,81 @@ const Home = () => {
   const [article, setArticle] = useState([]);
   const [q] = useSearchParams();
   const [paginate, setPaginate] = useState([]);
+  const [category, setCategory] = useState([]);
+  const [kw, setKw] = useState("");
+  const nav = useNavigate();
 
   useEffect(() => {
     async function fecthArticle() {
-      let e = endpoints["article"];
-
-      let categoryID = q.get("categoryID");
-      if (categoryID !== null) {
-        e = `${e}?categoryID=${categoryID}`;
-      } else {
+      try {
+        let e = endpoints["article"];
         let kw = q.get("kw");
-        if (kw !== null) e = `${e}?kw=${kw}`;
+        // if (kw !== null) {
+        //   e = `${e}?kw=${kw}`;
+        // }
+        let res = await Apis.get(e);
+        //       // setArticle(res.data);
+
+        const cate = await Apis.get(endpoints["category"]);
+        // console.log(cate);
+        // //       cái này là đầy đủ các attribute ông cần
+        // console.log(res.data);
+        // //       cái này là để ông lấy phân trang
+        // console.log(res.data.links);
+
+        // console.log(res.data.data);
+        setPaginate(res.data.links);
+        setArticle(res.data.data);
+      } catch (ex) {
+        console.error(ex);
       }
-
-      let res = await Apis.get(e);
-      //       // setArticle(res.data);
-
-      const cate = await Apis.get(endpoints["category"]);
-      console.log(cate);
-      //       cái này là đầy đủ các attribute ông cần
-      console.log(res.data);
-      //       cái này là để ông lấy phân trang
-      console.log(res.data.links);
-
-      console.log(res.data.data);
-      setPaginate(res.data.links);
-      setArticle(res.data.data);
     }
     fecthArticle();
+
+    //danh mục
+    const loadCategory = async () => {
+      let cate = endpoints["category"];
+      // e = `${e}/?page=${page}`;
+      let cateRes = await Apis.get(cate);
+      setCategory(cateRes.data);
+      // setCategory(res.data.links);
+    };
+    loadCategory();
   }, [q]);
+
+  const search = (evt) => {
+    evt.preventDefault();
+    const process = async () => {
+      try {
+        let res = await Apis.post(endpoints["search"], {
+          title: kw,
+        });
+        setPaginate(res.data.links);
+        setArticle(res.data.data);
+      } catch (err) {
+        console.error("Loi ne:" + err);
+      }
+    };
+    process();
+  };
+
+  const articleByCate = (evt, cateId) => {
+    console.log(cateId);
+    evt.preventDefault();
+    const process = async () => {
+      try {
+        let res = await Apis.post(endpoints["search"], {
+          cateId: cateId,
+        });
+        setPaginate(res.data.links);
+        setArticle(res.data.data);
+        console.log(res.data.data);
+      } catch (err) {
+        console.error("Loi ne:" + err);
+      }
+    };
+    process();
+  };
 
   const pagination = async (page) => {
     let e = endpoints["article"];
@@ -51,6 +98,7 @@ const Home = () => {
     let res = await Apis.get(e);
     setArticle(res.data.data);
     setPaginate(res.data.links);
+    nav(`/?kw=${kw}`);
   };
 
   if (article.length === 0)
@@ -62,14 +110,27 @@ const Home = () => {
 
   return (
     <>
-      <section className="mt-32 mx-auto w-full max-w-7xl px-8">
-        <div>Phần section trống có thể chạy hình ảnh</div>
+      <section className="flex justify-center text-lg mt-28 mx-auto w-full max-w-7xl px-8">
+        {category.map((c) => {
+          return (
+            <div className="inline-flex ">
+              <a
+                title={c.name}
+                onClick={(e) => articleByCate(e, c.id)}
+                className="mx-3 py-2 px-3 hover:bg-neutral-200 rounded-lg"
+              >
+                {" "}
+                {c.name}
+              </a>
+            </div>
+          );
+        })}
       </section>
 
       {/* section content */}
       <section className="mb-10">
-        {/* Search engine chưa xử lý */}
-        <form className="mt-10 mx-auto w-full max-w-7xl">
+        {/* Search engine đang xử lý */}
+        <form onSubmit={search} className="mt-7 mx-auto w-full max-w-7xl">
           <label
             htmlFor="default-search"
             className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
@@ -95,15 +156,16 @@ const Home = () => {
               </svg>
             </div>
             <input
-              type="search"
-              id="default-search"
+              type="text"
+              onChange={(e) => setKw(e.target.value)}
+              value={kw}
               className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Tìm kiếm..."
               required
             />
             <button
               type="submit"
-              className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-400 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
               Tìm kiếm
             </button>
@@ -136,7 +198,7 @@ const Home = () => {
                       </p>
                     </Link>
                     <p className="text-xs text-neutral-500 dark:text-neutral-300">
-                      {a.updated_at}
+                      {moment(a.updated_at).utc().format("HH:mm DD-MM-YYYY")}
                     </p>
                   </div>
                 </div>
