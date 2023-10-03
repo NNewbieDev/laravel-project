@@ -14,7 +14,6 @@ import {
 import { Link } from "react-router-dom";
 import { useStateContext } from "../../context/ContextProvider";
 
-
 const Header = () => {
   const [active, setActive] = useState(false);
   const { user, dispatch } = useStateContext();

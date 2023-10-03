@@ -53,11 +53,14 @@ const Home = () => {
     setPaginate(res.data.links);
   };
 
-  if (article === null) 
-    return <MySpinner />;
+  if (article.length === 0)
+    return (
+      <div className="mt-32 mx-auto text-center w-3/4 flex justify-center">
+        <MySpinner />
+      </div>
+    );
 
   return (
-  
     <>
       <section className="mt-32 mx-auto w-full max-w-7xl px-8">
         <div>Phần section trống có thể chạy hình ảnh</div>
@@ -123,19 +126,18 @@ const Home = () => {
                 <div className="rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 md:max-w-xl md:flex-row">
                   <div className="flex flex-col justify-start p-6">
                     <Link to={url} alt={a.title}>
-                    <h5 className="mb-3 capitalize text-xl font-medium text-neutral-800 dark:text-neutral-50">
-                      {a.title}.
-                    </h5>
-                    <p className="mb-4 text-base text-neutral-600 dark:text-neutral-200">
-                      <div
-                        dangerouslySetInnerHTML={{ __html: a.description }}
-                      />
-                    </p>
+                      <h5 className="mb-3 capitalize text-xl font-medium text-neutral-800 dark:text-neutral-50">
+                        {a.title}.
+                      </h5>
+                      <p className="mb-4 text-base text-neutral-600 dark:text-neutral-200">
+                        <div
+                          dangerouslySetInnerHTML={{ __html: a.description }}
+                        />
+                      </p>
                     </Link>
                     <p className="text-xs text-neutral-500 dark:text-neutral-300">
                       {a.updated_at}
                     </p>
-                    
                   </div>
                 </div>
               </>

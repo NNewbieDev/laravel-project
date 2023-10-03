@@ -1,0 +1,94 @@
+import React, { useEffect, useState } from "react";
+import { Profile } from "../pages";
+import { useStateContext } from "../context/ContextProvider";
+import { authApi, endpoints } from "../config/Apis";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
+import { Warning } from "./warning";
+
+const YourPost = () => {
+  const { user } = useStateContext();
+  const [article, setArticle] = useState();
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await authApi().get(endpoints["post"]);
+        setArticle(res.data);
+      } catch (err) {}
+    };
+    load();
+  }, []);
+
+  if (user.role_id === 1) {
+    return (
+      <Profile>
+        <div className="mt-10 sm:w-3/4 w-full h-96 sm:mx-auto flex justify-center items-center bg-slate-100 rounded-md">
+          <Warning />
+        </div>
+      </Profile>
+    );
+  }
+  if (article === undefined) {
+    return (
+      <Profile>
+        <div className="sm:w-3/4 w-full sm:mx-auto flex justify-center">
+          <div class="inline-block mt-3 h-8 w-8 animate-spin rounded-full border-4 border-green-btn border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_2s_linear_infinite]"></div>
+        </div>
+      </Profile>
+    );
+  }
+  return (
+    <Profile>
+      <div className="mt-8 mx-auto md:w-2/3 flex flex-col gap-5">
+        {article.data.map((item, index) => {
+          return (
+            <div
+              className="flex gap-5 border border-neutral-300 shadow-lg p-3 rounded-md"
+              key={index}
+            >
+              <div className="rounded-md border flex justify-center items-center p-2 drop-shadow-xl shadow-lg">
+                <img
+                  className="sm:w-72 lg:h-40 w-52 h-24 rounded-md "
+                  src={
+                    item.image === null
+                      ? "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png"
+                      : item.image
+                  }
+                  alt="ảnh"
+                />
+              </div>
+              <div className="flex w-full flex-row sm:flex-col justify-between">
+                <div className="">
+                  <div className="font-semibold text-2xl px-5 ">
+                    {item.title}
+                  </div>
+                  <div className="font-normal text-lg px-5 max-w-[12rem] lg:max-w-fit text-ellipsis overflow-x-hidden">
+                    {item.description}
+                  </div>
+                </div>
+                <div className="flex gap-5 flex-col sm:flex-row justify-end">
+                  <div className="flex justify-center items-center gap-2 bg-green-300 sm:px-5 lg:px-10 py-3 text-white font-semibold rounded-lg drop-shadow-lg cursor-pointer">
+                    <div className="px-4 sm:px-0">
+                      <FontAwesomeIcon icon={faPen} />
+                    </div>
+                    <div className="hidden sm:block">Chỉnh sửa</div>
+                  </div>
+                  <div className="flex justify-center items-center gap-2 bg-red-400 sm:px-5 lg:px-10 py-3 text-white font-semibold rounded-lg drop-shadow-lg cursor-pointer">
+                    <div className="px-4 sm:px-0">
+                      <FontAwesomeIcon icon={faTrash} />
+                    </div>
+                    <div className="hidden sm:block">Xóa</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </Profile>
+  );
+};
+
+export default YourPost;

@@ -6,6 +6,9 @@ const SERVER = "http://localhost:8000";
 export const endpoints = {
   login: "/api/auth/login",
   user: "/api/auth/user",
+  update: "/api/auth/update",
+  "update-pass": "/api/auth/update/password",
+  post: "/api/auth/user/article",
   register: "/api/register",
   article: "/api/article",
   category: "/api/category",

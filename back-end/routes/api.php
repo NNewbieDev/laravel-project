@@ -30,12 +30,16 @@ Route::group([
           Route::post('logout', [App\Http\Controllers\Api\ApiUserController::class, 'logout']);
           Route::post('refresh', [App\Http\Controllers\Api\ApiUserController::class, 'refresh']);
           // PUT Truyen bang raw data
+          // Update có file dùng post
           Route::put('update', [App\Http\Controllers\Api\ApiUserController::class, 'update']);
           Route::put('update/password', [App\Http\Controllers\Api\ApiUserController::class, 'changePassword']);
+          Route::put('send', [App\Http\Controllers\Api\ApiUserController::class, 'send']);
           Route::put('{id}/role-up', [App\Http\Controllers\Api\ApiUserController::class, 'levelUp'])->middleware("checkRole:3,3");
           Route::post('{id}/delete', [App\Http\Controllers\Api\ApiUserController::class, 'destroy'])->middleware("checkRole:3,3");
           Route::post('me', [App\Http\Controllers\Api\ApiUserController::class, 'me']);
           Route::get('user/get', [App\Http\Controllers\Api\ApiUserController::class, 'getUsers'])->middleware("checkRole:3,3");
+          Route::get('user/article', [App\Http\Controllers\Api\ApiArticleController::class, 'user'])->middleware("checkRole:2,3");
+          Route::get('user/sent', [App\Http\Controllers\Api\ApiUserController::class, 'getUserSent'])->middleware("checkRole:3,3");
 });
 
 Route::prefix("article")->group(function () {

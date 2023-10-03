@@ -139,9 +139,8 @@ class ApiArticleController extends Controller
                               $article->content = $request->content;
                               // dd(auth()->user()->id);
                               //check if file exist 
-                              if ($request->hasFile('image')) {
-                                        $article->save();
-                                        $response = cloudinary()->upload($request->file('image')->getRealPath())->getSecurePath();
+                              if ($request->image) {
+                                        $response = cloudinary()->upload($request->image)->getSecurePath();
                                         $article->image = $response;
                               }
 
@@ -167,6 +166,13 @@ class ApiArticleController extends Controller
                     $article->delete();
                     return Response::HTTP_NO_CONTENT;
           }
+
+          public function user()
+          {
+                    $article = Article::where('user_id', auth()->user()->id)->orderBy("created_at", "desc")->paginate(10);
+                    return response($article, Response::HTTP_OK);
+          }
+
           public function accept($id)
           {
                     $article = Article::where('id', $id)->first();

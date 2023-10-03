@@ -2,9 +2,16 @@ import React, { useEffect, useRef, useState } from "react";
 import Apis, { authApi, endpoints } from "../config/Apis";
 import { useQuill } from "react-quilljs";
 import "quill/dist/quill.snow.css";
+import { useStateContext } from "../context/ContextProvider";
+import { Warning } from "../components/warning";
+import { Link } from "react-router-dom";
+//
 const CreatePost = () => {
+  const { user } = useStateContext();
   const [category, setCategory] = useState(null);
   const [image, setImage] = useState(null);
+  const [loading, setLoading] = useState(false);
+
   const { quill, quillRef } = useQuill({
     placeholder: "Viết nội dung ở đây...",
   });
@@ -34,6 +41,28 @@ const CreatePost = () => {
       });
     }
   }, [quill]);
+  console.log(user);
+
+  if (user === null) {
+    return (
+      <div className="mt-24 sm:w-3/4 h-96 mx-auto flex justify-center items-center bg-slate-200 rounded-md">
+        <Link
+          to={"/login"}
+          className="bg-blue-600 px-5 py-3 text-white rounded-lg cursor-pointer hover:text-blue-600 hover:bg-white hover:outline hover:outline-blue-600 text-lg font-semibold transition duration-500"
+        >
+          Vui lòng đăng nhập
+        </Link>
+      </div>
+    );
+  }
+
+  if (user.role_id === 1) {
+    return (
+      <div className="mt-24 sm:w-3/4 w-full h-96 sm:mx-auto flex justify-center items-center bg-slate-100 rounded-md">
+        <Warning />
+      </div>
+    );
+  }
 
   if (category === null) {
     return (
@@ -83,7 +112,7 @@ const CreatePost = () => {
         {/*  */}
         <div className="">
           <div className="text-slate-500 text-lg mt-3">Thể loại</div>
-          <div className=" flex gap-5 mt-2">
+          <div className=" flex gap-5 mt-2 flex-wrap">
             {category.map((item, index) => {
               return (
                 <div
@@ -135,7 +164,7 @@ const CreatePost = () => {
             name="image"
             className="border p-2 w-full mt-2 text-slate-500 rounded-lg"
           />
-          <div>
+          <div className=" flex justify-center">
             <img
               src={image}
               alt="Ảnh minh họa"
@@ -144,11 +173,15 @@ const CreatePost = () => {
           </div>
         </div>
         {/*  */}
-        <input
-          type="submit"
-          className="cursor-pointer w-full py-3 bg-blue-500 text-white text-xl font-semibold text-center rounded-md mt-4"
-          value={"Tạo bài viết"}
-        />
+        {loading ? (
+          <div class="inline-block mt-3 h-8 w-8 animate-spin rounded-full border-4 border-green-btn border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_2s_linear_infinite]"></div>
+        ) : (
+          <input
+            type="submit"
+            className="cursor-pointer w-full py-3 bg-blue-500 text-white text-xl font-semibold text-center rounded-md mt-4"
+            value={"Tạo bài viết"}
+          />
+        )}
       </div>
     </form>
   );

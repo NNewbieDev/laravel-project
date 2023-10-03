@@ -2,36 +2,16 @@ import React, { useEffect, useRef, useState } from "react";
 import { useStateContext } from "../context/ContextProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar } from "@fortawesome/free-regular-svg-icons";
-import {
-  faChartBar,
-  faChartColumn,
-  faFile,
-  faHeart,
-  faUser,
-  faUserGroup,
-} from "@fortawesome/free-solid-svg-icons";
+import { faFile, faUser } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
+//
+const Profile = ({ children }) => {
+  const { user, checked, setChecked } = useStateContext();
 
-const Profile = () => {
-  const { user } = useStateContext();
-
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [password, setPassword] = useState({
-    current: "",
-    new: "",
-    confirm: "",
-  });
-  const [avatarURL, setAvatarURL] = useState("");
-  const avatar = useRef();
-
-  useEffect(() => {
-    if (user !== null) {
-      setUsername(user.username);
-      setEmail(user.email);
-      setPhone(user.phone);
-    }
-  }, []);
+  const listProfile = [
+    { name: "Thông tin chung", icon: faUser, link: "/profile" },
+    { name: "Bài viết của bạn", icon: faFile, link: "/post" },
+  ];
 
   const formatTime = (time) => {
     const d = new Date(time);
@@ -39,12 +19,6 @@ const Profile = () => {
     const month = d.getMonth() + 1;
     const day = d.getDate();
     return `${day}/${month}/${year}`;
-  };
-
-  const change = (e, field) => {
-    setPassword((current) => {
-      return { ...current, [field]: e.target.value };
-    });
   };
 
   if (user === null) {
@@ -56,6 +30,14 @@ const Profile = () => {
             <div className="w-14 h-14 bg-slate-400 border rounded-full "></div>
           </div>
           <div className="text-center">Loading...</div>
+          <div className=" flex justify-center mt-2">
+            <Link
+              to={"/login"}
+              className="bg-blue-600 px-5 py-3 text-white rounded-lg cursor-pointer hover:text-blue-600 hover:bg-white hover:outline hover:outline-blue-600 text-lg font-semibold transition duration-500"
+            >
+              Vui lòng đăng nhập
+            </Link>
+          </div>
         </div>
       </div>
     );
@@ -94,166 +76,26 @@ const Profile = () => {
           </div>
         </div>
       </div>
-      {/* other */}
-      <div className="mt-8 mx-auto md:w-2/3 flex flex-col gap-5 sm:flex-row flex-wrap sm:justify-evenly">
-        <div className="flex gap-5 border border-slate-400 p-3 rounded-lg ">
-          <div className="bg-green-100 text-green-400 text-3xl rounded-lg w-20 h-20 flex items-center justify-center">
-            <FontAwesomeIcon icon={faUserGroup} />
-          </div>
-          <div className="flex flex-col justify-center pr-5 text-neutral-800 font-semibold text-2xl">
-            <div className="">124K</div>
-            <div className="">Lượt xem </div>
-          </div>
-        </div>
-        {/*  */}
-        <div className="flex gap-5 border border-slate-400 p-3 rounded-lg ">
-          <div className="bg-blue-100 text-blue-400 text-3xl rounded-lg w-20 h-20 flex items-center justify-center">
-            <FontAwesomeIcon icon={faFile} />
-          </div>
-          <div className="flex flex-col justify-center pr-5 text-neutral-800 font-semibold text-2xl">
-            <div className="">124</div>
-            <div className="">Bài viết</div>
-          </div>
-        </div>
-        {/*  */}
-        <div className="flex gap-5 border border-slate-400 p-3 rounded-lg ">
-          <div className="bg-pink-100 text-pink-400 text-3xl rounded-lg w-20 h-20 flex items-center justify-center">
-            <FontAwesomeIcon icon={faHeart} />
-          </div>
-          <div className="flex flex-col justify-center pr-5 text-neutral-800 font-semibold text-2xl">
-            <div className="">100</div>
-            <div className="">Lượt thích </div>
-          </div>
-        </div>
-        {/*  */}
-        <div className="flex gap-5 border border-slate-400 p-3 rounded-lg ">
-          <div className="bg-sky-100 text-sky-400 text-3xl rounded-lg w-20 h-20 flex items-center justify-center">
-            <FontAwesomeIcon icon={faChartColumn} />
-          </div>
-          <div className="flex flex-col justify-center pr-5 text-neutral-800 font-semibold text-2xl">
-            <div className="">10k</div>
-            <div className="">Follewers </div>
-          </div>
-        </div>
+      <div className="flex mt-8 mx-auto md:w-2/3 justify-evenly border-t-2 border-blue-200 pt-5">
+        {listProfile.map((item, index) => {
+          return (
+            <Link
+              key={index}
+              to={item.link}
+              onClick={() => setChecked(index)}
+              className={`${
+                checked === index && "border-blue-500 border-b-4"
+              } gap-2 rounded-lg hover:bg-blue-100 cursor-pointer w-1/2 flex justify-center text-lg font-semibold py-4`}
+            >
+              <div className="">
+                <FontAwesomeIcon icon={item.icon} />
+              </div>
+              <div className="">{item.name}</div>
+            </Link>
+          );
+        })}
       </div>
-      {/* info */}
-      <form className="mt-8 mx-auto md:w-2/3 border border-slate-400 rounded-md ">
-        <div className="border-b border-slate-400 text-xl font-semibold p-4">
-          Profile
-        </div>
-        <div className="p-3 flex flex-col gap-4">
-          <div className="flex flex-col gap-2">
-            <label htmlFor="username">Tên người dùng</label>
-            <input
-              type="text"
-              name="username"
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="border py-1 px-3  rounded-md border-slate-400"
-            />
-          </div>
-          <div className="">
-            <div className="mb-2">Avatar</div>
-            <div className="">
-              <label
-                htmlFor="avatar"
-                className="w-24 h-24 flex justify-center items-center"
-              >
-                <img
-                  src={avatarURL || user.avatar}
-                  alt="avatar"
-                  className="border border-slate-400 p-1 w-full h-full  cursor-pointer rounded-full "
-                />
-              </label>
-            </div>
-            <input
-              ref={avatar}
-              type="file"
-              onChange={(e) => {
-                if (e.target.files || e.target.files[0])
-                  setAvatarURL(URL.createObjectURL(e.target.files[0]));
-              }}
-              name="avatat"
-              id="avatar"
-              className="hidden"
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              value={email || ""}
-              onChange={(e) => setEmail(e.target.value)}
-              className="border py-1 px-3  rounded-md border-slate-400"
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="phone">Số điện thoại</label>
-            <input
-              type="text"
-              name="phone"
-              id="phone"
-              value={phone || ""}
-              onChange={(e) => setPhone(e.target.value)}
-              className="border py-1 px-3  rounded-md border-slate-400"
-            />
-          </div>
-          <div className="flex justify-end">
-            <div className="text-right mr-4 mt-4 px-8 py-3 rounded-lg text-lg font-semibold bg-blue-400 text-white">
-              Lưu thay đổi
-            </div>
-          </div>
-        </div>
-      </form>
-      {/* update password */}
-      <form className="mt-8 mx-auto md:w-2/3 border border-slate-400 rounded-md ">
-        <div className="border-b border-slate-400 text-xl font-semibold p-4">
-          Cập nhật mật khẩu
-        </div>
-        <div className="p-3 flex flex-col gap-4">
-          <div className="flex flex-col gap-2">
-            <label htmlFor="current-pass">Mật khẩu hiện tại</label>
-            <input
-              type="password"
-              name="current-pass"
-              id="current-pass"
-              value={password.current || ""}
-              onChange={(e) => change(e, "current")}
-              className="border py-1 px-3  rounded-md border-slate-400"
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="new-pass">Mật khẩu mới</label>
-            <input
-              type="password"
-              name="new-pass"
-              id="new-pass"
-              value={password.new || ""}
-              onChange={(e) => change(e, "new")}
-              className="border py-1 px-3  rounded-md border-slate-400"
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <label htmlFor="confirm-pass">Xác nhận mật khẩu</label>
-            <input
-              type="password"
-              name="cònirm-pass"
-              id="confirm-pass"
-              value={password.confirm || ""}
-              onChange={(e) => change(e, "confirm")}
-              className="border py-1 px-3  rounded-md border-slate-400"
-            />
-          </div>
-          <div className="flex justify-end">
-            <div className="text-right mr-4 mt-4 px-8 py-3 rounded-lg text-lg font-semibold bg-blue-400 text-white">
-              cập nhật
-            </div>
-          </div>
-        </div>
-      </form>
+      {children}
     </div>
   );
 };
