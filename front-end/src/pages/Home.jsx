@@ -103,9 +103,12 @@ const Home = () => {
 
   if (article.length === 0)
     return (
+  <>
       <div className="mt-32 mx-auto text-center w-3/4 flex justify-center">
         <MySpinner />
       </div>
+      <h1  className="mt-6 flex justify-center">Không Có Thông Tin</h1>
+      </>
     );
 
   return (
@@ -117,7 +120,7 @@ const Home = () => {
               <a
                 title={c.name}
                 onClick={(e) => articleByCate(e, c.id)}
-                className="mx-3 py-2 px-3 hover:bg-neutral-200 rounded-lg"
+                className="mx-3 py-2 px-3 hover:bg-neutral-200 transition hover:scale-110 duration-300 rounded-lg"
               >
                 {" "}
                 {c.name}
@@ -185,9 +188,9 @@ const Home = () => {
             let url = `/article/${a.id}`;
             return (
               <>
-                <div className="rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 md:max-w-xl md:flex-row">
-                  <div className="flex flex-col justify-start p-6">
-                    <Link to={url} alt={a.title}>
+                <div className="transition hover:scale-105 hover:-translate-y-6 duration-300 rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 md:max-w-xl md:flex-row">
+                  <div className="flex flex-col justify-start p-6 ">
+                    <Link  to={url} alt={a.title}>
                       <h5 className="mb-3 capitalize text-xl font-medium text-neutral-800 dark:text-neutral-50">
                         {a.title}.
                       </h5>
@@ -265,7 +268,7 @@ const Home = () => {
                     <Button
                       onClick={() => pagination(page.label)}
                       variant="outlined"
-                      className="px-3"
+                      className="px-3 scale-110 -translate-y-2"
                       style={{ borderColor: "black" }}
                     >
                       {page.label}
@@ -274,7 +277,7 @@ const Home = () => {
                     <Button
                       onClick={() => pagination(page.label)}
                       variant="outlined"
-                      className="px-3"
+                      className="tran sition hover:scale-125 hover:-translate-y-2 duration-300 px-3"
                     >
                       {page.label}
                     </Button>
@@ -285,7 +288,7 @@ const Home = () => {
           </div>
           <Button
             variant="text"
-            className="flex items-center gap-2"
+            className=" flex items-center gap-2"
             onClick=""
             disabled="true"
           >
