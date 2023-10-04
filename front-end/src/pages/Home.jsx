@@ -103,11 +103,11 @@ const Home = () => {
 
   if (article.length === 0)
     return (
-  <>
-      <div className="mt-32 mx-auto text-center w-3/4 flex justify-center">
-        <MySpinner />
-      </div>
-      <h1  className="mt-6 flex justify-center">Không Có Thông Tin</h1>
+      <>
+        <div className="mt-32 mx-auto text-center w-3/4 flex justify-center">
+          <MySpinner />
+        </div>
+        <h1 className="mt-6 flex justify-center">Không Có Thông Tin</h1>
       </>
     );
 
@@ -117,14 +117,13 @@ const Home = () => {
         {category.map((c) => {
           return (
             <div className="inline-flex ">
-              <a
+              <div
                 title={c.name}
                 onClick={(e) => articleByCate(e, c.id)}
-                className="mx-3 py-2 px-3 hover:bg-neutral-200 transition hover:scale-110 duration-300 rounded-lg"
+                className="mx-3 py-2 px-3 hover:bg-neutral-200 cursor-pointer rounded-lg transition duration-500"
               >
-                {" "}
                 {c.name}
-              </a>
+              </div>
             </div>
           );
         })}
@@ -190,7 +189,7 @@ const Home = () => {
               <>
                 <div className="transition hover:scale-105 hover:-translate-y-6 duration-300 rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 md:max-w-xl md:flex-row">
                   <div className="flex flex-col justify-start p-6 ">
-                    <Link  to={url} alt={a.title}>
+                    <Link to={url} alt={a.title}>
                       <h5 className="mb-3 capitalize text-xl font-medium text-neutral-800 dark:text-neutral-50">
                         {a.title}.
                       </h5>

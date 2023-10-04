@@ -115,18 +115,18 @@ class ApiArticleController extends Controller
 
           public function search(Request $request)
           {
-            $result = Article::with("user");
-            if ($request->exists('cateId')) {
-                $result = $result->where('categoryid', $request->cateId);
-            }
+                    $result = Article::with("user");
+                    if ($request->exists('cateId')) {
+                              $result = $result->where('categoryid', $request->cateId);
+                    }
 
-            if ($request->exists('title')) {
-                $result = $result->where('title', 'LIKE', "%{$request->title}%");
-            }
-                
-            $result = $result->where("status", "ACCEPT")->paginate(10);
+                    if ($request->exists('title')) {
+                              $result = $result->where('title', 'LIKE', "%{$request->title}%");
+                    }
+
+                    $result = $result->where("status", "ACCEPT")->paginate(10);
                     // dd($result->get("categoryID"));
-            return response($result, Response::HTTP_OK);
+                    return response($result, Response::HTTP_OK);
           }
 
 
@@ -148,19 +148,26 @@ class ApiArticleController extends Controller
                               $article->content = $request->content;
                               // dd(auth()->user()->id);
                               //check if file exist 
-                              if ($request->image) {
-                                        $response = cloudinary()->upload($request->image)->getSecurePath();
+                              if ($request->hasFile('image')) {
+                                        $response = cloudinary()->upload($request->file('image')->getRealPath())->getSecurePath();
                                         $article->image = $response;
+                                        $article->save();
                               }
 
                               if ($article->save()) {
                                         return response("Cập nhật thành công", Response::HTTP_OK);
                               } else {
-                                        return response("Cập nhật thất bại", Response::HTTP_CREATED);
+                                        return response("Cập nhật thất bại", Response::HTTP_BAD_REQUEST);
                               }
                     } else {
                               return response("Không thể thực hiện chức năng này", Response::HTTP_FORBIDDEN);
                     }
+          }
+
+          public function getArticleWaiting()
+          {
+                    $article = Article::with('user')->where('status', 'WAIT')->orderBy('created_at', 'desc')->paginate(10);
+                    return response($article, Response::HTTP_OK);
           }
 
           /**

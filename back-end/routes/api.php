@@ -45,6 +45,7 @@ Route::group([
 Route::prefix("article")->group(function () {
           Route::get('/', [App\Http\Controllers\Api\ApiArticleController::class, "index"])->name('article.index');
           Route::post('/create', [App\Http\Controllers\Api\ApiArticleController::class, "store"])->middleware(["api", "checkRole:2,3"])->name('article.store');
+          Route::get('/wait', [App\Http\Controllers\Api\ApiArticleController::class, 'getArticleWaiting'])->middleware(["api", "checkRole:3,3"]);
           Route::post('/{id}/delete', [App\Http\Controllers\Api\ApiArticleController::class, "destroy"])->middleware(["api", "checkRole:2,3"])->name('article.destory');
           // PUT Truyen bang raw data
           Route::put('{id}/update', [App\Http\Controllers\Api\ApiArticleController::class, "update"])->middleware(["api", "checkRole:2,3"])->name('article.update');
