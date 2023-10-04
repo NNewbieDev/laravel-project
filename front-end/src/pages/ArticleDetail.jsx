@@ -20,8 +20,8 @@ const ArticleDetail = () => {
 
   return (
     <>
-      <section className="mt-10 mx-auto w-full max-w-7xl px-8">
-        <div className="rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 md:flex-row">
+      <section className="mt-20 mx-auto w-full max-w-7xl px-8">
+        <div className=" rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 md:flex-row">
           <div className=" flex flex-col justify-end p-6">
             {/* {article.category.name !== null ? 
                         <span class="mb-10 grid justify-end bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 w-fit rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">
@@ -55,7 +55,7 @@ const ArticleDetail = () => {
               >
                 <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z" />
               </svg>
-              { moment(article.updated_at).utc().format('HH:mm DD-MM-YYYY')}
+              {moment(article.updated_at).utc().format('HH:mm DD-MM-YYYY')}
             </span>
             {/* <p className="text-xs text-neutral-500 dark:text-neutral-300">
                             {article.updated_at}
