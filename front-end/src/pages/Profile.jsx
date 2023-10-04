@@ -3,14 +3,13 @@ import { useStateContext } from "../context/ContextProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar } from "@fortawesome/free-regular-svg-icons";
 import { faFile, faUser } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 //
 const Profile = ({ children }) => {
   const { user, checked, setChecked } = useStateContext();
-
   const listProfile = [
     { name: "Thông tin chung", icon: faUser, link: "/profile" },
-    { name: "Bài viết của bạn", icon: faFile, link: "/post" },
+    { name: "Bài viết của bạn", icon: faFile, link: "/article" },
   ];
 
   const formatTime = (time) => {

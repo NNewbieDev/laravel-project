@@ -5,11 +5,12 @@ import { authApi, endpoints } from "../config/Apis";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import { Warning } from "./warning";
+import { Warning, WarningDelete } from "./warning";
 
 const YourPost = () => {
   const { user } = useStateContext();
   const [article, setArticle] = useState();
+  const [dialogDel, setDialogDel] = useState(false);
 
   useEffect(() => {
     const load = async () => {
@@ -33,7 +34,7 @@ const YourPost = () => {
   if (article === undefined) {
     return (
       <Profile>
-        <div className="sm:w-3/4 w-full sm:mx-auto flex justify-center">
+        <div className="sm:w-3/4 mt-10 w-full sm:mx-auto flex justify-center">
           <div class="inline-block mt-3 h-8 w-8 animate-spin rounded-full border-4 border-green-btn border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_2s_linear_infinite]"></div>
         </div>
       </Profile>
@@ -69,13 +70,19 @@ const YourPost = () => {
                   </div>
                 </div>
                 <div className="flex gap-5 flex-col sm:flex-row justify-end">
-                  <div className="flex justify-center items-center gap-2 bg-green-300 sm:px-5 lg:px-10 py-3 text-white font-semibold rounded-lg drop-shadow-lg cursor-pointer">
+                  <Link
+                    to={`update?id=${item.id}`}
+                    className="flex justify-center items-center gap-2 transition duration-600 hover:drop-shadow-2xl hover:bg-green-400 bg-green-300 sm:px-5 lg:px-10 py-3 text-white font-semibold rounded-lg drop-shadow-lg cursor-pointer"
+                  >
                     <div className="px-4 sm:px-0">
                       <FontAwesomeIcon icon={faPen} />
                     </div>
                     <div className="hidden sm:block">Chỉnh sửa</div>
-                  </div>
-                  <div className="flex justify-center items-center gap-2 bg-red-400 sm:px-5 lg:px-10 py-3 text-white font-semibold rounded-lg drop-shadow-lg cursor-pointer">
+                  </Link>
+                  <div
+                    onClick={() => setDialogDel(true)}
+                    className="flex justify-center items-center gap-2 transition duration-700 hover:drop-shadow-2xl hover:bg-red-500 bg-red-400 sm:px-5 lg:px-10 py-3 text-white font-semibold rounded-lg drop-shadow-lg cursor-pointer"
+                  >
                     <div className="px-4 sm:px-0">
                       <FontAwesomeIcon icon={faTrash} />
                     </div>
@@ -83,6 +90,12 @@ const YourPost = () => {
                   </div>
                 </div>
               </div>
+              {dialogDel && (
+                <WarningDelete
+                  onHandleClose={() => setDialogDel(false)}
+                  articleID={item.id}
+                />
+              )}
             </div>
           );
         })}

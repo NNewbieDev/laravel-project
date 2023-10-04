@@ -11,14 +11,15 @@ import {
   faRightToBracket,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useStateContext } from "../../context/ContextProvider";
 
 const Header = () => {
   const [active, setActive] = useState(false);
-  const { user, dispatch } = useStateContext();
+  const { user, dispatch, setChecked, setCheckManager } = useStateContext();
   const resize = useRef();
   const width = useRef();
+  const nav = useNavigate();
   useEffect(() => {
     const load = () => {
       if (width.current > 640) {
@@ -40,6 +41,7 @@ const Header = () => {
 
   const logout = () => {
     dispatch({ type: "logout" });
+    nav("/login");
   };
 
   return (
@@ -54,7 +56,7 @@ const Header = () => {
           <div className="group relative">
             <Link
               to={"/"}
-              className="flex gap-2 hover:cursor-pointer px-3 py-2 hover:bg-neutral-200 rounded-lg"
+              className="flex gap-2 transition duration-500 hover:cursor-pointer px-3 py-2 hover:bg-neutral-200 rounded-lg"
             >
               <div className="">
                 <FontAwesomeIcon icon={faHome} />
@@ -64,7 +66,7 @@ const Header = () => {
           </div>
           {/*  */}
           <div className="group relative">
-            <div className="flex gap-2 hover:cursor-pointer px-3 py-2 group-hover:bg-neutral-200 rounded-lg">
+            <div className="flex gap-2 transition duration-500 hover:cursor-pointer px-3 py-2 group-hover:bg-neutral-200 rounded-lg">
               <div className="">
                 <FontAwesomeIcon icon={faGear} />
               </div>
@@ -73,25 +75,31 @@ const Header = () => {
             {/*  */}
             <div className="group-hover:flex sm:rounded-lg flex-col rounded-lg sm:min-w-[300px] p-3 drop-shadow-xl sm:absolute hidden bg-white sm:top-10 sm:right-0">
               <Link
-                to={"/create-post"}
-                className="flex gap-2 hover:cursor-pointer px-10 py-2 hover:bg-neutral-200 rounded-lg"
+                to={"/article/create"}
+                className="flex gap-2 hover:cursor-pointer transition duration-500 px-10 py-2 hover:bg-neutral-200 rounded-lg"
               >
                 <div className="">
                   <FontAwesomeIcon icon={faPlusCircle} />
                 </div>
                 <div className="">Tạo bài viết</div>
               </Link>
-              <div className="flex gap-2 hover:cursor-pointer px-10 py-2 hover:bg-neutral-200 rounded-lg">
-                <div className="">
-                  <FontAwesomeIcon icon={faGear} />
-                </div>
-                <div className="">Các chức năng quản lý</div>
-              </div>
+              {user && user.role_id === 3 && (
+                <Link
+                  to={"/manager"}
+                  onClick={() => setCheckManager(0)}
+                  className="flex gap-2 hover:cursor-pointer transition duration-500 px-10 py-2 hover:bg-neutral-200 rounded-lg"
+                >
+                  <div className="">
+                    <FontAwesomeIcon icon={faGear} />
+                  </div>
+                  <div className="">Các chức năng quản lý</div>
+                </Link>
+              )}
             </div>
           </div>
           {/*  */}
           <div className="group relative">
-            <div className="flex gap-2 hover:cursor-pointer px-3 py-2 group-hover:bg-neutral-200 rounded-lg">
+            <div className="flex gap-2 transition duration-500 hover:cursor-pointer px-3 py-2 group-hover:bg-neutral-200 rounded-lg">
               {user === null ? (
                 <>
                   <div className="">
@@ -118,7 +126,7 @@ const Header = () => {
               <div className="group-hover:flex sm:rounded-lg flex-col rounded-lg sm:min-w-[200px] p-3 drop-shadow-xl sm:absolute hidden bg-white sm:top-10 sm:right-0">
                 <Link
                   to={"/login"}
-                  className="flex gap-2 hover:cursor-pointer px-10 py-2 hover:bg-neutral-200 rounded-lg"
+                  className="flex gap-2 transition duration-500 hover:cursor-pointer px-10 py-2 hover:bg-neutral-200 rounded-lg"
                 >
                   <div className="">
                     <FontAwesomeIcon icon={faRightToBracket} />
@@ -127,7 +135,7 @@ const Header = () => {
                 </Link>
                 <Link
                   to={"/register"}
-                  className="flex gap-2 hover:cursor-pointer px-10 py-2 hover:bg-neutral-200 rounded-lg"
+                  className="flex gap-2 transition duration-500 hover:cursor-pointer px-10 py-2 hover:bg-neutral-200 rounded-lg"
                 >
                   <div className="">
                     <FontAwesomeIcon icon={faAddressCard} />
@@ -136,10 +144,11 @@ const Header = () => {
                 </Link>
               </div>
             ) : (
-              <div className="group-hover:flex sm:rounded-lg flex-col rounded-lg sm:min-w-[300px] p-3 drop-shadow-xl sm:absolute hidden bg-white sm:top-10 sm:right-0">
+              <div className="group-hover:flex sm:rounded-lg flex-col rounded-lg sm:min-w-[300px] p-3 drop-shadow-xl sm:absolute hidden bg-white sm:top-14 sm:right-0">
                 <Link
                   to={"/profile"}
-                  className="flex gap-2 hover:cursor-pointer px-10 py-2 hover:bg-neutral-200 rounded-lg"
+                  onClick={() => setChecked(0)}
+                  className="flex gap-2 transition duration-500 hover:cursor-pointer px-10 py-2 hover:bg-neutral-200 rounded-lg"
                 >
                   <div className="">
                     <FontAwesomeIcon icon={faUser} />
@@ -148,7 +157,7 @@ const Header = () => {
                 </Link>
                 <div
                   onClick={logout}
-                  className="flex gap-2 hover:cursor-pointer px-10 py-2 hover:bg-neutral-200 rounded-lg"
+                  className="flex gap-2 transition duration-500 hover:cursor-pointer px-10 py-2 hover:bg-neutral-200 rounded-lg"
                 >
                   <div className="">
                     <FontAwesomeIcon icon={faDoorOpen} />

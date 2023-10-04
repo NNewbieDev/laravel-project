@@ -114,14 +114,13 @@ const Home = () => {
         {category.map((c) => {
           return (
             <div className="inline-flex ">
-              <a
+              <div
                 title={c.name}
                 onClick={(e) => articleByCate(e, c.id)}
-                className="mx-3 py-2 px-3 hover:bg-neutral-200 rounded-lg"
+                className="mx-3 py-2 px-3 hover:bg-neutral-200 cursor-pointer rounded-lg transition duration-500"
               >
-                {" "}
                 {c.name}
-              </a>
+              </div>
             </div>
           );
         })}

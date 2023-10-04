@@ -4,14 +4,14 @@ import { useQuill } from "react-quilljs";
 import "quill/dist/quill.snow.css";
 import { useStateContext } from "../context/ContextProvider";
 import { Warning } from "../components/warning";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 //
-const CreatePost = () => {
+const CreateArticle = () => {
   const { user } = useStateContext();
   const [category, setCategory] = useState(null);
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
-
+  const nav = useNavigate();
   const { quill, quillRef } = useQuill({
     placeholder: "Viết nội dung ở đây...",
   });
@@ -26,7 +26,6 @@ const CreatePost = () => {
   useEffect(() => {
     const load = async () => {
       const res = await Apis.get(endpoints["category"]);
-      console.log(res.data);
       setCategory(res.data);
     };
 
@@ -41,7 +40,6 @@ const CreatePost = () => {
       });
     }
   }, [quill]);
-  console.log(user);
 
   if (user === null) {
     return (
@@ -78,15 +76,15 @@ const CreatePost = () => {
   const submit = (e) => {
     e.preventDefault();
     const handle = async () => {
+      setLoading(true);
       let form = new FormData();
 
       for (let field in article)
         if (field !== "") form.append(field, article[field]);
       form.append("image", imageUrl.current.files[0]);
       //       form.append("image");
-      console.log(form);
       const res = await authApi().post(endpoints["create"], form);
-      console.log(res.status);
+      if (res.status === 200) nav("/");
     };
     handle();
   };
@@ -174,7 +172,9 @@ const CreatePost = () => {
         </div>
         {/*  */}
         {loading ? (
-          <div class="inline-block mt-3 h-8 w-8 animate-spin rounded-full border-4 border-green-btn border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_2s_linear_infinite]"></div>
+          <div className="w-full flex justify-center">
+            <div class="inline-block mt-3 h-8 w-8 animate-spin rounded-full border-4 border-green-btn border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_2s_linear_infinite]"></div>
+          </div>
         ) : (
           <input
             type="submit"
@@ -187,4 +187,4 @@ const CreatePost = () => {
   );
 };
 
-export default CreatePost;
+export default CreateArticle;

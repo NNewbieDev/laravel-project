@@ -8,9 +8,18 @@ import {
   Profile,
   Register,
   ArticleDetail,
+  CreateArticle,
+  UpdateArticle,
 } from "./pages";
 import Footer from "./components/layout/Footer";
-import { GeneralInfo, YourPost } from "./components";
+import {
+  GeneralInfo,
+  ManagerArticle,
+  ManagerCheck,
+  ManagerUser,
+  YourPost,
+} from "./components";
+import Manager from "./pages/Manager";
 
 const App = () => {
   return (
@@ -21,9 +30,13 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<GeneralInfo />} />
-        <Route path="/post" element={<YourPost />} />
-        <Route path="/create-post" element={<CreatePost />} />
+        <Route path="/article" element={<YourPost />} />
+        <Route path="/article/create" element={<CreateArticle />} />
+        <Route path="/article/update" element={<UpdateArticle />} />
         <Route path="/article/:articleId" element={<ArticleDetail />} />
+        <Route path="/manager" element={<ManagerCheck />} />
+        <Route path="/manager/user" element={<ManagerUser />} />
+        <Route path="/manager/article" element={<ManagerArticle />} />
       </Router>
       <Footer />
     </div>
