@@ -11,7 +11,7 @@ const SITEMAP = [
   },
   {
     title: "Danh Mục",
-    links: ["Blog", "Newsletter", "Free Products", "Affiliate Program", "abc", "xyz"],
+    links: ["Blog", "Newsletter", "Free Products", "Affiliate Program"],
   },
 ];
  

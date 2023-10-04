@@ -1,23 +1,49 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import Apis, { endpoints } from "../config/Apis";
+import Apis, { authApi, endpoints } from "../config/Apis";
 import { TagIcon } from "@heroicons/react/24/outline";
 import { MySpinner } from "../components/layout";
 import moment from "moment";
+import { Button } from "@material-tailwind/react";
+import { useStateContext } from "../context/ContextProvider";
 
 const ArticleDetail = () => {
   const [article, setArticle] = useState([]);
   const { articleId } = useParams();
+  const [comments, setComments] = useState([]);
+  const [content, setContent] = useState();
+  const { user, dispatch } = useStateContext();
 
   useEffect(() => {
     const fecthArticle = async () => {
       let { data } = await Apis.get(endpoints["detail"](articleId));
       setArticle(data);
     };
-    //
+    const loadComments = async () => {
+      let { data } = await Apis.get(endpoints['comments'](articleId));
+      setComments(data.data);
+
+    };
     fecthArticle();
+    loadComments();
   }, [articleId]);
 
+  console.log(comments);
+
+  const addComment = () => {
+    const process = async () => {
+      let { data } = await authApi().post(endpoints['comments'](articleId), {
+        "content": content,
+      });
+      setComments([data, ...comments]);
+    }
+    process();
+  }
+
+  if (comments === undefined)
+    return <MySpinner />
+
+  let url = `/login?next=/article/${articleId}`;
   return (
     <>
       <section className="mt-20 mx-auto w-full max-w-7xl px-8">
@@ -57,11 +83,64 @@ const ArticleDetail = () => {
               </svg>
               {moment(article.updated_at).utc().format('HH:mm DD-MM-YYYY')}
             </span>
-            {/* <p className="text-xs text-neutral-500 dark:text-neutral-300">
-                            {article.updated_at}
-                        </p> */}
+          </div>
+          
+          <h1 className="ms-16 text-2xl">Thảo Luận: </h1>
+          {user === null ? <p className=" pb-5 my-5 ms-20 text-lg">Vui lòng <Link to={url}>đăng nhập</Link> để bình luận!</p>
+            : <><div className="flex items-center justify-center shadow-lg mt-10 mx-8 mb-4 max-w-full">
+              <form className="w-full max-w-full bg-white rounded-lg px-4 pt-2">
+                <div className="flex flex-wrap -mx-3 mb-6">
+                  <h2 className="px-4 pt-3 pb-2 text-gray-800 text-lg">Thêm Bình Luận Mới:</h2>
+                  <div className="w-full md:w-full px-3 mb-2 mt-2">
+                    <textarea className="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-14 py-2 px-2 font-medium placeholder-gray-700 focus:outline-none focus:bg-white" name="body" placeholder="Cảm nghĩ của bạn..." required defaultValue={""} />
+                  </div>
+                  <div className="w-full flex items-start md:w-full px-3">
+                    <div className="flex items-start w-1/2 text-gray-700 px-2 mr-auto">
+                      <svg fill="none" className="w-5 h-5 text-gray-600 mr-1" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <p className="text-xs md:text-sm pt-px">Some HTML is okay.</p>
+                    </div>
+                    <div className="-mr-1">
+                      <Button type="submit" onClick={addComment} className="bg-white text-gray-700 font-normal py-1 px-4 border border-gray-400 rounded-lg mr-1 hover:bg-gray-100" defaultValue="Post Comment">
+                        Thêm Ý kiến
+                      </Button>
+                    </div>
+                  </div>
+                </div></form>
+            </div>
+            </>}
+
+
+          <div className="lg:px-12 mt-14">
+            {comments.map(c =>
+              <div key={c.id} className="flex justify-start relative top-1/3">
+                <div className="relative grid grid-cols-1 gap-4 p-4 mb-8 border rounded-lg bg-white shadow-lg">
+                  <div className="relative flex gap-3">
+                    <img src="https://icons.iconarchive.com/icons/diversity-avatars/avatars/256/charlie-chaplin-icon.png" className="relative rounded-lg  -mb-4 bg-white border h-20 w-20" alt loading="lazy" />
+                    <div className="flex flex-col w-full">
+                      <div className="flex flex-row justify-between">
+                        <p className="relative text-xl whitespace-nowrap truncate overflow-hidden">User Id: {c.userID}</p>
+                        <a className="text-gray-500 text-xl" href="#"><i className="fa-solid fa-trash" /></a>
+                      </div>
+                      <p className="text-gray-400 text-sm">Cập nhật lần cuối: {moment(c.updated_at).utc().format('HH:mm DD-MM-YYYY')}</p>
+
+                      {c.content === null ? (
+                        <p className="ps-3 mt-4 text-gray-500"><mark className="italic bg-red-300">Comment này đã bị xóa bởi admin</mark></p>
+                      ) : (
+                        <p className="ps-3 text-lg mt-4 text-gray-500">{c.content}</p>
+                      )}
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            )}
           </div>
         </div>
+
+        {/* Phần comment */}
+
       </section>
     </>
   );

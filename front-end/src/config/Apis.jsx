@@ -14,6 +14,7 @@ export const endpoints = {
   category: "/api/category",
   create: "/api/article/create",
   search: "/api/search",
+  comments: (id) => `/api/article/${id}/comment`,
   detail: (id) => `/api/article/${id}`,
 };
 
