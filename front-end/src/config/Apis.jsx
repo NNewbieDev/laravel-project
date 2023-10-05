@@ -22,6 +22,7 @@ export const endpoints = {
   "role-up": (id) => `/api/auth/${id}/role-up`,
   search: "/api/search",
   comments: (id) => `/api/article/${id}/comment`,
+  // ratings: (id) => `/api/rating/${id}/add`,
   detail: (id) => `/api/article/${id}`,
 };
 
