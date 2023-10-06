@@ -26,6 +26,7 @@ export const endpoints = {
   "user-delete": (id) => `/api/auth/${id}/delete`,
   search: "/api/search",
   comments: (id) => `/api/article/${id}/comment`,
+  // ratings: (id) => `/api/rating/${id}/add`,
   detail: (id) => `/api/article/${id}`,
 };
 
