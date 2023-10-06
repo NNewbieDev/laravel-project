@@ -35,7 +35,8 @@ Route::group([
           Route::put('update/password', [App\Http\Controllers\Api\ApiUserController::class, 'changePassword']);
           Route::put('send', [App\Http\Controllers\Api\ApiUserController::class, 'send']);
           Route::put('{id}/role-up', [App\Http\Controllers\Api\ApiUserController::class, 'levelUp'])->middleware("checkRole:3,3");
-          Route::post('{id}/delete', [App\Http\Controllers\Api\ApiUserController::class, 'destroy'])->middleware("checkRole:3,3");
+          Route::put('/{id}/cancel', [App\Http\Controllers\Api\ApiUserController::class, "cancel"])->middleware(["api", "checkRole:3,3"])->name('article.cancel');
+          Route::delete('{id}/delete', [App\Http\Controllers\Api\ApiUserController::class, 'destroy'])->middleware("checkRole:3,3");
           Route::post('me', [App\Http\Controllers\Api\ApiUserController::class, 'me']);
           Route::get('user/get', [App\Http\Controllers\Api\ApiUserController::class, 'getUsers'])->middleware("checkRole:3,3");
           Route::get('user/article', [App\Http\Controllers\Api\ApiArticleController::class, 'user'])->middleware("checkRole:2,3");
@@ -46,7 +47,7 @@ Route::prefix("article")->group(function () {
           Route::get('/', [App\Http\Controllers\Api\ApiArticleController::class, "index"])->name('article.index');
           Route::post('/create', [App\Http\Controllers\Api\ApiArticleController::class, "store"])->middleware(["api", "checkRole:2,3"])->name('article.store');
           Route::get('/wait', [App\Http\Controllers\Api\ApiArticleController::class, 'getArticleWaiting'])->middleware(["api", "checkRole:3,3"]);
-          Route::post('/{id}/delete', [App\Http\Controllers\Api\ApiArticleController::class, "destroy"])->middleware(["api", "checkRole:2,3"])->name('article.destory');
+          Route::delete('/{id}/delete', [App\Http\Controllers\Api\ApiArticleController::class, "destroy"])->middleware(["api", "checkRole:2,3"])->name('article.destory');
           // PUT Truyen bang raw data
           Route::put('{id}/update', [App\Http\Controllers\Api\ApiArticleController::class, "update"])->middleware(["api", "checkRole:2,3"])->name('article.update');
           Route::put('/{id}/accept', [App\Http\Controllers\Api\ApiArticleController::class, "accept"])->middleware(["api", "checkRole:3,3"])->name('article.accept');

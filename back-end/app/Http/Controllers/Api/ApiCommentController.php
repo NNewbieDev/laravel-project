@@ -17,7 +17,7 @@ class ApiCommentController extends Controller
            */
           public function index($id)
           {
-                    $comment =  Comment::where("articleID", $id)->orderBy("created_at", "desc")->paginate(10);
+                    $comment =  Comment::with("user")->where("articleID", $id)->orderBy("created_at", "desc")->paginate(10);
                     return response($comment, Response::HTTP_OK);
           }
 

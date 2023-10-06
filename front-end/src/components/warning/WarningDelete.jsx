@@ -9,7 +9,7 @@ const WarningDelete = (props) => {
   const submit = (e) => {
     e.preventDefault();
     const handle = async () => {
-      const res = await authApi().post(
+      const res = await authApi().delete(
         endpoints["delete-article"](props.articleID)
       );
       if (res.status === 200) nav("/profile");

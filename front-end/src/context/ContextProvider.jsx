@@ -15,6 +15,7 @@ const ContextProvider = ({ children }) => {
   const [isLogin, setIsLogin] = useState(false);
   const [checked, setChecked] = useState(0);
   const [checkManager, setCheckManager] = useState(0);
+  const [checkItem, setCheckItem] = useState(0);
 
   return (
     <StateProvider.Provider
@@ -27,6 +28,8 @@ const ContextProvider = ({ children }) => {
         setChecked,
         checkManager,
         setCheckManager,
+        checkItem,
+        setCheckItem,
       }}
     >
       {children}

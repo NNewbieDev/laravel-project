@@ -150,9 +150,18 @@ class ApiUserController extends Controller
                     return response($user, Response::HTTP_OK);
           }
 
+          public function cancel($id)
+          {
+                    $user = User::find($id);
+                    $user->level_up = "WAIT";
+                    $user->save();
+                    return response("Yêu cầu bị từ chối", Response::HTTP_OK);
+          }
+
           public function levelUp($id)
           {
                     $user = User::find($id);
+                    $user->level_up = "OK";
                     $user->role_id = 2;
                     $user->save();
                     return response("Đã nâng cấp vai trò", Response::HTTP_OK);

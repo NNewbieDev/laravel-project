@@ -13,6 +13,8 @@ import {
 } from "./pages";
 import Footer from "./components/layout/Footer";
 import {
+  CheckArticle,
+  CheckUser,
   GeneralInfo,
   ManagerArticle,
   ManagerCheck,
@@ -34,9 +36,10 @@ const App = () => {
         <Route path="/article/create" element={<CreateArticle />} />
         <Route path="/article/update" element={<UpdateArticle />} />
         <Route path="/article/:articleId" element={<ArticleDetail />} />
-        <Route path="/manager" element={<ManagerCheck />} />
         <Route path="/manager/user" element={<ManagerUser />} />
         <Route path="/manager/article" element={<ManagerArticle />} />
+        <Route path="/approve/user" element={<CheckUser />} />
+        <Route path="/approve/article" element={<CheckArticle />} />
       </Router>
       <Footer />
     </div>

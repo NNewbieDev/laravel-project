@@ -24,7 +24,7 @@ const Register = () => {
       for (let field in user) if (field !== "") form.append(field, user[field]);
 
       //       form.append("avatar", avatar.current.files[0]);
-
+      //       console.log(user.password);
       let res = await Apis.post(endpoints["register"], form);
       if (res.status === 201) {
         nav("/login");
@@ -96,7 +96,9 @@ const Register = () => {
             type="password"
             name="password"
             id="password"
-            minLength={8}
+            value={user.password}
+            onChange={(e) => change(e, "password")}
+            //   minLength={8}
             required
             placeholder="*****"
           />
@@ -108,7 +110,9 @@ const Register = () => {
             type="password"
             name="confirm"
             id="confirm"
-            minLength={8}
+            value={user.confirmPass}
+            onChange={(e) => change(e, "confirmPass")}
+            //   minLength={8}
             required
             placeholder="*****"
           />

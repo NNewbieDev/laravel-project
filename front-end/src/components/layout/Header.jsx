@@ -16,7 +16,8 @@ import { useStateContext } from "../../context/ContextProvider";
 
 const Header = () => {
   const [active, setActive] = useState(false);
-  const { user, dispatch, setChecked, setCheckManager } = useStateContext();
+  const { user, dispatch, setChecked, setCheckManager, setCheckItem } =
+    useStateContext();
   const resize = useRef();
   const width = useRef();
   const nav = useNavigate();
@@ -85,8 +86,11 @@ const Header = () => {
               </Link>
               {user && user.role_id === 3 && (
                 <Link
-                  to={"/manager"}
-                  onClick={() => setCheckManager(0)}
+                  to={"/approve/user"}
+                  onClick={() => {
+                    setCheckManager(0);
+                    setCheckItem(0);
+                  }}
                   className="flex gap-2 hover:cursor-pointer transition duration-500 px-10 py-2 hover:bg-neutral-200 rounded-lg"
                 >
                   <div className="">

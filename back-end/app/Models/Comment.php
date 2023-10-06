@@ -13,6 +13,6 @@ class Comment extends Model
           protected $fillable = ['id', 'userID', 'content'];
           public function user()
           {
-                    return $this->belongsTo(User::class);
+                    return $this->belongsTo(User::class, "userID");
           }
 }
