@@ -4,12 +4,19 @@ import { authApi, endpoints } from "../config/Apis";
 import { useStateContext } from "../context/ContextProvider";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck, faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAngleLeft,
+  faAngleRight,
+  faCheck,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 
 const CheckUser = () => {
   const [userSent, setUserSent] = useState(null);
   const { user, dispatch } = useStateContext();
   const [reRender, setReRender] = useState(false);
+  const [paginate, setPaginate] = useState();
+
   const nav = useNavigate();
   useEffect(() => {
     const load = async () => {
@@ -17,6 +24,7 @@ const CheckUser = () => {
         const res = await authApi().get(endpoints["user-sent"]);
         console.log(res.data);
         setUserSent(res.data.data);
+        setPaginate(res.data.links);
       } catch (err) {
         dispatch({ type: "logout" });
         nav("/login");
@@ -64,7 +72,18 @@ const CheckUser = () => {
     };
     handle();
   };
-
+  const onPaginate = (e, url) => {
+    e.preventDefault();
+    const handle = async () => {
+      if (url !== null) {
+        const res = await authApi().get(url);
+        setUserSent(res.data.data);
+        setPaginate(res.data.links);
+        window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+      }
+    };
+    handle();
+  };
   if (userSent === null) {
     return (
       <ManagerCheck>
@@ -74,6 +93,17 @@ const CheckUser = () => {
       </ManagerCheck>
     );
   }
+
+  if (userSent.length === 0) {
+    return (
+      <ManagerCheck>
+        <div className="sm:w-3/4 mt-10 w-full sm:mx-auto flex justify-center">
+          <div className="">Không có yêu cầu nào</div>
+        </div>
+      </ManagerCheck>
+    );
+  }
+
   return (
     <ManagerCheck>
       <div className="">
@@ -129,6 +159,35 @@ const CheckUser = () => {
               </div>
             );
           })}
+          {/*  */}
+          <div className="flex justify-center w-full">
+            <div className="flex gap-5">
+              {paginate.map((item, index) => {
+                return (
+                  <form
+                    onSubmit={(e) => onPaginate(e, item.url)}
+                    className=""
+                    key={index}
+                  >
+                    <button
+                      type="submit"
+                      className={` ${
+                        item.active && "bg-neutral-400 text-neutral-50"
+                      } border px-3 py-1 rounded-lg hover:bg-blue-400 cursor-pointer hover:text-neutral-50`}
+                    >
+                      {index === 0 ? (
+                        <FontAwesomeIcon icon={faAngleLeft} />
+                      ) : index === paginate.length - 1 ? (
+                        <FontAwesomeIcon icon={faAngleRight} />
+                      ) : (
+                        item.label
+                      )}
+                    </button>
+                  </form>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>
     </ManagerCheck>

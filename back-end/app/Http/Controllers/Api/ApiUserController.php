@@ -146,7 +146,7 @@ class ApiUserController extends Controller
 
           public function getUsers()
           {
-                    $user = User::paginate(10);
+                    $user = User::with("role")->where("role_id", "!=", 3)->paginate(10);
                     return response($user, Response::HTTP_OK);
           }
 
@@ -167,10 +167,19 @@ class ApiUserController extends Controller
                     return response("Đã nâng cấp vai trò", Response::HTTP_OK);
           }
 
+          public function levelDown($id)
+          {
+                    $user = User::find($id);
+                    $user->level_up = "WAIT";
+                    $user->role_id = 1;
+                    $user->save();
+                    return response("Đã giảm cấp vai trò", Response::HTTP_OK);
+          }
+
           public function destroy($id)
           {
                     $user = User::find($id);
-                    $user->destroy();
+                    $user->delete();
                     return response("Tài khoản đã được xóa", Response::HTTP_ACCEPTED);
           }
 

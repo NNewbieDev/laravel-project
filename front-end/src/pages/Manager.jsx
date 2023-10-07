@@ -14,7 +14,7 @@ const Manager = ({ children }) => {
   const { checkManager, setCheckManager, setCheckItem } = useStateContext();
   useEffect(() => {}, []);
   return (
-    <div className="mt-24 flex gap-5">
+    <div className="mt-24 px-3 lg:px-0 flex md:flex-row flex-col gap-5">
       {/*  */}
       <div className="basis-1/5 flex flex-col gap-2">
         {navManager.map((item, index) => {
