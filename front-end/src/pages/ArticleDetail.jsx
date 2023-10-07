@@ -41,7 +41,7 @@ const ArticleDetail = () => {
     const process = async () => {
       console.log(articleId)
       let response = await authApi().post(endpoints['comments'](articleId), {
-        "rate": 1,
+        "comment": content, 
       });
       let { data } = await Apis.get(endpoints['comments'](articleId));
       setComments(data.data);
@@ -62,7 +62,7 @@ const ArticleDetail = () => {
   //   process();
   // }
 
-  if (comments === undefined)
+  if (comments === null)
     return <MySpinner />
 
   let url = `/login?next=/article/${articleId}`;
@@ -93,28 +93,26 @@ const ArticleDetail = () => {
             ) : (
               <MySpinner />
             )}
-            <span class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center w-fit px-2.5 py-0.5 rounded mr-2 dark:bg-gray-700 dark:text-gray-400 border border-gray-500">
-              <svg
-                class="w-2.5 h-2.5 mr-1.5"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z" />
-              </svg>
-              {moment(article.updated_at).utc().format('HH:mm DD-MM-YYYY')}
-            </span>
+            <div className=" inline-flex">
+              <span class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center w-fit px-2.5 py-0.5 rounded mr-2 dark:bg-gray-700 dark:text-gray-400 border border-gray-500">
+                <svg
+                  class="w-2.5 h-2.5 mr-1.5"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z" />
+                </svg>
+                {moment(article.updated_at).utc().format('HH:mm DD-MM-YYYY')}
+              </span>
+              <div className="flex w-4/5 justify-end">
+                <Button><HandThumbUpIcon width={20} color="#1877f2" /></Button>
+                <Button><FlagIcon className="ms-7" color="Red" width={20} /></Button>
+              </div>
+            </div>
           </div>
-          <div class="mt-10 ms-14 flex">
-            <Button>
-              <HandThumbUpIcon width={20} color="#1877f2" />
-            </Button>
-
-            <FlagIcon className="ms-2" width={20} />
-            <h1 className="ms-3 text-2xl">Thảo Luận: </h1>
-          </div>
-
+          <h1 className="ms-14 text-2xl">Thảo Luận: </h1>
           {user === null ? <p className=" pb-5 mb-5 ms-20 text-xl">Vui lòng <Link className="text-sky-500" to={url}>đăng nhập</Link> để bình luận!</p>
             : <>
               <div className="flex items-center justify-center shadow-lg mt-3 mx-8 mb-4 max-w-full">
@@ -142,15 +140,19 @@ const ArticleDetail = () => {
             </>}
 
 
-          <div className="lg:px-12 mt-14">
+          <div className="lg:px-12 mt-8">
             {comments.map(c =>
               <div key={c.id} className="flex justify-start relative top-1/3">
                 <div className="relative grid grid-cols-1 gap-4 p-4 mb-8 border rounded-lg bg-white shadow-lg">
                   <div className="relative flex gap-3">
-                    <img src="https://icons.iconarchive.com/icons/diversity-avatars/avatars/256/charlie-chaplin-icon.png" className="relative rounded-lg  -mb-4 bg-white border h-20 w-20" alt loading="lazy" />
+                    {c.user.avatar !== null ?
+                      <img src={c.user.avatar} className="relative rounded-lg -mb-4 bg-white border h-20 w-20" alt loading="lazy" />
+                      :
+                      <img src="https://icons.iconarchive.com/icons/diversity-avatars/avatars/256/charlie-chaplin-icon.png" className="relative rounded-lg -mb-4 bg-white border h-20 w-20" alt loading="lazy" />
+                    }
                     <div className="flex flex-col w-full">
                       <div className="flex flex-row justify-between">
-                        <p className="relative text-xl whitespace-nowrap truncate overflow-hidden">User Id: {c.userID}</p>
+                        <p className="relative text-xl whitespace-nowrap truncate overflow-hidden">{c.user.username}</p>
                         <a className="text-gray-500 text-xl" href="#"><i className="fa-solid fa-trash" /></a>
                       </div>
                       <p className="text-gray-400 text-sm">Cập nhật lần cuối: {moment(c.updated_at).utc().format('HH:mm DD-MM-YYYY')}</p>
@@ -168,9 +170,6 @@ const ArticleDetail = () => {
             )}
           </div>
         </div>
-
-        {/* Phần comment */}
-
       </section>
     </>
   );
