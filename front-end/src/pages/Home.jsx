@@ -110,6 +110,7 @@ const Home = () => {
         <h1 className="mt-6 flex justify-center">Không Có Thông Tin</h1>
       </>
     );
+   
 
   return (
     <>
