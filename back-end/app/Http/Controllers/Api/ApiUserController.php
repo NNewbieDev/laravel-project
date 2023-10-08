@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Article;
+use App\Models\Comment;
+use App\Models\Rating;
+use App\Models\Report;
 use App\Models\User;
 use Cloudinary\Cloudinary;
 use Exception;
@@ -179,6 +183,14 @@ class ApiUserController extends Controller
           public function destroy($id)
           {
                     $user = User::find($id);
+                    $article = Article::where("user_id", $id);
+                    $comment = Comment::where("userID", $id);
+                    $rating = Rating::where("userID", $id);
+                    $report = Report::where("userID", $id);
+                    $comment->delete();
+                    $rating->delete();
+                    $report->delete();
+                    $article->delete();
                     $user->delete();
                     return response("Tài khoản đã được xóa", Response::HTTP_ACCEPTED);
           }

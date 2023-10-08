@@ -3,15 +3,18 @@ import Apis, { authApi, endpoints } from "../config/Apis";
 import { useQuill } from "react-quilljs";
 import "quill/dist/quill.snow.css";
 import { useStateContext } from "../context/ContextProvider";
-import { Warning } from "../components/warning";
+import { Toast, Warning } from "../components/warning";
 import { Link, useNavigate } from "react-router-dom";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
 //
 const CreateArticle = () => {
   const { user } = useStateContext();
   const [category, setCategory] = useState(null);
   const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [toast, setToast] = useState(false);
   const nav = useNavigate();
+  const timeout = useRef();
   const { quill, quillRef } = useQuill({
     placeholder: "Viết nội dung ở đây...",
   });
@@ -84,13 +87,24 @@ const CreateArticle = () => {
       form.append("image", imageUrl.current.files[0]);
       //       form.append("image");
       const res = await authApi().post(endpoints["create"], form);
-      if (res.status === 200) nav("/");
+      if (res.status === 200) {
+        window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+        setToast(true);
+      }
     };
     handle();
   };
 
   return (
     <form onSubmit={(e) => submit(e)} className="w-[80%] mx-auto mt-24">
+      {toast && (
+        <Toast
+          icon={faCheck}
+          content={"Đã tạo một bài báo mới"}
+          Timeout={setToast}
+          color={"green-400"}
+        />
+      )}
       <div className="text-3xl font-semibold my-5">Tạo bài viết</div>
       <div className="border border-slate-300 rounded-md px-5 py-3">
         {/*  */}
@@ -100,7 +114,10 @@ const CreateArticle = () => {
           </label>
           <input
             value={article.title}
-            onChange={(e) => change(e, "title")}
+            onChange={(e) => {
+              setLoading(false);
+              change(e, "title");
+            }}
             type="text"
             id="name"
             placeholder="tên bài viết"
@@ -114,11 +131,12 @@ const CreateArticle = () => {
             {category.map((item, index) => {
               return (
                 <div
-                  onClick={(e) =>
+                  onClick={(e) => {
+                    setLoading(false);
                     setArticle((cate) => {
                       return { ...cate, ["category"]: item.id };
-                    })
-                  }
+                    });
+                  }}
                   className={`border border-slate-300 px-8 py-3 rounded-md hover:border-blue-600 ${
                     index === article.category - 1 &&
                     "border-blue-500 bg-slate-100"
@@ -142,7 +160,10 @@ const CreateArticle = () => {
             id="descript"
             cols="30"
             rows="5"
-            onChange={(e) => change(e, "description")}
+            onChange={(e) => {
+              setLoading(false);
+              change(e, "description");
+            }}
             placeholder="Mô tả ngắn..."
             className=" outline-none rounded-md outline-slate-300 border-none px-5 py-2 mt-3"
           ></textarea>

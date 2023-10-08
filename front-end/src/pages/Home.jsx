@@ -24,7 +24,7 @@ const Home = () => {
     async function fecthArticle() {
       try {
         let e = endpoints["article"];
-        let kw = q.get("kw");  
+        let kw = q.get("kw");
         let res = await Apis.get(e);
         // console.log(cate);
         // //       cái này là đầy đủ các attribute ông cần
@@ -90,6 +90,7 @@ const Home = () => {
     let res = await Apis.get(e);
     setArticle(res.data.data);
     setPaginate(res.data.links);
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     nav(`/?kw=${kw}`);
   };
 
@@ -102,7 +103,6 @@ const Home = () => {
         <h1 className="mt-6 flex justify-center">Không Có Thông Tin</h1>
       </>
     );
-
 
   return (
     <>
@@ -299,7 +299,6 @@ const Home = () => {
           </svg>
         </Button >
       </div> */}
-
     </>
   );
 };

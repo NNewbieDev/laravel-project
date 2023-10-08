@@ -43,8 +43,8 @@ class ApiRatingController extends Controller
            */
           public function show($id)
           {
-                    $rating = Rating::where("articleID", $id);
-                    return response($rating->rate, Response::HTTP_OK);
+                    $rating = Rating::where("articleID", $id)->avg('rate');
+                    return response($rating, Response::HTTP_OK);
           }
 
           /**

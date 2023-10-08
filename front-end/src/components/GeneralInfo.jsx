@@ -1,5 +1,6 @@
 import {
   faChartColumn,
+  faCheck,
   faFile,
   faHeart,
   faUserGroup,
@@ -10,6 +11,7 @@ import { useStateContext } from "../context/ContextProvider";
 import Profile from "../pages/Profile";
 import { Link, useNavigate } from "react-router-dom";
 import { authApi, endpoints } from "../config/Apis";
+import { Toast } from "./warning";
 
 const GeneralInfo = () => {
   const [username, setUsername] = useState("");
@@ -19,6 +21,8 @@ const GeneralInfo = () => {
   const [avatarURL, setAvatarURL] = useState("");
   const avatar = useRef();
   const nav = useNavigate();
+  const [toast, setToast] = useState(false);
+  const timeout = useRef();
   const [password, setPassword] = useState({
     current: "",
     newPass: "",
@@ -52,8 +56,13 @@ const GeneralInfo = () => {
         const res = await authApi().post(endpoints["update"], form);
         console.log(res.status);
         if (res.status === 200) {
-          dispatch({ type: "logout" });
-          nav("/login");
+          window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+          setToast(true);
+          timeout.current = setTimeout(() => {
+            clearTimeout(timeout.current);
+            dispatch({ type: "logout" });
+            nav("/login");
+          }, 800);
         }
       } catch (err) {}
     };
@@ -70,8 +79,13 @@ const GeneralInfo = () => {
         try {
           const res = await authApi().post(endpoints["update-pass"], form);
           if (res.status === 200) {
-            dispatch({ type: "logout" });
-            nav("/login");
+            window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+            setToast(true);
+            timeout.current = setTimeout(() => {
+              clearTimeout(timeout.current);
+              dispatch({ type: "logout" });
+              nav("/login");
+            }, 800);
           }
         } catch (err) {}
       };
@@ -95,6 +109,14 @@ const GeneralInfo = () => {
   }
   return (
     <Profile>
+      {toast && (
+        <Toast
+          icon={faCheck}
+          content={"Đã cập nhật"}
+          color={"green-400"}
+          Timeout={setToast}
+        />
+      )}
       {/* other */}
       <div className="mt-8 mx-auto md:w-2/3 flex flex-col gap-5 sm:flex-row flex-wrap sm:justify-evenly">
         <div className="flex gap-5 border border-slate-400 p-3 rounded-lg ">

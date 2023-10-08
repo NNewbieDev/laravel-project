@@ -25,11 +25,11 @@ class ApiReportController extends Controller
            * @param  \Illuminate\Http\Request  $request
            * @return \Illuminate\Http\Response
            */
-          public function store(Request $request)
+          public function store(Request $request, $id)
           {
                     $report = new Report;
                     $report->userID = auth()->user()->id;
-                    $report->articleID = $request->articleID;
+                    $report->articleID = $id;
                     $report->content = $request->content;
                     $report->save();
                     return response("Cảm ơn bạn đã báo cáo", Response::HTTP_CREATED);
