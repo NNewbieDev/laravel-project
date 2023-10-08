@@ -93,8 +93,8 @@ const ArticleDetail = () => {
             ) : (
               <MySpinner />
             )}
-            <div className=" inline-flex">
-              <span class="bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center w-fit px-2.5 py-0.5 rounded mr-2 dark:bg-gray-700 dark:text-gray-400 border border-gray-500">
+            <div className="lg:pt3 lg:pb-5 inline-flex">
+              <span class=" lg:ms-8 bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center w-fit px-2.5 py-0.5 rounded mr-2 dark:bg-gray-700 dark:text-gray-400 border border-gray-500">
                 <svg
                   class="w-2.5 h-2.5 mr-1.5"
                   aria-hidden="true"
@@ -106,14 +106,15 @@ const ArticleDetail = () => {
                 </svg>
                 {moment(article.updated_at).utc().format('HH:mm DD-MM-YYYY')}
               </span>
-              <div className="flex w-4/5 justify-end">
-                <Button><HandThumbUpIcon width={20} color="#1877f2" /></Button>
-                <Button><FlagIcon className="ms-7" color="Red" width={20} /></Button>
+              <div className="flex w-4/6 lg:ms-28 justify-end">
+                <Button><HandThumbUpIcon className="mx-2" width={24} color="#1877f2" /></Button>
+                <hr className="mx-2"/>
+                <Button><FlagIcon className="mx-2" color="Red" width={24} /></Button>
               </div>
             </div>
           </div>
-          <h1 className="ms-14 text-2xl">Thảo Luận: </h1>
-          {user === null ? <p className=" pb-5 mb-5 ms-20 text-xl">Vui lòng <Link className="text-sky-500" to={url}>đăng nhập</Link> để bình luận!</p>
+          <h1 className="ms-5 lg:ms-14 text-2xl">Thảo Luận: </h1>
+          {user === null ? <p className=" my-5 ms-5 lg:ms-20 text-xl">Vui lòng <Link className="text-sky-500" to={url}>đăng nhập</Link> để bình luận!</p>
             : <>
               <div className="flex items-center justify-center shadow-lg mt-3 mx-8 mb-4 max-w-full">
                 <form className="w-full max-w-full bg-white rounded-lg px-4 pt-2" onSubmit={addComment}>
@@ -140,10 +141,10 @@ const ArticleDetail = () => {
             </>}
 
 
-          <div className="lg:px-12 mt-8">
+          <div className="max-lg:mx-5 lg:px-12 mt-8 pb-10">
             {comments.map(c =>
               <div key={c.id} className="flex justify-start relative top-1/3">
-                <div className="relative grid grid-cols-1 gap-4 p-4 mb-8 border rounded-lg bg-white shadow-lg">
+                <div className="relative grid grid-cols-1 gap-4 p-4 mb-4 border rounded-lg bg-white shadow-lg">
                   <div className="relative flex gap-3">
                     {c.user.avatar !== null ?
                       <img src={c.user.avatar} className="relative rounded-lg -mb-4 bg-white border h-20 w-20" alt loading="lazy" />
@@ -160,7 +161,7 @@ const ArticleDetail = () => {
                       {c.content === null ? (
                         <p className="ps-3 mt-4 text-gray-500"><mark className="italic bg-red-300">Comment này đã bị xóa bởi admin</mark></p>
                       ) : (
-                        <p className="ps-3 text-lg mt-4 text-gray-500">{c.content}</p>
+                        <p className="ps-3 text-lg mt-4 text-gray-500">{c.content}.</p>
                       )}
                     </div>
                   </div>

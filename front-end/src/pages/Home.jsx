@@ -24,21 +24,15 @@ const Home = () => {
     async function fecthArticle() {
       try {
         let e = endpoints["article"];
-        let kw = q.get("kw");
-        // if (kw !== null) {
-        //   e = `${e}?kw=${kw}`;
-        // }
+        let kw = q.get("kw");  
         let res = await Apis.get(e);
-        //       // setArticle(res.data);
-
-        const cate = await Apis.get(endpoints["category"]);
         // console.log(cate);
         // //       cái này là đầy đủ các attribute ông cần
         // console.log(res.data);
         // //       cái này là để ông lấy phân trang
         // console.log(res.data.links);
-
         // console.log(res.data.data);
+
         setPaginate(res.data.links);
         setArticle(res.data.data);
       } catch (ex) {
@@ -50,10 +44,8 @@ const Home = () => {
     //danh mục
     const loadCategory = async () => {
       let cate = endpoints["category"];
-      // e = `${e}/?page=${page}`;
       let cateRes = await Apis.get(cate);
       setCategory(cateRes.data);
-      // setCategory(res.data.links);
     };
     loadCategory();
   }, [q]);
@@ -110,29 +102,30 @@ const Home = () => {
         <h1 className="mt-6 flex justify-center">Không Có Thông Tin</h1>
       </>
     );
-   
+
 
   return (
     <>
-      <section className="flex justify-center text-lg mt-28 mx-auto w-full max-w-7xl px-8">
-        {category.map((c) => {
-          return (
-            <div className="inline-flex ">
-              <div
-                title={c.name}
-                onClick={(e) => articleByCate(e, c.id)}
-                className="mx-3 py-2 px-3 hover:bg-neutral-200 cursor-pointer rounded-lg transition duration-500"
-              >
-                {c.name}
+      <div className="bg-sky-50 mt-28">
+        <hr />
+        <section className=" p-3 lg:flex max-lg:inline-grid grid-cols-3 gap-5 justify-center text-lg  mx-auto w-fit px-8">
+          {category.map((c) => {
+            return (
+              <div>
+                <div
+                  title={c.name}
+                  onClick={(e) => articleByCate(e, c.id)}
+                  className=" mx-3 -my-2 py-2 px-3 hover:bg-slate-200 cursor-pointer rounded-lg transition duration-500"
+                >
+                  {c.name}
+                </div>
               </div>
-            </div>
-          );
-        })}
-      </section>
-
-      {/* section content */}
+            );
+          })}
+        </section>
+        <hr />
+      </div>
       <section className="mb-10">
-        {/* Search engine đang xử lý */}
         <form onSubmit={search} className="mt-7 mx-auto w-full max-w-7xl">
           <label
             htmlFor="default-search"
@@ -297,6 +290,16 @@ const Home = () => {
           </Button>
         </div>
       </section>
+
+      {/* Back to top */}
+      {/* <div>
+        <Button type="button" data-te-ripple-init data-te-ripple-color="light" className="!fixed bottom-5 right-5 hidden rounded-full bg-red-600 p-3 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg" id="btn-back-to-top">
+          <svg aria-hidden="false" focusable="false" data-prefix="fas" className="h-4 w-4" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+            <path fill="currentColor" d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z" />
+          </svg>
+        </Button >
+      </div> */}
+
     </>
   );
 };
