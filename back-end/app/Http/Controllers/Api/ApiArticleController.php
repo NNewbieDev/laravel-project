@@ -113,6 +113,12 @@ class ApiArticleController extends Controller
                     return response($article, Response::HTTP_OK);
           }
 
+          public function getAll()
+          {
+                    $article = Article::with('user', 'category')->paginate(10);
+                    return response($article, Response::HTTP_OK);
+          }
+
           public function search(Request $request)
           {
                     $result = Article::with("user");
