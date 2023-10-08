@@ -1,19 +1,24 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Form, Link, useParams } from "react-router-dom";
 import Apis, { authApi, endpoints } from "../config/Apis";
 import { TagIcon, HandThumbUpIcon, FlagIcon } from "@heroicons/react/24/outline";
 import { MySpinner } from "../components/layout";
 import moment from "moment";
-import { Button } from "@material-tailwind/react";
+import { Button, Rating } from "@material-tailwind/react";
 import { useStateContext } from "../context/ContextProvider";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faPlusCircle,
+} from "@fortawesome/free-solid-svg-icons";
 
 const ArticleDetail = () => {
   const [article, setArticle] = useState([]);
   const { articleId } = useParams();
   const [comments, setComments] = useState([]);
   const [content, setContent] = useState();
-  // const [rating, setRating] = useState();
+  const [rating, setRating] = useState();
   // const [userRating, setUserRating] = useState();
+  const [report, setReport] = useState();
   const { user, dispatch } = useStateContext();
 
   useEffect(() => {
@@ -24,24 +29,26 @@ const ArticleDetail = () => {
     const loadComments = async () => {
       let { data } = await Apis.get(endpoints['comments'](articleId));
       setComments(data.data);
-
+    };
+    const loadRatings = async () => {
+      let { data } = await Apis.get(endpoints['getRatings'](articleId));
+      setRating(data);
     };
     fecthArticle();
     loadComments();
+    loadRatings();
   }, [articleId]);
 
-  useEffect(() => {
-    console.log(content);
-  }, [content])
+  // useEffect(() => {
+  //   console.log(content);
+  // }, [content])
 
-  console.log(comments);
 
   const addComment = (evt) => {
     evt.preventDefault();
     const process = async () => {
-      console.log(articleId)
       let response = await authApi().post(endpoints['comments'](articleId), {
-        "comment": content, 
+        "comment": content,
       });
       let { data } = await Apis.get(endpoints['comments'](articleId));
       setComments(data.data);
@@ -49,18 +56,28 @@ const ArticleDetail = () => {
     process();
   }
 
-  // const addRating = (evt) => {
-  //   evt.preventDefault();
-  //   const process = async () => {
-  //     console.log(articleId)
-  //     let response = await authApi().post(endpoints['comments'](articleId), {
-  //       "rate": content,
-  //     });
-  //     let { data } = await Apis.get(endpoints['comments'](articleId));
-  //     setComments(data.data);
-  //   }
-  //   process();
-  // }
+  const addRating = (evt) => {
+    evt.preventDefault();
+    const process = async () => {
+      let response = await authApi().post(endpoints['addRatings'](articleId), {
+        "rate": rating,
+      });
+      let { data } = await Apis.get(endpoints['getRatings'](articleId));
+      setRating(data);
+    }
+    process();
+  }
+
+  const addReport = (evt) => {
+    evt.preventDefault();
+    const process = async () => {
+      let response = await authApi().post(endpoints['addReport'](articleId), {
+        "content": report,
+      });
+    }
+    process();
+  }
+  console.log(rating);
 
   if (comments === null)
     return <MySpinner />
@@ -69,6 +86,7 @@ const ArticleDetail = () => {
   return (
     <>
       <section className="mt-20 mx-auto w-full max-w-7xl px-8">
+
         <div className=" rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 md:flex-row">
           <div className=" flex flex-col justify-end p-6">
             {/* {article.category.name !== null ? 
@@ -91,7 +109,9 @@ const ArticleDetail = () => {
                 <div dangerouslySetInnerHTML={{ __html: article.content }} />
               </p>
             ) : (
-              <MySpinner />
+              <div className="my-5 flex justify-center">
+                <MySpinner />
+              </div>
             )}
             <div className="lg:pt3 lg:pb-5 inline-flex">
               <span class=" lg:ms-8 bg-gray-100 text-gray-800 text-xs font-medium inline-flex items-center w-fit px-2.5 py-0.5 rounded mr-2 dark:bg-gray-700 dark:text-gray-400 border border-gray-500">
@@ -106,20 +126,81 @@ const ArticleDetail = () => {
                 </svg>
                 {moment(article.updated_at).utc().format('HH:mm DD-MM-YYYY')}
               </span>
-              <div className="flex w-4/6 lg:ms-28 justify-end">
-                <Button><HandThumbUpIcon className="mx-2" width={24} color="#1877f2" /></Button>
-                <hr className="mx-2"/>
-                <Button><FlagIcon className="mx-2" color="Red" width={24} /></Button>
+
+              {/* Phần Rating */}
+              <div className="flex w-4/6 lg:ms-28 justify-end ">
+                <form onSubmit={addRating}>
+                  <div className="flex items-center flex-row-reverse">
+                    <svg type="submit" onClick={(event) => setRating(event.currentTarget.id)} id="5" className=" w-4 h-4 text-gray-600 cursor-pointer peer peer-hover:text-yellow-400 hover:text-yellow-400 duration-100 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                      <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                    </svg>
+                    <svg type="submit" onClick={(event) => setRating(event.currentTarget.id)} id="4" className="w-4 h-4 text-gray-600 cursor-pointer peer peer-hover:text-yellow-400 hover:text-yellow-400 duration-100 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                      <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                    </svg>
+                    <svg type="submit" onClick={(event) => setRating(event.currentTarget.id)} id="3" className="w-4 h-4 text-gray-600 cursor-pointer peer peer-hover:text-yellow-400 hover:text-yellow-400 duration-100 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                      <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                    </svg>
+                    <svg type="submit" onClick={(event) => setRating(event.currentTarget.id)} id="2" className="w-4 h-4 text-gray-600 cursor-pointer peer peer-hover:text-yellow-400 hover:text-yellow-400 duration-100 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                      <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                    </svg>
+                    <svg type="submit" onClick={(event) => setRating(event.currentTarget.id)} id="1" className="w-4 h-4 text-gray-600 cursor-pointer peer peer-hover:text-yellow-400 hover:text-yellow-400 duration-100 mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                      <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                    </svg>
+                    {rating !== undefined ? (
+                      <p className=" me-2 text-sm font-medium text-gray-500 dark:text-gray-400">{rating} out of 5</p>)
+                      : (<p className=" me-2 text-sm font-medium text-gray-500 dark:text-gray-400">0 out of 5</p>)
+                    }
+                  </div>
+                </form>
               </div>
+
+              {/*Phần report bài viết*/}
+              <form onSubmit={addReport} className="group p-3 relative -mt-3 me-10">
+                <FlagIcon className=" mx-3" color="Red" width={24} />
+                <div className="group-hover:flex sm:rounded-lg flex-col rounded-lg sm:min-w-[300px] p-3 drop-shadow-xl sm:absolute hidden bg-white sm:top-10 sm:right-0">
+                  <button
+                    type="submit"
+                    onClick={(event) => setReport(event.currentTarget.textContent)}
+                    className="flex gap-2 hover:cursor-pointer min-w-[15rem] transition duration-500 px-2 py-2 hover:bg-neutral-200 rounded-lg"
+                  >
+                    <div className="">
+                      <FontAwesomeIcon icon={faPlusCircle} />
+                    </div>
+                    <div className="">Bài viết có chứa yếu tố phản động!</div>
+                  </button>
+                  <button
+                    type="submit"
+                    onClick={(event) => setReport(event.currentTarget.textContent)}
+                    className="flex gap-2 hover:cursor-pointer min-w-[15rem] transition duration-500 px-2 py-2 hover:bg-neutral-200 rounded-lg"
+                  >
+                    <div className="">
+                      <FontAwesomeIcon icon={faPlusCircle} />
+                    </div>
+                    <div className="">Bài viết có chứa ngôn ngữ đả kích!</div>
+                  </button>
+                  <button
+                    type="submit"
+                    onClick={(event) => setReport(event.currentTarget.textContent)}
+                    className="flex gap-2 hover:cursor-pointer min-w-[15rem] transition duration-500 px-2 py-2 hover:bg-neutral-200 rounded-lg"
+                  >
+                    <div className="">
+                      <FontAwesomeIcon icon={faPlusCircle} />
+                    </div>
+                    <div className="">Bài viết có nội dung ko phù hợp!</div>
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
+
+          {/* Phần comment */}
           <h1 className="ms-5 lg:ms-14 text-2xl">Thảo Luận: </h1>
           {user === null ? <p className=" my-5 ms-5 lg:ms-20 text-xl">Vui lòng <Link className="text-sky-500" to={url}>đăng nhập</Link> để bình luận!</p>
             : <>
               <div className="flex items-center justify-center shadow-lg mt-3 mx-8 mb-4 max-w-full">
                 <form className="w-full max-w-full bg-white rounded-lg px-4 pt-2" onSubmit={addComment}>
                   <div className="flex flex-wrap -mx-3 mb-6">
-                    <h2 className="px-4 pt-3 pb-2 text-gray-800 text-xl">Thêm bình luận mới:</h2>
+                    <h2 className="px-4 pt-3 pb-2 text-gray-800 text-xl">Thêm bình luận:</h2>
                     <div className="w-full md:w-full px-3 mb-2 mt-2">
                       <input onChange={(event) => setContent(event.target.value)} className="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full text-base h-16 py-2 px-2 placeholder-gray-700 focus:outline-none focus:bg-white" name="body" placeholder="Cảm nghĩ của bạn..." required defaultValue={""} />
                     </div>
@@ -140,7 +221,7 @@ const ArticleDetail = () => {
               </div>
             </>}
 
-
+          {/* Hiển thị comment */}
           <div className="max-lg:mx-5 lg:px-12 mt-8 pb-10">
             {comments.map(c =>
               <div key={c.id} className="flex justify-start relative top-1/3">

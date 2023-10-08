@@ -67,10 +67,10 @@ Route::prefix("category")->group(function () {
 });
 
 Route::prefix("report")->group(function () {
-          Route::post("/add", [App\Http\Controllers\Api\ApiReportController::class, "store"])->middleware(["api"])->name('report.store');
+          Route::post("{id}/add", [App\Http\Controllers\Api\ApiReportController::class, "store"])->middleware(["api"])->name('report.store');
 });
 
 Route::prefix("rating")->group(function () {
-          Route::post("/add", [App\Http\Controllers\Api\ApiRatingController::class, "store"])->middleware(["api"])->name('rating.store');
+          Route::post("{id}/add", [App\Http\Controllers\Api\ApiRatingController::class, "store"])->middleware(["api"])->name('rating.store');
           Route::get("{id}/get", [App\Http\Controllers\Api\ApiRatingController::class, "show"])->middleware(["api"])->name('rating.show');
 });
