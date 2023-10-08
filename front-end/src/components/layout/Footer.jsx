@@ -7,17 +7,21 @@ const Footer = () => {
   const [category, setCategory] = useState([]);
   const [paginate, setPaginate] = useState([]);
   const [article, setArticle] = useState([]);
+  
 
   useEffect(() => {
     const loadCategory = async () => {
       let cate = endpoints["category"];
       let cateRes = await Apis.get(cate);
+
+      let e = endpoints["article"];
+      let res = await Apis.get(e);
       setCategory(cateRes.data);
+      setArticle(res.data.data);
     };
     loadCategory();
   }, [])
 
-  console.log(category);
 
   const articleByCate = (evt, cateId) => {
     console.log(cateId);
@@ -45,7 +49,7 @@ const Footer = () => {
       title: "Hỗ Trợ",
       links: ["Discord", "Twitter", "GitHub", "Contact Us"],
     },
-   
+
   ];
 
 
@@ -82,6 +86,7 @@ const Footer = () => {
                 </ul>
               </div>
             ))}
+
             <div >
               <Typography
                 variant="small"
@@ -90,23 +95,25 @@ const Footer = () => {
               >
                 Danh Mục
               </Typography>
-
-              <div className="lg:grid grid-rows-4 grid-flow-col gap-1">
-                {category.map((c) => {
-                  return (
-                    <div>
-                      <div
-                        title={c.name}
-                        onClick={(e) => articleByCate(e, c.id)}
-                        className=" inline-block py-1 pr-2 transition-transform hover:scale-125"
-                      >
-                        {c.name}
+              <section>
+                <div className="lg:grid grid-rows-4 grid-flow-col gap-1">
+                  {category.map((c) => {
+                    return (
+                      <div>
+                        <div
+                          title={c.name}
+                          onClick={(evt) => articleByCate(evt, c.id)}
+                          className=" inline-block py-1 pr-2 transition-transform hover:scale-125"
+                        >
+                          {c.name}
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
-              </div>
+                    );
+                  })}
+                </div>
+              </section>
             </div>
+
           </div>
           <div className="flex w-full flex-col items-center justify-center border-t border-blue-gray-50 py-4 md:flex-row md:justify-between">
             <Typography
