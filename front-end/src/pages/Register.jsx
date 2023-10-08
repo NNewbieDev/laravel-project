@@ -1,6 +1,12 @@
 import React, { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Apis, { endpoints } from "../config/Apis";
+import {
+  faCheck,
+  faTriangleExclamation,
+  faWarning,
+} from "@fortawesome/free-solid-svg-icons";
+import { Toast } from "../components/warning";
 
 const Register = () => {
   const [user, setUser] = useState({
@@ -13,6 +19,13 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const avatar = useRef();
   const nav = useNavigate();
+  const [toast, setToast] = useState(false);
+  const [toastInfo, setToastInfo] = useState({
+    icon: "",
+    content: "",
+    color: "",
+  });
+  const timeout = useRef();
 
   const register = (e) => {
     e.preventDefault();
@@ -23,18 +36,39 @@ const Register = () => {
 
       for (let field in user) if (field !== "") form.append(field, user[field]);
 
-      //       form.append("avatar", avatar.current.files[0]);
-      //       console.log(user.password);
       let res = await Apis.post(endpoints["register"], form);
       if (res.status === 201) {
-        nav("/login");
+        setToastInfo(() => {
+          return {
+            icon: faCheck,
+            content: "Đăng ký thành công",
+            color: "green-400",
+          };
+        });
+        setToast(true);
+        timeout.current = setTimeout(() => {
+          clearTimeout(timeout.current);
+          nav("/login");
+        }, 1000);
       }
     };
 
     if (user.password === user.confirmPass) process();
+    else {
+      setToastInfo(() => {
+        return {
+          icon: faTriangleExclamation,
+          content: "Kiểm tra lại thông tin",
+          color: "orange-300",
+        };
+      });
+      console.log(toastInfo);
+      setToast(true);
+    }
   };
 
   const change = (e, field) => {
+    setLoading(false);
     setUser((current) => {
       return { ...current, [field]: e.target.value };
     });
@@ -42,6 +76,14 @@ const Register = () => {
 
   return (
     <div className="flex justify-center items-center mb-4 mt-24">
+      {toast && (
+        <Toast
+          icon={toastInfo.icon}
+          content={toastInfo.content}
+          Timeout={setToast}
+          color={toastInfo.color}
+        />
+      )}
       <form
         onSubmit={register}
         className="w-[80%] sm:max-w-2xl bg-gray-form p-12 rounded-md"

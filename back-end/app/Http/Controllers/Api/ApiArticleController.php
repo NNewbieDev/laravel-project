@@ -7,6 +7,8 @@ use App\Http\Resources\ArticleResource;
 use App\Models\Article;
 use App\Models\Category;
 use App\Models\Comment;
+use App\Models\Rating;
+use App\Models\Report;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -185,6 +187,12 @@ class ApiArticleController extends Controller
           public function destroy($id)
           {
                     $article = Article::where('id', $id)->first();
+                    $comment = Comment::where("userID", $id);
+                    $rating = Rating::where("articleID", $id);
+                    $report = Report::where("articleID", $id);
+                    $comment->delete();
+                    $rating->delete();
+                    $report->delete();
                     $article->delete();
                     return Response::HTTP_NO_CONTENT;
           }
