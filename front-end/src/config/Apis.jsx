@@ -27,6 +27,7 @@ export const endpoints = {
   "role-down": (id) => `/api/auth/${id}/role-down`,
   "user-delete": (id) => `/api/auth/${id}/delete`,
   search: "/api/search",
+  articleByCate: (id) => `/api/article/category/${id}`,
   comments: (id) => `/api/article/${id}/comment`,
   addRatings: (id) => `/api/rating/${id}/add`,
   getRatings: (id) => `/api/rating/${id}/get`,

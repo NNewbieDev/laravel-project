@@ -123,16 +123,16 @@ class ApiArticleController extends Controller
 
           public function search(Request $request)
           {
-                    $result = Article::with("user");
-                    if ($request->exists('cateId')) {
-                              $result = $result->where('categoryid', $request->cateId);
-                    }
+                    // $result = Article::with("user");
+                    // if ($request->exists('cateId')) {
+                    //           $result = $result->where('categoryID', $request->cateId);
+                    // }
 
-                    if ($request->exists('title')) {
-                              $result = $result->where('title', 'LIKE', "%{$request->title}%");
-                    }
+                    // if ($request->exists('title')) {
+                    //           $result = $result->where('title', 'LIKE', "%{$request->title}%");
+                    // }
 
-                    $result = $result->where("status", "ACCEPT")->paginate(10);
+                    $result = Article::where('title', 'LIKE', "%{$request->title}%")->where("status", "ACCEPT")->orderBy('created_at', 'desc')->paginate(10);
                     // dd($result->get("categoryID"));
                     return response($result, Response::HTTP_OK);
           }

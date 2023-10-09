@@ -24,6 +24,7 @@ const YourPost = () => {
     const load = async () => {
       try {
         const res = await authApi().get(endpoints["post"]);
+        //         console.log(res);
         setArticle(res.data.data);
         setPaginate(res.data.links);
       } catch (err) {
@@ -79,7 +80,7 @@ const YourPost = () => {
   return (
     <Profile>
       <div className="mt-8 mx-auto md:w-2/3 flex flex-col gap-5">
-        {article.data.map((item, index) => {
+        {article.map((item, index) => {
           return (
             <div
               className="flex gap-5 border border-neutral-300 shadow-lg p-3 rounded-md"

@@ -34,7 +34,7 @@ class ApiCommentController extends Controller
                     // $article = Article::where("ArticleID", $id)->first();
                     // $comment->articleID = $request->session()->get("key");
                     $comment->articleID = $id;
-                    $comment->content = $request['comment'];
+                    $comment->content = $request->comment;
                     $comment->save();
                     return response("Bạn đã bình luận", Response::HTTP_CREATED);
           }

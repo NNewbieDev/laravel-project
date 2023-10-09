@@ -54,12 +54,14 @@ Route::prefix("article")->group(function () {
           Route::put('{id}/update', [App\Http\Controllers\Api\ApiArticleController::class, "update"])->middleware(["api", "checkRole:2,3"])->name('article.update');
           Route::put('/{id}/accept', [App\Http\Controllers\Api\ApiArticleController::class, "accept"])->middleware(["api", "checkRole:3,3"])->name('article.accept');
           Route::get('/{id}', [App\Http\Controllers\Api\ApiArticleController::class, "show"])->name('article.show');
+          Route::post('/category/{id}', [App\Http\Controllers\Api\ApiCategoryController::class, "show"])->name('article.cate');
           // Comment
           Route::post('/{id}/comment', [App\Http\Controllers\Api\ApiCommentController::class, "store"])->name('comment.store');
           Route::get('/{id}/comment', [App\Http\Controllers\Api\ApiCommentController::class, "index"])->name('comment.index');
 });
 
 Route::post('search', [App\Http\Controllers\Api\ApiArticleController::class, "search"])->name('article.search');
+// Route::get('search', [App\Http\Controllers\Api\ApiArticleController::class, "search"])->name('article.search');
 
 Route::prefix("category")->group(function () {
           Route::get('/', [App\Http\Controllers\Api\ApiCategoryController::class, "index"])->name('category.index');

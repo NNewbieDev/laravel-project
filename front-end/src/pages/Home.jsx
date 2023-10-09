@@ -1,12 +1,17 @@
-import React, { useEffect, useState } from "react";
-import Apis, { endpoints } from "../config/Apis";
+import React, { Fragment, useEffect, useState } from "react";
+import Apis, { authApi, endpoints } from "../config/Apis";
 import { MySpinner } from "../components/layout";
 import { library, icon } from "@fortawesome/fontawesome-svg-core";
-import { faCamera } from "@fortawesome/free-solid-svg-icons";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import {
+  faAngleLeft,
+  faAngleRight,
+  faCamera,
+} from "@fortawesome/free-solid-svg-icons";
+import { Form, Link, useNavigate, useSearchParams } from "react-router-dom";
 import { Button, IconButton } from "@material-tailwind/react";
 import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import moment from "moment";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 library.add(faCamera);
 
@@ -17,7 +22,10 @@ const Home = () => {
   const [q] = useSearchParams();
   const [paginate, setPaginate] = useState([]);
   const [category, setCategory] = useState([]);
-  const [kw, setKw] = useState("");
+  const [param, setParam] = useState({
+    title: "",
+    cateId: "",
+  });
   const nav = useNavigate();
 
   useEffect(() => {
@@ -55,7 +63,7 @@ const Home = () => {
     const process = async () => {
       try {
         let res = await Apis.post(endpoints["search"], {
-          title: kw,
+          title: param.title,
         });
         setPaginate(res.data.links);
         setArticle(res.data.data);
@@ -66,17 +74,15 @@ const Home = () => {
     process();
   };
 
-  const articleByCate = (evt, cateId) => {
-    console.log(cateId);
+  const articleByCate = (evt, id) => {
+    //     console.log(cateId);
     evt.preventDefault();
     const process = async () => {
       try {
-        let res = await Apis.post(endpoints["search"], {
-          cateId: cateId,
-        });
+        let res = await Apis.post(endpoints["articleByCate"](id));
         setPaginate(res.data.links);
         setArticle(res.data.data);
-        console.log(res.data.data);
+        //         console.log(res.data.data);
       } catch (err) {
         console.error("Loi ne:" + err);
       }
@@ -84,14 +90,36 @@ const Home = () => {
     process();
   };
 
-  const pagination = async (page) => {
-    let e = endpoints["article"];
-    e = `${e}/?page=${page}`;
-    let res = await Apis.get(e);
-    setArticle(res.data.data);
-    setPaginate(res.data.links);
-    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-    nav(`/?kw=${kw}`);
+  const onPaginate = (e, url) => {
+    e.preventDefault();
+    const handle = async () => {
+      let form = new FormData();
+
+      if (param.title !== "") {
+        form.append("title", param.title);
+        const res = await authApi().post(url, form);
+        setArticle(res.data.data);
+        setPaginate(res.data.links);
+        window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+      }
+      //
+      else if (param.cateId !== "") {
+        form.append("cateId", param.cateId);
+        const res = await authApi().post(url, form);
+        setArticle(res.data.data);
+        setPaginate(res.data.links);
+        window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+      }
+      //       console.log(form);
+      else {
+        const res = await authApi().get(url);
+        setArticle(res.data.data);
+        setPaginate(res.data.links);
+        window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+        //         nav(`/?kw=${}`);
+      }
+    };
+    handle();
   };
 
   if (article.length === 0)
@@ -100,7 +128,7 @@ const Home = () => {
         <div className="mt-32 mx-auto text-center w-3/4 flex justify-center">
           <MySpinner />
         </div>
-        <h1 className="mt-6 flex justify-center">Không Có Thông Tin</h1>
+        <h1 className="mt-6 flex justify-center">Đang tải tài nguyên...</h1>
       </>
     );
 
@@ -109,12 +137,17 @@ const Home = () => {
       <div className="bg-sky-50 mt-28">
         <hr />
         <section className=" p-3 lg:flex max-lg:inline-grid grid-cols-3 gap-5 justify-center text-lg  mx-auto w-fit px-8">
-          {category.map((c) => {
+          {category.map((c, index) => {
             return (
-              <div>
+              <div key={index}>
                 <div
                   title={c.name}
-                  onClick={(e) => articleByCate(e, c.id)}
+                  onClick={(e) => {
+                    setParam((prev) => {
+                      return { title: "", cateId: c.id };
+                    });
+                    articleByCate(e, c.id);
+                  }}
                   className=" mx-3 -my-2 py-2 px-3 hover:bg-slate-200 cursor-pointer rounded-lg transition duration-500"
                 >
                   {c.name}
@@ -153,8 +186,12 @@ const Home = () => {
             </div>
             <input
               type="text"
-              onChange={(e) => setKw(e.target.value)}
-              value={kw}
+              onChange={(e) =>
+                setParam((prev) => {
+                  return { cateId: "", title: e.target.value };
+                })
+              }
+              value={param.title}
               className="block w-full p-4 pl-10 text-xl text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Tìm kiếm..."
               required
@@ -172,33 +209,34 @@ const Home = () => {
           <h1 className="text-2xl">
             <i class="fa-solid fa-question-circle"></i>TIN NÓNG 24H
           </h1>
-          <p>Tin nóng, tin nhanh toàn quốc, update liên tục 24h</p>
+          <span>Tin nóng, tin nhanh toàn quốc, update liên tục 24h</span>
         </div>
 
         {/* Menu tin tức chính */}
         <div className="mt-5 grid lg:grid-cols-2 gap-2 mx-auto w-full max-w-7xl px-8">
-          {article.map((a) => {
+          {article.map((a, index) => {
             let url = `/article/${a.id}`;
             return (
-              <>
-                <div className="transition hover:scale-105 hover:-translate-y-6 duration-300 rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 md:max-w-xl md:flex-row">
-                  <div className="flex flex-col justify-start p-6 ">
-                    <Link to={url} alt={a.title}>
-                      <h5 className="mb-3 capitalize text-xl font-medium text-neutral-800 dark:text-neutral-50">
-                        {a.title}.
-                      </h5>
-                      <p className="mb-4 text-base text-neutral-600 dark:text-neutral-200">
-                        <div
-                          dangerouslySetInnerHTML={{ __html: a.description }}
-                        />
-                      </p>
-                    </Link>
-                    <p className="text-xs text-neutral-500 dark:text-neutral-300">
-                      {moment(a.updated_at).utc().format("HH:mm DD-MM-YYYY")}
-                    </p>
-                  </div>
+              <div
+                key={index}
+                className="transition hover:scale-105 hover:-translate-y-6 duration-300 rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 md:max-w-xl md:flex-row"
+              >
+                <div className="flex flex-col justify-start p-6 ">
+                  <Link to={url} alt={a.title}>
+                    <h5 className="mb-3 capitalize text-xl font-medium text-neutral-800 dark:text-neutral-50">
+                      {a.title}.
+                    </h5>
+                    <span className="mb-4 text-base text-neutral-600 dark:text-neutral-200">
+                      <div
+                        dangerouslySetInnerHTML={{ __html: a.description }}
+                      />
+                    </span>
+                  </Link>
+                  <span className="text-xs text-neutral-500 dark:text-neutral-300">
+                    {moment(a.updated_at).utc().format("HH:mm DD-MM-YYYY")}
+                  </span>
                 </div>
-              </>
+              </div>
             );
           })}
         </div>
@@ -243,53 +281,35 @@ const Home = () => {
         </div> */}
       </section>
 
-      <section className="mt-10 mx-auto w-full max-w-7xl px-8 mb-24 ">
-        <div className="flex items-center gap-4 justify-center">
-          <Button
-            variant="text"
-            className="flex items-center gap-2"
-            onClick=""
-            disabled="true"
-          >
-            <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
-          </Button>
-          <div className="flex items-center gap-2 justify-center ">
-            {paginate.slice(1, -1).map((page) => {
-              return (
-                <>
-                  {page.active === true ? (
-                    <Button
-                      onClick={() => pagination(page.label)}
-                      variant="outlined"
-                      className="px-3 scale-110 -translate-y-2"
-                      style={{ borderColor: "black" }}
-                    >
-                      {page.label}
-                    </Button>
+      {/*  */}
+      <div className="flex justify-center w-full">
+        <div className="flex gap-5">
+          {paginate.map((item, index) => {
+            return (
+              <form
+                onSubmit={(e) => onPaginate(e, item.url)}
+                className=""
+                key={index}
+              >
+                <button
+                  type="submit"
+                  className={` ${
+                    item.active && "bg-neutral-400 text-neutral-50"
+                  } border px-3 py-1 rounded-lg hover:bg-blue-400 cursor-pointer hover:text-neutral-50`}
+                >
+                  {index === 0 ? (
+                    <FontAwesomeIcon icon={faAngleLeft} />
+                  ) : index === paginate.length - 1 ? (
+                    <FontAwesomeIcon icon={faAngleRight} />
                   ) : (
-                    <Button
-                      onClick={() => pagination(page.label)}
-                      variant="outlined"
-                      className="tran sition hover:scale-125 hover:-translate-y-2 duration-300 px-3"
-                    >
-                      {page.label}
-                    </Button>
+                    item.label
                   )}
-                </>
-              );
-            })}
-          </div>
-          <Button
-            variant="text"
-            className=" flex items-center gap-2"
-            onClick=""
-            disabled="true"
-          >
-            Next
-            <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
-          </Button>
+                </button>
+              </form>
+            );
+          })}
         </div>
-      </section>
+      </div>
 
       {/* Back to top */}
       {/* <div>
