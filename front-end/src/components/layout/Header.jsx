@@ -46,7 +46,7 @@ const Header = () => {
   };
 
   return (
-    <div className=" fixed top-0 left-0 right-0 h-20 bg-white z-40 border drop-shadow-lg flex items-center justify-between">
+    <div style={{zIndex: "9999999"}} className=" fixed top-0 left-0 right-0 h-20 bg-white z-40 border drop-shadow-lg flex items-center justify-between">
       <div className="px-10 py-2">
         <Link to={"/"}>
           <img src="/logo.png" alt="" className="w-20" />

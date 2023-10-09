@@ -144,7 +144,7 @@ const Home = () => {
                   title={c.name}
                   onClick={(e) => {
                     setParam((prev) => {
-                      return { title: "", cateId: c.id };
+                      return { title: c.title, cateId: c.id };
                     });
                     articleByCate(e, c.id);
                   }}

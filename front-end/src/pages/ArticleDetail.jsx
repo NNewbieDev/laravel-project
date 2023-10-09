@@ -11,7 +11,8 @@ import moment from "moment";
 import { Button, Rating } from "@material-tailwind/react";
 import { useStateContext } from "../context/ContextProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+import { faPaperPlane, faPlusCircle, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { Toast } from "../components/warning";
 
 const ArticleDetail = () => {
   const [article, setArticle] = useState([]);
@@ -22,6 +23,8 @@ const ArticleDetail = () => {
   // const [userRating, setUserRating] = useState();
   const [report, setReport] = useState();
   const { user, dispatch } = useStateContext();
+  const[toast, setToast] = useState(false);
+  const[toastContent, setToastContent] = useState(false);
 
   useEffect(() => {
     const fecthArticle = async () => {
@@ -52,15 +55,16 @@ const ArticleDetail = () => {
         comment: content,
       });
       console.log(response.status);
-      if (response.status === 201) {
-        window.scrollTo({
-          top: 0,
-          left: 0,
-          behavior: "smooth",
-        });
-      }
+      // if (response.status === 201) {
+      //   window.scrollTo({
+      //     top: 0,
+      //     left: 0,
+      //     behavior: "smooth",
+      //   });
+      // }
       let { data } = await Apis.get(endpoints["comments"](articleId));
       setComments(data.data);
+      setContent("");
     };
     process();
   };
@@ -71,17 +75,19 @@ const ArticleDetail = () => {
       let response = await authApi().post(endpoints["addRatings"](articleId), {
         rate: rating,
       });
-      if (response.status === 201) {
-        window.scrollTo({
-          top: 0,
-          left: 0,
-          behavior: "smooth",
-        });
-      }
+      // if (response.status === 201) {
+      //   window.scrollTo({
+      //     top: 0,
+      //     left: 0,
+      //     behavior: "smooth",
+      //   });
+      // }
+      setToastContent(response.data)
       let { data } = await Apis.get(endpoints["getRatings"](articleId));
       setRating(data);
     };
     process();
+    setToast(true);
   };
 
   const addReport = (evt) => {
@@ -98,8 +104,10 @@ const ArticleDetail = () => {
           behavior: "smooth",
         });
       }
+      setToastContent(response.data)
     };
     process();
+    setToast(true);
   };
   //   console.log(rating);
 
@@ -109,6 +117,14 @@ const ArticleDetail = () => {
   return (
     <>
       <section className="mt-20 mx-auto w-full max-w-7xl px-8">
+        {toast && (
+          <Toast
+            Timeout={setToast}
+            content={toastContent}
+            icon={faCheck}
+            color={"green-400"}
+          />
+        )}
         <div className=" rounded-lg bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 md:flex-row">
           <div className=" flex flex-col justify-end p-6">
             {/* {article.category.name !== null ? 
@@ -316,6 +332,7 @@ const ArticleDetail = () => {
                         onChange={(event) => setContent(event.target.value)}
                         className="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full text-base h-16 py-2 px-4 transition duration-300 placeholder-gray-700 focus:outline-none focus:bg-white"
                         name="body"
+                        value={content}
                         placeholder="Cảm nghĩ của bạn..."
                         required
                         defaultValue={""}
@@ -365,7 +382,7 @@ const ArticleDetail = () => {
                       src={c.user.avatar}
                       className="relative rounded-full border-4 border-blue-400 h-20 w-20"
                       alt=""
-                      //     loading="lazy"
+                    //     loading="lazy"
                     />
                     <div className="flex flex-col w-full">
                       <div className="flex flex-row justify-between">
