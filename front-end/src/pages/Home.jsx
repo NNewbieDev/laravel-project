@@ -119,10 +119,8 @@ const Home = () => {
         //         nav(`/?kw=${}`);
       }
     };
-
     handle();
   };
-  console.log(param.cateId);
 
   if (article.length === 0)
     return (
@@ -146,7 +144,7 @@ const Home = () => {
                   title={c.name}
                   onClick={(e) => {
                     setParam((prev) => {
-                      return { title: c.title, cateId: c.id };
+                      return { title: "", cateId: c.id };
                     });
                     articleByCate(e, c.id);
                   }}
