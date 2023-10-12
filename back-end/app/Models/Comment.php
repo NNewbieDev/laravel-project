@@ -15,4 +15,8 @@ class Comment extends Model
           {
                     return $this->belongsTo(User::class, "userID");
           }
+          public function article()
+          {
+                    return $this->belongsTo(Article::class, "articleID");
+          }
 }

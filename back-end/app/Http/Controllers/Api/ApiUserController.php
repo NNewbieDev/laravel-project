@@ -54,14 +54,6 @@ class ApiUserController extends Controller
                     $user->email = $request->email;
                     $user->phone = $request->phone;
                     $user->save();
-
-                    // User::create([
-                    //           'username' => $request['username'],
-                    //           'password' => Hash::make($request['password']),
-                    //           'email' => $request['email'],
-                    //           'phone' => $request['phone'],
-                    //           // 'avatar' => $filename
-                    // ]);
                     return response("Đăng ký thành công", Response::HTTP_CREATED);
           }
 

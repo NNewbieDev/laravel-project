@@ -119,8 +119,10 @@ const Home = () => {
         //         nav(`/?kw=${}`);
       }
     };
+
     handle();
   };
+  console.log(param.cateId);
 
   if (article.length === 0)
     return (
