@@ -31,8 +31,6 @@ class ApiCommentController extends Controller
           {
                     $comment = new Comment;
                     $comment->userID = auth()->user()->id;
-                    // $article = Article::where("ArticleID", $id)->first();
-                    // $comment->articleID = $request->session()->get("key");
                     $comment->articleID = $id;
                     $comment->content = $request->comment;
                     $comment->save();

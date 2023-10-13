@@ -10,4 +10,8 @@ class Report extends Model
           use HasFactory;
           protected $table = "reports";
           protected $fillable = [""];
+          public function article()
+          {
+                    return $this->belongsTo(Article::class);
+          }
 }

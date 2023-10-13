@@ -111,14 +111,44 @@ class ApiArticleController extends Controller
            */
           public function show($id)
           {
-                    $article = Article::with('user', 'category')->where('id', $id)->first();
+                    $article = Article::with('user', 'category')->find($id);
+
+                    if (!$article) {
+                              return response('Không tìm thấy bài viết', Response::HTTP_NOT_FOUND);
+                    }
+
+                    $viewCount = $article->view;
+                    $article->view = $viewCount + 1;
+                    $article->save();
                     return response($article, Response::HTTP_OK);
           }
 
           public function getAll()
           {
-                    $article = Article::with('user', 'category')->paginate(10);
-                    return response($article, Response::HTTP_OK);
+                    $articles = Article::with("user", "category")->withCount('comments', 'reports')->paginate(10);
+                    return response($articles, Response::HTTP_OK);
+          }
+
+          public function getAllByComment()
+          {
+                    $articles = Article::with("user", "category")->withCount('comments', 'reports')
+                              ->orderBy("comments_count", "desc")->paginate(10);
+
+                    return response($articles, Response::HTTP_OK);
+          }
+
+          public function getAllByReport()
+          {
+                    $articles = Article::with("user", "category")->withCount('comments', 'reports')
+                              ->orderBy("reports_count", "desc")->paginate(10);
+                    return response($articles, Response::HTTP_OK);
+          }
+
+          public function getAllByView()
+          {
+                    $articles = Article::with("user", "category")->withCount('comments', 'reports')
+                              ->orderBy("view", "desc")->paginate(10);
+                    return response($articles, Response::HTTP_OK);
           }
 
           public function search(Request $request)

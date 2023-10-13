@@ -11,7 +11,11 @@ import moment from "moment";
 import { Button, Rating } from "@material-tailwind/react";
 import { useStateContext } from "../context/ContextProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane, faPlusCircle, faCheck } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPaperPlane,
+  faPlusCircle,
+  faCheck,
+} from "@fortawesome/free-solid-svg-icons";
 import { Toast } from "../components/warning";
 
 const ArticleDetail = () => {
@@ -23,8 +27,8 @@ const ArticleDetail = () => {
   // const [userRating, setUserRating] = useState();
   const [report, setReport] = useState();
   const { user, dispatch } = useStateContext();
-  const[toast, setToast] = useState(false);
-  const[toastContent, setToastContent] = useState(false);
+  const [toast, setToast] = useState(false);
+  const [toastContent, setToastContent] = useState(false);
 
   useEffect(() => {
     const fecthArticle = async () => {
@@ -82,7 +86,7 @@ const ArticleDetail = () => {
       //     behavior: "smooth",
       //   });
       // }
-      setToastContent(response.data)
+      setToastContent(response.data);
       let { data } = await Apis.get(endpoints["getRatings"](articleId));
       setRating(data);
     };
@@ -104,7 +108,7 @@ const ArticleDetail = () => {
           behavior: "smooth",
         });
       }
-      setToastContent(response.data)
+      setToastContent(response.data);
     };
     process();
     setToast(true);
@@ -264,38 +268,43 @@ const ArticleDetail = () => {
                 onSubmit={(e) => addReport(e)}
                 className="group cursor-pointer transition duration-300 border-2 rounded-md p-3 relative -mt-3 ml-3 hover:bg-neutral-100 me-10"
               >
-                <FlagIcon className="mx-3" color="Red" width={24} />
+                <FlagIcon
+                  className="mx-3 hover:text-blue-400 group-hover:text-blue-400"
+                  width={24}
+                />
                 <div className="group-hover:flex sm:rounded-lg flex-col rounded-lg sm:min-w-[300px] p-3 drop-shadow-xl sm:absolute hidden bg-white sm:top-10 sm:right-0">
                   <button
                     type="submit"
                     onClick={(event) =>
                       setReport(event.currentTarget.textContent)
                     }
-                    className="flex gap-2 hover:cursor-pointer min-w-[15rem] transition duration-500 px-2 py-2 hover:bg-neutral-200 rounded-lg"
+                    className="flex gap-2 hover:cursor-pointer min-w-[15rem] transition duration-500 p-2 hover:bg-neutral-200 rounded-lg"
                   >
                     <div className="">
                       <FontAwesomeIcon icon={faPlusCircle} />
                     </div>
-                    <div className="">Bài viết có chứa yếu tố phản động!</div>
+                    <div className="">
+                      Bài viết chứa nội dung không phù hợp!
+                    </div>
                   </button>
                   <button
                     type="submit"
                     onClick={(event) =>
                       setReport(event.currentTarget.textContent)
                     }
-                    className="flex gap-2 hover:cursor-pointer min-w-[15rem] transition duration-500 px-2 py-2 hover:bg-neutral-200 rounded-lg"
+                    className="flex gap-2 hover:cursor-pointer min-w-[15rem] transition duration-500 p-2 hover:bg-neutral-200 rounded-lg"
                   >
                     <div className="">
                       <FontAwesomeIcon icon={faPlusCircle} />
                     </div>
-                    <div className="">Bài viết có chứa ngôn ngữ đả kích!</div>
+                    <div className="">Bài viết dễ gây kích động!</div>
                   </button>
                   <button
                     type="submit"
                     onClick={(event) =>
                       setReport(event.currentTarget.textContent)
                     }
-                    className="flex gap-2 hover:cursor-pointer min-w-[15rem] transition duration-500 px-2 py-2 hover:bg-neutral-200 rounded-lg"
+                    className="flex gap-2 hover:cursor-pointer min-w-[15rem] transition duration-500 p-2 hover:bg-neutral-200 rounded-lg"
                   >
                     <div className="">
                       <FontAwesomeIcon icon={faPlusCircle} />
@@ -382,7 +391,7 @@ const ArticleDetail = () => {
                       src={c.user.avatar}
                       className="relative rounded-full border-4 border-blue-400 h-20 w-20"
                       alt=""
-                    //     loading="lazy"
+                      //     loading="lazy"
                     />
                     <div className="flex flex-col w-full">
                       <div className="flex flex-row justify-between">

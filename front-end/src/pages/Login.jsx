@@ -108,7 +108,7 @@ const Login = () => {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between">
           <div className="">
             {loading ? (
-              <div class="inline-block mt-3 h-8 w-8 animate-spin rounded-full border-4 border-green-btn border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_2s_linear_infinite]"></div>
+              <div className="inline-block mt-3 h-8 w-8 animate-spin rounded-full border-4 border-green-btn border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_2s_linear_infinite]"></div>
             ) : (
               <input
                 className="bg-green-btn text-white font-semibold px-14 py-3 rounded-md my-4 cursor-pointer hover:bg-green-700 transition-colors duration-300"
