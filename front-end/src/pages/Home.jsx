@@ -28,18 +28,13 @@ const Home = () => {
   });
   const nav = useNavigate();
 
+  // lấy các bài báo
   useEffect(() => {
     async function fecthArticle() {
       try {
         let e = endpoints["article"];
         let kw = q.get("kw");
         let res = await Apis.get(e);
-        // console.log(cate);
-        // //       cái này là đầy đủ các attribute ông cần
-        // console.log(res.data);
-        // //       cái này là để ông lấy phân trang
-        // console.log(res.data.links);
-        // console.log(res.data.data);
 
         setPaginate(res.data.links);
         setArticle(res.data.data);
@@ -49,7 +44,7 @@ const Home = () => {
     }
     fecthArticle();
 
-    //danh mục
+    // lấy danh mục
     const loadCategory = async () => {
       let cate = endpoints["category"];
       let cateRes = await Apis.get(cate);
@@ -58,6 +53,7 @@ const Home = () => {
     loadCategory();
   }, [q]);
 
+    // hàm xử lý search theo thanh tìm kiếm
   const search = (evt) => {
     evt.preventDefault();
     const process = async () => {
@@ -74,6 +70,7 @@ const Home = () => {
     process();
   };
 
+  //Hàm xử lý search theo danh mục
   const articleByCate = (evt, id) => {
     //     console.log(cateId);
     evt.preventDefault();
@@ -90,6 +87,7 @@ const Home = () => {
     process();
   };
 
+  // hàm xử lý phân trang
   const onPaginate = (e, url) => {
     e.preventDefault();
     const handle = async () => {

@@ -27,6 +27,7 @@ const Register = () => {
   });
   const timeout = useRef();
 
+  // hàm xử lý đăng ký
   const register = (e) => {
     e.preventDefault();
 
