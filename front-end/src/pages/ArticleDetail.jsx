@@ -11,7 +11,11 @@ import moment from "moment";
 import { Button, Rating } from "@material-tailwind/react";
 import { useStateContext } from "../context/ContextProvider";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane, faPlusCircle, faCheck } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPaperPlane,
+  faPlusCircle,
+  faCheck,
+} from "@fortawesome/free-solid-svg-icons";
 import { Toast } from "../components/warning";
 
 const ArticleDetail = () => {
@@ -65,6 +69,13 @@ const ArticleDetail = () => {
       let response = await authApi().post(endpoints["addRatings"](articleId), {
         rate: rating,
       });
+      // if (response.status === 201) {
+      //   window.scrollTo({
+      //     top: 0,
+      //     left: 0,
+      //     behavior: "smooth",
+      //   });
+      // }
       setToastContent(response.data)
       let { data } = await Apis.get(endpoints["getRatings"](articleId));
       setRating(data);
@@ -88,7 +99,7 @@ const ArticleDetail = () => {
           behavior: "smooth",
         });
       }
-      setToastContent(response.data)
+      setToastContent(response.data);
     };
     process();
     setToast(true);
@@ -258,51 +269,71 @@ const ArticleDetail = () => {
                       </form>
                     </div>
 
-                    {/*Phần report bài viết*/}
-                    <form
-                      onSubmit={(e) => addReport(e)}
-                      className="group cursor-pointer transition duration-300 border-2 rounded-md p-3 relative -mt-3 ml-3 hover:bg-neutral-100 me-10"
-                    >
-                      <FlagIcon className="mx-3" color="Red" width={24} />
-                      <div className="group-hover:flex sm:rounded-lg flex-col rounded-lg sm:min-w-[300px] p-3 drop-shadow-xl sm:absolute hidden bg-white sm:top-10 sm:right-0">
-                        <button
-                          type="submit"
-                          onClick={(event) =>
-                            setReport(event.currentTarget.textContent)
-                          }
-                          className="flex gap-2 hover:cursor-pointer min-w-[15rem] transition duration-500 px-2 py-2 hover:bg-neutral-200 rounded-lg"
-                        >
-                          <div className="">
-                            <FontAwesomeIcon icon={faPlusCircle} />
-                          </div>
-                          <div className="">Bài viết có chứa yếu tố phản động!</div>
-                        </button>
-                        <button
-                          type="submit"
-                          onClick={(event) =>
-                            setReport(event.currentTarget.textContent)
-                          }
-                          className="flex gap-2 hover:cursor-pointer min-w-[15rem] transition duration-500 px-2 py-2 hover:bg-neutral-200 rounded-lg"
-                        >
-                          <div className="">
-                            <FontAwesomeIcon icon={faPlusCircle} />
-                          </div>
-                          <div className="">Bài viết có chứa ngôn ngữ đả kích!</div>
-                        </button>
-                        <button
-                          type="submit"
-                          onClick={(event) =>
-                            setReport(event.currentTarget.textContent)
-                          }
-                          className="flex gap-2 hover:cursor-pointer min-w-[15rem] transition duration-500 px-2 py-2 hover:bg-neutral-200 rounded-lg"
-                        >
-                          <div className="">
-                            <FontAwesomeIcon icon={faPlusCircle} />
-                          </div>
-                          <div className="">Bài viết có nội dung ko phù hợp!</div>
-                        </button>
-                      </div>
-                    </form>
+              {/*Phần report bài viết*/}
+              <form
+                onSubmit={(e) => addReport(e)}
+                className="group cursor-pointer transition duration-300 border-2 rounded-md p-3 relative -mt-3 ml-3 hover:bg-neutral-100 me-10"
+              >
+                <FlagIcon className="mx-3" color="Red" width={24} />
+                <div className="group-hover:flex sm:rounded-lg flex-col rounded-lg sm:min-w-[300px] p-3 drop-shadow-xl sm:absolute hidden bg-white sm:top-10 sm:right-0">
+                  <button
+                    type="submit"
+                    onClick={(event) =>
+                      setReport(event.currentTarget.textContent)
+                    }
+                    className="flex gap-2 hover:cursor-pointer min-w-[15rem] transition duration-500 px-2 py-2 hover:bg-neutral-200 rounded-lg"
+                  >
+                    <div className="">
+                      <FontAwesomeIcon icon={faPlusCircle} />
+                    </div>
+                    <div className="">Bài viết có chứa yếu tố phản động!</div>
+                  </button>
+                  <button
+                    type="submit"
+                    onClick={(event) =>
+                      setReport(event.currentTarget.textContent)
+                    }
+                    className="flex gap-2 hover:cursor-pointer min-w-[15rem] transition duration-500 px-2 py-2 hover:bg-neutral-200 rounded-lg"
+                  >
+                    <div className="">
+                      <FontAwesomeIcon icon={faPlusCircle} />
+                    </div>
+                    <div className="">Bài viết có chứa ngôn ngữ đả kích!</div>
+                  </button>
+                  <button
+                    type="submit"
+                    onClick={(event) =>
+                      setReport(event.currentTarget.textContent)
+                    }
+                    className="flex gap-2 hover:cursor-pointer min-w-[15rem] transition duration-500 px-2 py-2 hover:bg-neutral-200 rounded-lg"
+                  >
+                    <div className="">
+                      <FontAwesomeIcon icon={faPlusCircle} />
+                    </div>
+                    <div className="">Bài viết có nội dung ko phù hợp!</div>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          {/* Phần comment */}
+          {user === null ? (
+            <p className=" my-5 ms-5 lg:ms-20 text-xl">
+              Vui lòng{" "}
+              <Link className="text-sky-500" to={url}>
+                đăng nhập
+              </Link>{" "}
+              để bình luận!
+            </p>
+          ) : (
+            <>
+              <div className="flex items-center justify-center shadow-lg mt-3 mx-8 mb-4 max-w-full">
+                <form
+                  className="w-full max-w-full bg-white rounded-lg px-4 pt-2"
+                  onSubmit={(e) => addComment(e)}
+                >
+                  <div className="flex flex-wrap -mx-3 mb-6">
                     <h2 className="px-4 pt-3 pb-2 text-gray-800 text-xl">
                       Thêm bình luận:
                     </h2>
@@ -362,7 +393,7 @@ const ArticleDetail = () => {
                       src={c.user.avatar}
                       className="relative rounded-full border-4 border-blue-400 h-20 w-20"
                       alt=""
-                    //     loading="lazy"
+                      //     loading="lazy"
                     />
                     <div className="flex flex-col w-full">
                       <div className="flex flex-row justify-between">

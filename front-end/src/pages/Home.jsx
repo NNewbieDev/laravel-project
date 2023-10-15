@@ -171,6 +171,8 @@ const Home = () => {
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
+                clipRule={""}
+                fillRule=""
                 viewBox="0 0 20 20"
               >
                 <path
@@ -205,7 +207,7 @@ const Home = () => {
 
         <div className="mt-10 mx-auto w-full max-w-7xl pl-16">
           <h1 className="text-2xl">
-            <i class="fa-solid fa-question-circle"></i>TIN NÓNG 24H
+            <i className="fa-solid fa-question-circle"></i>TIN NÓNG 24H
           </h1>
           <span>Tin nóng, tin nhanh toàn quốc, update liên tục 24h</span>
         </div>

@@ -9,8 +9,12 @@ import {
   faCalendar,
   faCalendarAlt,
   faCalendarCheck,
+  faEye,
   faFileSignature,
   faIcons,
+  faMessage,
+  faWarning,
+  faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { useStateContext } from "../context/ContextProvider";
 import { useNavigate } from "react-router-dom";
@@ -19,6 +23,7 @@ const ManagerArticle = () => {
   const [article, setArticle] = useState();
   const [paginate, setPaginate] = useState();
   const { dispatch } = useStateContext();
+  const [reRender, setReRender] = useState(false);
   const nav = useNavigate();
   useEffect(() => {
     const load = async () => {
@@ -32,18 +37,7 @@ const ManagerArticle = () => {
       }
     };
     load();
-  }, []);
-
-  const formatDate = (date) => {
-    let d = new Date(date);
-    let day = d.getDate() < 10 ? "0" + d.getDate() : d.getDate();
-    let month = d.getMonth() + 1;
-    let year = d.getFullYear() < 10 ? "0" + d.getFullYear() : d.getFullYear();
-    let hour = d.getHours() < 10 ? "0" + d.getHours() : d.getHours();
-    let minute = d.getMinutes() < 10 ? "0" + d.getMinutes() : d.getMinutes();
-    let second = d.getSeconds() < 10 ? "0" + d.getSeconds() : d.getSeconds();
-    return `${day}/${month}/${year} - ${hour}:${minute}:${second}`;
-  };
+  }, [reRender]);
 
   if (article === undefined && paginate === undefined) {
     return (
@@ -57,6 +51,7 @@ const ManagerArticle = () => {
 
   const onPaginate = (e, url) => {
     e.preventDefault();
+    console.log(url);
     const handle = async () => {
       if (url !== null) {
         const res = await authApi().get(url);
@@ -68,8 +63,110 @@ const ManagerArticle = () => {
     handle();
   };
 
+  const filterComment = (e) => {
+    e.preventDefault();
+    const handle = async () => {
+      try {
+        const res = await authApi().get(endpoints["article-all-comment"]);
+        setArticle(res.data.data);
+        setPaginate(res.data.links);
+      } catch (err) {
+        dispatch({ type: "logout" });
+        nav("/login");
+      }
+    };
+    handle();
+  };
+
+  const filterReport = (e) => {
+    e.preventDefault();
+    const handle = async () => {
+      try {
+        const res = await authApi().get(endpoints["article-all-report"]);
+        setArticle(res.data.data);
+        setPaginate(res.data.links);
+      } catch (err) {
+        dispatch({ type: "logout" });
+        nav("/login");
+      }
+    };
+    handle();
+  };
+
+  const filterView = (e) => {
+    e.preventDefault();
+    const handle = async () => {
+      try {
+        const res = await authApi().get(endpoints["article-all-view"]);
+        setArticle(res.data.data);
+        setPaginate(res.data.links);
+      } catch (err) {
+        dispatch({ type: "logout" });
+        nav("/login");
+      }
+    };
+    handle();
+  };
+
+  const cancel = (e, id) => {
+    e.preventDefault();
+    const handle = async () => {
+      const res = await authApi().delete(endpoints["delete-article"](id));
+      console.log(res.status);
+
+      if (res.status === 200) {
+        setReRender((prev) => !prev);
+      }
+    };
+    handle();
+  };
+
   return (
     <Manager>
+      <div className="flex gap-5 mb-2">
+        <form
+          onSubmit={(e) => {
+            filterComment(e);
+          }}
+          action=""
+        >
+          <button
+            type="submit"
+            className="px-4 py-2 bg-neutral-200 rounded-md hover:bg-blue-400 hover:text-neutral-50 cursor-pointer"
+          >
+            Bình luận nhiều nhất
+          </button>
+        </form>
+        {/*  */}
+        <form
+          onSubmit={(e) => {
+            filterView(e);
+          }}
+          action=""
+        >
+          <button
+            type="submit"
+            className="px-4 py-2 bg-neutral-200 rounded-md hover:bg-blue-400 hover:text-neutral-50 cursor-pointer"
+          >
+            Lượt xem nhiều nhất
+          </button>
+        </form>
+        {/*  */}
+        <form
+          onSubmit={(e) => {
+            filterReport(e);
+          }}
+          action=""
+        >
+          <button
+            type="submit"
+            className="px-4 py-2 bg-neutral-200 rounded-md hover:bg-blue-400 hover:text-neutral-50 cursor-pointer"
+          >
+            Tố cáo nhiều nhất
+          </button>
+        </form>
+      </div>
+      {/*  */}
       <div className="flex flex-col md:flex-row md:flex-wrap gap-3">
         {article.map((item, index) => {
           return (
@@ -105,22 +202,45 @@ const ManagerArticle = () => {
                 <div className="text-xl w-8 text-center text-blue-400">
                   <FontAwesomeIcon icon={faIcons} />
                 </div>
-                <div className="">{item.category.name}</div>
+                <div className="">
+                  {item.category === null
+                    ? "Chưa cập nhật"
+                    : item.category.name}
+                </div>
               </div>
               {/*  */}
               <div className="basis-1/5 flex items-center gap-2">
                 <div className="text-xl w-8 text-center text-blue-400">
-                  <FontAwesomeIcon icon={faCalendar} />
+                  <FontAwesomeIcon icon={faMessage} />
                 </div>
-                <div className="">{formatDate(item.created_at)}</div>
+                <div className="">{item.comments_count}</div>
               </div>
               {/*  */}
               <div className="basis-1/5 flex items-center gap-2">
                 <div className="text-xl w-8 text-center text-blue-400">
-                  <FontAwesomeIcon icon={faCalendarCheck} />
+                  <FontAwesomeIcon icon={faWarning} />
                 </div>
-                <div className="">{formatDate(item.updated_at)}</div>
+                <div className="">{item.reports_count}</div>
               </div>
+              {/*  */}
+              <div className="basis-1/5 flex items-center gap-2">
+                <div className="text-xl w-8 text-center text-blue-400">
+                  <FontAwesomeIcon icon={faEye} />
+                </div>
+                <div className="">{item.view}</div>
+              </div>
+              {/*  */}
+              <form onSubmit={(e) => cancel(e, item.id)} className="min-w-fit">
+                <button
+                  type="submit"
+                  className="flex items-center gap-2 bg-red-400 text-neutral-50 px-5 py-2 rounded-lg hover:bg-red-600 cursor-pointer"
+                >
+                  <div className="">
+                    <FontAwesomeIcon icon={faXmark} />
+                  </div>
+                  <div className="">Bỏ qua bài viết</div>
+                </button>
+              </form>
             </div>
           );
         })}
