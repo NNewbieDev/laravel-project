@@ -162,9 +162,10 @@ const ArticleDetail = () => {
                     <button
                       className="transition duration-300 w-4 h-4 text-gray-600 cursor-pointer peer peer-hover:text-yellow-400 hover:text-yellow-400 mr-1"
                       type="submit"
+                      disabled="true"
                     >
                       <svg
-                        onClick={(event) => setRating(event.currentTarget.id)}
+
                         id="5"
                         aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg"
@@ -177,9 +178,10 @@ const ArticleDetail = () => {
                     <button
                       className="transition duration-300 w-4 h-4 text-gray-600 cursor-pointer peer peer-hover:text-yellow-400 hover:text-yellow-400 mr-1"
                       type="submit"
+                      disabled="true"
                     >
                       <svg
-                        onClick={(event) => setRating(event.currentTarget.id)}
+                        
                         id="4"
                         aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg"
@@ -190,11 +192,12 @@ const ArticleDetail = () => {
                       </svg>
                     </button>
                     <button
-                      className="transition duration-300 w-4 h-4 text-gray-600 cursor-pointer peer peer-hover:text-yellow-400 hover:text-yellow-400 mr-1"
+                      className="transition duration-300 w-4 h-4  cursor-pointer peer text-yellow-400 hover:text-yellow-400 mr-1"
                       type="submit"
+                      disabled="true"
                     >
                       <svg
-                        onClick={(event) => setRating(event.currentTarget.id)}
+                        
                         id="3"
                         aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg"
@@ -205,11 +208,12 @@ const ArticleDetail = () => {
                       </svg>
                     </button>
                     <button
-                      className="transition duration-300 w-4 h-4 text-gray-600 cursor-pointer peer peer-hover:text-yellow-400 hover:text-yellow-400 mr-1"
+                      className="transition duration-300 w-4 h-4  cursor-pointer peer text-yellow-400 hover:text-yellow-400 mr-1"
                       type="submit"
+                      disabled="true"
                     >
                       <svg
-                        onClick={(event) => setRating(event.currentTarget.id)}
+                        
                         id="2"
                         aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg"
@@ -220,11 +224,12 @@ const ArticleDetail = () => {
                       </svg>
                     </button>
                     <button
-                      className="transition duration-300 w-4 h-4 text-gray-600 cursor-pointer peer peer-hover:text-yellow-400 hover:text-yellow-400 mr-1"
+                      className="transition duration-300 w-4 h-4cursor-pointer peer text-yellow-400 hover:text-yellow-400 mr-1"
                       type="submit"
+                      disabled="true"
                     >
                       <svg
-                        onClick={(event) => setRating(event.currentTarget.id)}
+                        
                         id="1"
                         aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg"
@@ -238,67 +243,18 @@ const ArticleDetail = () => {
                     {/*  */}
                     {rating !== "" ? (
                       <span className=" me-2 text-sm font-medium text-gray-500 dark:text-gray-400">
-                        {rating} out of 5
+                        {rating} trên 5
                       </span>
                     ) : (
                       <span className=" me-2 text-sm font-medium text-gray-500 dark:text-gray-400">
-                        0 out of 5
+                        Chưa có đánh giá!
                       </span>
                     )}
                   </div>
                 </form>
               </div>
 
-              {/*Phần report bài viết*/}
-              <form
-                onSubmit={(e) => addReport(e)}
-                className="group cursor-pointer transition duration-300 border-2 rounded-md p-3 relative -mt-3 ml-3 hover:bg-neutral-100 me-10"
-              >
-                <FlagIcon
-                  className="mx-3 hover:text-blue-400 group-hover:text-blue-400"
-                  width={24}
-                />
-                <div className="group-hover:flex sm:rounded-lg flex-col rounded-lg sm:min-w-[300px] p-3 drop-shadow-xl sm:absolute hidden bg-white sm:top-10 sm:right-0">
-                  <button
-                    type="submit"
-                    onClick={(event) =>
-                      setReport(event.currentTarget.textContent)
-                    }
-                    className="flex gap-2 hover:cursor-pointer min-w-[15rem] transition duration-500 p-2 hover:bg-neutral-200 rounded-lg"
-                  >
-                    <div className="">
-                      <FontAwesomeIcon icon={faPlusCircle} />
-                    </div>
-                    <div className="">
-                      Bài viết chứa nội dung không phù hợp!
-                    </div>
-                  </button>
-                  <button
-                    type="submit"
-                    onClick={(event) =>
-                      setReport(event.currentTarget.textContent)
-                    }
-                    className="flex gap-2 hover:cursor-pointer min-w-[15rem] transition duration-500 p-2 hover:bg-neutral-200 rounded-lg"
-                  >
-                    <div className="">
-                      <FontAwesomeIcon icon={faPlusCircle} />
-                    </div>
-                    <div className="">Bài viết dễ gây kích động!</div>
-                  </button>
-                  <button
-                    type="submit"
-                    onClick={(event) =>
-                      setReport(event.currentTarget.textContent)
-                    }
-                    className="flex gap-2 hover:cursor-pointer min-w-[15rem] transition duration-500 p-2 hover:bg-neutral-200 rounded-lg"
-                  >
-                    <div className="">
-                      <FontAwesomeIcon icon={faPlusCircle} />
-                    </div>
-                    <div className="">Bài viết có nội dung ko phù hợp!</div>
-                  </button>
-                </div>
-              </form>
+
             </div>
           </div>
 
@@ -403,11 +359,11 @@ const ArticleDetail = () => {
                           {/*  */}
                           {rating !== "" ? (
                             <span className=" me-2 text-sm font-medium text-gray-500 dark:text-gray-400">
-                              {rating} trên 5
+                              Đánh giá bài viết!
                             </span>
                           ) : (
                             <span className=" me-2 text-sm font-medium text-gray-500 dark:text-gray-400">
-                              Chưa có đánh giá!
+                              Hãy là người đầu tiên!
                             </span>
                           )}
                         </div>

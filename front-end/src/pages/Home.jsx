@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import Apis, { authApi, endpoints } from "../config/Apis";
 import { MySpinner } from "../components/layout";
 import { library, icon } from "@fortawesome/fontawesome-svg-core";
+import { animateScroll as scroll, scrollSpy } from 'react-scroll';
 import {
   faAngleLeft,
   faAngleRight,
@@ -26,6 +27,7 @@ const Home = () => {
     title: "",
     cateId: "",
   });
+  const [clicked, setClicked] = useState(0)
   const nav = useNavigate();
 
   // lấy các bài báo
@@ -53,7 +55,7 @@ const Home = () => {
     loadCategory();
   }, [q]);
 
-    // hàm xử lý search theo thanh tìm kiếm
+  // hàm xử lý search theo thanh tìm kiếm
   const search = (evt) => {
     evt.preventDefault();
     const process = async () => {
@@ -118,8 +120,14 @@ const Home = () => {
       }
     };
     handle();
-  };
 
+  };
+  
+  const ScrollToTop = () => {
+    // window.scrollTo({ top: 0, left: 0, behavior: "" });
+    // scroll.scrollToTop();
+    document.body.scrollTo({ top: 0, left: 0})
+  }
   if (article.length === 0)
     return (
       <>
@@ -141,12 +149,14 @@ const Home = () => {
                 <div
                   title={c.name}
                   onClick={(e) => {
+                    setClicked(c.id)
                     setParam((prev) => {
                       return { title: "", cateId: c.id };
                     });
                     articleByCate(e, c.id);
                   }}
-                  className=" mx-3 -my-2 py-2 px-3 hover:bg-slate-200 cursor-pointer rounded-lg transition duration-500"
+                  className={clicked === c.id ? " mx-3 -my-2 py-2 px-3 bg-cyan-600 text-white scale-x-110 cursor-pointer rounded-lg transition duration-500"
+                    : " mx-3 -my-2 py-2 px-3 hover:bg-slate-200 cursor-pointer rounded-lg transition duration-200"}
                 >
                   {c.name}
                 </div>
@@ -293,9 +303,8 @@ const Home = () => {
               >
                 <button
                   type="submit"
-                  className={` ${
-                    item.active && "bg-neutral-400 text-neutral-50"
-                  } border px-3 py-1 rounded-lg hover:bg-blue-400 cursor-pointer hover:text-neutral-50`}
+                  className={` ${item.active && "bg-neutral-400 text-neutral-50"
+                    } border px-3 py-1 rounded-lg hover:bg-blue-400 cursor-pointer hover:text-neutral-50`}
                 >
                   {index === 0 ? (
                     <FontAwesomeIcon icon={faAngleLeft} />
@@ -312,13 +321,21 @@ const Home = () => {
       </div>
 
       {/* Back to top */}
-      {/* <div>
-        <Button type="button" data-te-ripple-init data-te-ripple-color="light" className="!fixed bottom-5 right-5 hidden rounded-full bg-red-600 p-3 text-xs font-medium uppercase leading-tight text-white shadow-md transition duration-150 ease-in-out hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg" id="btn-back-to-top">
-          <svg aria-hidden="false" focusable="false" data-prefix="fas" className="h-4 w-4" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-            <path fill="currentColor" d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z" />
-          </svg>
-        </Button >
-      </div> */}
+
+      <div className="sticky bottom-0 right-0 w-full">
+        <Button onClick={ScrollToTop()} className=" bg-black w-32">
+          scroll to top
+        </Button>
+      </div>
+
+      {/* Mục xem nhiều nhất */}
+      {/* Backend sẽ so sánh giá trị cột view trong database
+         sau đó gửi kết quả top 5 bài có giá trị view cao nhất lên forntend xử lý */}
+      <section className="mt-5 grid lg:grid-cols-2 gap-2 mx-auto w-full max-w-7xl px-8">
+        <div>
+
+        </div>
+      </section>
     </>
   );
 };
