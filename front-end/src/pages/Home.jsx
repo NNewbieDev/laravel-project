@@ -124,9 +124,7 @@ const Home = () => {
   };
   
   const ScrollToTop = () => {
-    // window.scrollTo({ top: 0, left: 0, behavior: "" });
-    // scroll.scrollToTop();
-    document.body.scrollTo({ top: 0, left: 0})
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }
   if (article.length === 0)
     return (
@@ -323,9 +321,9 @@ const Home = () => {
       {/* Back to top */}
 
       <div className="sticky bottom-0 right-0 w-full">
-        <Button onClick={ScrollToTop()} className=" bg-black w-32">
+        <div onClick={() => ScrollToTop()} className=" bg-black text-white w-32">
           scroll to top
-        </Button>
+        </div>
       </div>
 
       {/* Mục xem nhiều nhất */}
