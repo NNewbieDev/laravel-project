@@ -68,7 +68,7 @@ const ArticleDetail = () => {
     evt.preventDefault();
     const process = async () => {
       if (user === null) {
-        nav(`?next/login`)
+        nav(`/login`)
       } else {
         let response = await authApi().post(endpoints["addRatings"](articleId), {
           rate: rating,
@@ -81,23 +81,28 @@ const ArticleDetail = () => {
     process();
     setToast(true);
   };
-
+  console.log("user: ");
+  console.log(user);
   // Thêm báo cáo
   const addReport = (evt) => {
     evt.preventDefault();
     const process = async () => {
-      let response = await authApi().post(endpoints["addReport"](articleId), {
-        content: report,
-      });
-      console.log(response.status);
-      if (response.status === 201) {
-        window.scrollTo({
-          top: 0,
-          left: 0,
-          behavior: "smooth",
+      if (user === null) {
+        nav(`/login`)
+      } else {
+        let response = await authApi().post(endpoints["addReport"](articleId), {
+          content: report,
         });
+        console.log(response.status);
+        if (response.status === 201) {
+          window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: "smooth",
+          });
+        }
+        setToastContent(response.data);
       }
-      setToastContent(response.data);
     };
     process();
     setToast(true);
