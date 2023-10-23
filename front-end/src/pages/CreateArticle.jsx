@@ -38,6 +38,7 @@ const CreateArticle = () => {
       quill.on("text-change", (delta, oldDelta, source) => {
         let text = quill.root.innerHTML;
         setArticle((current) => {
+          setLoading(false);
           return { ...current, ["content"]: text };
         });
       });
@@ -67,11 +68,12 @@ const CreateArticle = () => {
 
   if (category === null) {
     return (
-      <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-green-btn border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_2s_linear_infinite]"></div>
+      <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-green-btn border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_2s_linear_infinite]"></div>
     );
   }
   const change = (e, field) => {
     setArticle((current) => {
+      setLoading(false);
       return { ...current, [field]: e.target.value };
     });
   };
@@ -85,11 +87,14 @@ const CreateArticle = () => {
       for (let field in article)
         if (field !== "") form.append(field, article[field]);
       form.append("image", imageUrl.current.files[0]);
-      //       form.append("image");
-      const res = await authApi().post(endpoints["create"], form);
-      if (res.status === 200) {
-        window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-        setToast(true);
+      try {
+        const res = await authApi().post(endpoints["create"], form);
+        if (res.status === 200) {
+          window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+          setToast(true);
+        }
+      } catch (err) {
+        console.log(article);
       }
     };
     handle();
@@ -177,6 +182,7 @@ const CreateArticle = () => {
             ref={imageUrl}
             type="file"
             onChange={(e) => {
+              setLoading(false);
               if (e.target.files || e.target.files[0])
                 setImage(URL.createObjectURL(e.target.files[0]));
             }}
@@ -194,7 +200,7 @@ const CreateArticle = () => {
         {/*  */}
         {loading ? (
           <div className="w-full flex justify-center">
-            <div class="inline-block mt-3 h-8 w-8 animate-spin rounded-full border-4 border-green-btn border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_2s_linear_infinite]"></div>
+            <div className="inline-block mt-3 h-8 w-8 animate-spin rounded-full border-4 border-green-btn border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_2s_linear_infinite]"></div>
           </div>
         ) : (
           <input
