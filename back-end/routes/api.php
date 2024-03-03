@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\ApiArticleController;
+use App\Http\Controllers\Api\ApiCategoryController;
+use App\Http\Middleware\CheckRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -78,4 +80,9 @@ Route::prefix("report")->group(function () {
 Route::prefix("rating")->group(function () {
           Route::post("{id}/add", [App\Http\Controllers\Api\ApiRatingController::class, "store"])->middleware(["api"])->name('rating.store');
           Route::get("{id}/get", [App\Http\Controllers\Api\ApiRatingController::class, "show"])->middleware(["api"])->name('rating.show');
+});
+
+Route::prefix("statis")->group(function () {
+          Route::get("category", [App\Http\Controllers\Api\ApiCategoryController::class, "statistic"]);
+          Route::get("article", [App\Http\Controllers\Api\ApiArticleController::class, "statistic"]);
 });

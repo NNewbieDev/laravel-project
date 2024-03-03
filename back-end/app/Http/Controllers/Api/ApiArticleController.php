@@ -48,16 +48,17 @@ class ApiArticleController extends Controller
                               $rslt = $result['items'];
                               // Lấy thẻ và fix lỗi tiếng việt
                               $dom = new \DOMDocument('1.0', 'UTF-8');
-                              foreach ($rslt as $list) {
+                              for ($list = 0; $list < 10; $list++) {
+
                                         $article = new Article;
-                                        if (Article::where("title", "LIKE", $list['title'])->exists()) {
+                                        if (Article::where("title", "LIKE", $rslt[$list]['title'])->exists()) {
                                                   continue;
                                         } else {
-                                                  $article->title = $list['title'];
-                                                  $article->description = $list['description'];
+                                                  $article->title = $rslt[$list]['title'];
+                                                  $article->description = $rslt[$list]['description'];
 
                                                   $dom = new \DOMDocument('1.0', 'UTF-8');
-                                                  $contents = file_get_contents($list['link']);
+                                                  $contents = file_get_contents($rslt[$list]['link']);
                                                   $content = mb_convert_encoding($contents, 'HTML-ENTITIES', "UTF-8");
                                                   @$dom->loadHTML($content);
 
@@ -65,7 +66,7 @@ class ApiArticleController extends Controller
                                                   $news = $dom->saveHTML($node);
 
                                                   $article->content = $news;
-                                                  $article->link = $list['link'];
+                                                  $article->link = $rslt[$list]['link'];
                                                   $article->categoryID = $rss->id;
                                                   $article->status = "ACCEPT";
                                         }
@@ -231,6 +232,15 @@ class ApiArticleController extends Controller
           {
                     $article = Article::where('user_id', auth()->user()->id)->orderBy("created_at", "desc")->paginate(10);
                     return response($article, Response::HTTP_OK);
+          }
+
+          public function statistic()
+          {
+                    $articles = Article::join('categories', 'articles.categoryID', '=', 'categories.id')
+                              ->selectRaw('categories.name AS category_name, COUNT(*) AS category_count')
+                              ->groupBy('categories.name')
+                              ->get();
+                    return response($articles, Response::HTTP_OK);
           }
 
           public function accept($id)

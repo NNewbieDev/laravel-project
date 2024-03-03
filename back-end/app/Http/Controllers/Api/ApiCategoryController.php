@@ -67,6 +67,13 @@ class ApiCategoryController extends Controller
            * @param  int  $id
            * @return \Illuminate\Http\Response
            */
+          public function statistic()
+          {
+                    $category = Article::all()->groupBy("categoryID")->count();
+
+                    return response($category, Response::HTTP_OK);
+          }
+
           public function destroy($id)
           {
                     //
