@@ -2,17 +2,16 @@ import React, { Fragment, useEffect, useState } from "react";
 import Apis, { authApi, endpoints } from "../config/Apis";
 import { MySpinner } from "../components/layout";
 import { library, icon } from "@fortawesome/fontawesome-svg-core";
-import { animateScroll as scroll, scrollSpy } from 'react-scroll';
 import {
+  faAngleDoubleUp,
   faAngleLeft,
   faAngleRight,
   faCamera,
 } from "@fortawesome/free-solid-svg-icons";
 import { Form, Link, useNavigate, useSearchParams } from "react-router-dom";
-import { Button, IconButton } from "@material-tailwind/react";
-import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
 import moment from "moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Mail } from "../components";
 
 library.add(faCamera);
 
@@ -27,12 +26,12 @@ const Home = () => {
     title: "",
     cateId: "",
   });
-  const [clicked, setClicked] = useState(0)
+  const [clicked, setClicked] = useState(0);
   const nav = useNavigate();
 
   // lấy các bài báo
   useEffect(() => {
-    async function fecthArticle() {
+    const fecthArticle = async () => {
       try {
         let e = endpoints["article"];
         let kw = q.get("kw");
@@ -43,7 +42,7 @@ const Home = () => {
       } catch (ex) {
         console.error(ex);
       }
-    }
+    };
     fecthArticle();
 
     // lấy danh mục
@@ -81,7 +80,6 @@ const Home = () => {
         let res = await Apis.post(endpoints["articleByCate"](id));
         setPaginate(res.data.links);
         setArticle(res.data.data);
-        //         console.log(res.data.data);
       } catch (err) {
         console.error("Loi ne:" + err);
       }
@@ -120,12 +118,11 @@ const Home = () => {
       }
     };
     handle();
-
   };
-  
+
   const ScrollToTop = () => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-  }
+  };
   if (article.length === 0)
     return (
       <>
@@ -147,14 +144,17 @@ const Home = () => {
                 <div
                   title={c.name}
                   onClick={(e) => {
-                    setClicked(c.id)
+                    setClicked(c.id);
                     setParam((prev) => {
                       return { title: "", cateId: c.id };
                     });
                     articleByCate(e, c.id);
                   }}
-                  className={clicked === c.id ? " mx-3 -my-2 py-2 px-3 bg-cyan-600 text-white scale-x-110 cursor-pointer rounded-lg transition duration-500"
-                    : " mx-3 -my-2 py-2 px-3 hover:bg-slate-200 cursor-pointer rounded-lg transition duration-200"}
+                  className={
+                    clicked === c.id
+                      ? " mx-3 -my-2 py-2 px-3 bg-cyan-600 text-white scale-x-110 cursor-pointer rounded-lg transition duration-500"
+                      : " mx-3 -my-2 py-2 px-3 hover:bg-slate-200 cursor-pointer rounded-lg transition duration-200"
+                  }
                 >
                   {c.name}
                 </div>
@@ -248,45 +248,6 @@ const Home = () => {
             );
           })}
         </div>
-
-        {/* Cái này là sidebar bên phải mà chưa biết set sao cho nó bên phải */}
-        {/* <div> 
-          <h4 className="mt-4 mb-3">Trending topics</h4>
-          
-          <div className="text-center mb-3 card-bg-scale position-relative overflow-hidden rounded bg-dark-overlay-4 " style={{ backgroundImage: 'url(assets/images/blog/4by3/01.jpg)', backgroundPosition: 'center left', backgroundSize: 'cover' }}>
-            <div className="p-3">
-              <a href="#" className="stretched-link btn-link fw-bold text-white h5">Travel</a>
-            </div>
-          </div>
-          
-          <div className="text-center mb-3 card-bg-scale position-relative overflow-hidden rounded" style={{ backgroundImage: 'url(assets/images/blog/4by3/02.jpg)', backgroundPosition: 'center left', backgroundSize: 'cover' }}>
-            <div className="bg-dark-overlay-4 p-3">
-              <a href="#" className="stretched-link btn-link fw-bold text-black h5">Business</a>
-            </div>
-          </div>
-          
-          <div className="text-center mb-3 card-bg-scale position-relative overflow-hidden rounded" style={{ backgroundImage: 'url(assets/images/blog/4by3/03.jpg)', backgroundPosition: 'center left', backgroundSize: 'cover' }}>
-            <div className="bg-dark-overlay-4 p-3">
-              <a href="#" className="stretched-link btn-link fw-bold text-black h5">Marketing</a>
-            </div>
-          </div>
-          
-          <div className="text-center mb-3 card-bg-scale position-relative overflow-hidden rounded" style={{ backgroundImage: 'url(assets/images/blog/4by3/04.jpg)', backgroundPosition: 'center left', backgroundSize: 'cover' }}>
-            <div className="bg-dark-overlay-4 p-3">
-              <a href="#" className="stretched-link btn-link fw-bold text-black h5">Photography</a>
-            </div>
-          </div>
-          
-          <div className="text-center mb-3 card-bg-scale position-relative overflow-hidden rounded" style={{ backgroundImage: 'url(assets/images/blog/4by3/05.jpg)', backgroundPosition: 'center left', backgroundSize: 'cover' }}>
-            <div className="bg-dark-overlay-4 p-3">
-              <a href="#" className="stretched-link btn-link fw-bold text-black h5">Sports</a>
-            </div>
-          </div>
-          
-          <div className="text-center mt-3">
-            <a href="#" className="fw-bold text-body text-primary-hover"><u>View all categories</u></a>
-          </div>
-        </div> */}
       </section>
 
       {/*  */}
@@ -301,8 +262,9 @@ const Home = () => {
               >
                 <button
                   type="submit"
-                  className={` ${item.active && "bg-neutral-400 text-neutral-50"
-                    } border px-3 py-1 rounded-lg hover:bg-blue-400 cursor-pointer hover:text-neutral-50`}
+                  className={` ${
+                    item.active && "bg-neutral-400 text-neutral-50"
+                  } border px-3 py-1 rounded-lg hover:bg-blue-400 cursor-pointer hover:text-neutral-50`}
                 >
                   {index === 0 ? (
                     <FontAwesomeIcon icon={faAngleLeft} />
@@ -320,19 +282,21 @@ const Home = () => {
 
       {/* Back to top */}
 
-      <div className="sticky bottom-0 right-0 w-full">
-        <div onClick={() => ScrollToTop()} className=" bg-black text-white w-32">
-          scroll to top
+      <div className="fixed bottom-5 right-5">
+        <div
+          onClick={() => ScrollToTop()}
+          className=" bg-black text-white w-16 h-16 rounded-full flex items-center justify-center cursor-pointer text-3xl hover:opacity-25 transition duration-500"
+        >
+          <FontAwesomeIcon icon={faAngleDoubleUp} />
         </div>
       </div>
+      <Mail />
 
       {/* Mục xem nhiều nhất */}
       {/* Backend sẽ so sánh giá trị cột view trong database
          sau đó gửi kết quả top 5 bài có giá trị view cao nhất lên forntend xử lý */}
       <section className="mt-5 grid lg:grid-cols-2 gap-2 mx-auto w-full max-w-7xl px-8">
-        <div>
-
-        </div>
+        <div></div>
       </section>
     </>
   );

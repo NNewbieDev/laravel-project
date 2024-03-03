@@ -36,6 +36,7 @@ export const endpoints = {
   getRatings: (id) => `/api/rating/${id}/get`,
   addReport: (id) => `/api/report/${id}/add`,
   detail: (id) => `/api/article/${id}`,
+  statisArticle: "/api/statis/article",
 };
 
 export const authApi = () => {

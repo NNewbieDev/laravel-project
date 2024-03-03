@@ -1,4 +1,9 @@
-import { faBook, faGears, faUser } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBook,
+  faChartSimple,
+  faGears,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -8,6 +13,7 @@ const navManager = [
   { name: "Kiểm duyệt", link: "/approve/user", icon: faGears },
   { name: "Quản lý người dùng", link: "/manager/user", icon: faUser },
   { name: "Quản lý bài viết", link: "/manager/article", icon: faBook },
+  { name: "Thống kê", link: "/manager/statistic", icon: faChartSimple },
 ];
 
 const Manager = ({ children }) => {

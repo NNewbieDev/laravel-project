@@ -5,3 +5,4 @@ export { default as Register } from "./Register";
 export { default as CreateArticle } from "./CreateArticle";
 export { default as UpdateArticle } from "./UpdateArticle";
 export { default as ArticleDetail } from "./ArticleDetail";
+export { default as Manager } from "./Manager";

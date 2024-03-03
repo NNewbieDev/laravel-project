@@ -14,9 +14,9 @@ import {
 const CheckArticle = () => {
   const [articleWait, setArticleWait] = useState(null);
   const { dispatch } = useStateContext();
+  const nav = useNavigate();
   const [reRender, setReRender] = useState(false);
   const [paginate, setPaginate] = useState();
-  const nav = useNavigate();
 
   useEffect(() => {
     const load = async () => {

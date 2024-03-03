@@ -18,10 +18,10 @@ import {
   GeneralInfo,
   ManagerArticle,
   ManagerCheck,
+  ManagerStatistic,
   ManagerUser,
   YourPost,
 } from "./components";
-import Manager from "./pages/Manager";
 
 const App = () => {
   return (
@@ -38,6 +38,7 @@ const App = () => {
         <Route path="/article/:articleId" element={<ArticleDetail />} />
         <Route path="/manager/user" element={<ManagerUser />} />
         <Route path="/manager/article" element={<ManagerArticle />} />
+        <Route path="/manager/statistic" element={<ManagerStatistic />} />
         <Route path="/approve/user" element={<CheckUser />} />
         <Route path="/approve/article" element={<CheckArticle />} />
       </Router>
